@@ -48,14 +48,14 @@ extension ContextExtensions on BuildContext {
 
   appBar({@required String title}) {
     return AppBar(
-      brightness: Brightness.dark,
-      backgroundColor: Palette.colorPrimary,
-      elevation: 0,
+      brightness: Brightness.light,
+      backgroundColor: Colors.white,
+      elevation: Dimens.elevation,
       centerTitle: true,
       leading: IconButton(
         icon: Icon(
-          Icons.arrow_back_ios,
-          color: Colors.white,
+          Icons.arrow_back_outlined,
+          color: Palette.colorPrimary,
         ),
         onPressed: () {
           Navigator.pop(this);
@@ -64,7 +64,7 @@ extension ContextExtensions on BuildContext {
       automaticallyImplyLeading: true,
       title: Text(
         title,
-        style: TextStyles.white.copyWith(
+        style: TextStyles.primaryBold.copyWith(
           fontSize: Dimens.fontLarge,
         ),
       ),
@@ -105,12 +105,13 @@ extension ContextExtensions on BuildContext {
     return await showDatePicker(
       context: this,
       initialDate: DateTime.now(),
-      firstDate: DateTime(DateTime.now().year),
+      firstDate: DateTime(DateTime.now().year - 100),
       lastDate: DateTime(DateTime.now().year + 100),
-      initialEntryMode: DatePickerEntryMode.calendar,
-      initialDatePickerMode: DatePickerMode.day,
+      initialEntryMode: DatePickerEntryMode.input,
+      initialDatePickerMode: DatePickerMode.year,
       helpText: Strings.selectDate,
       confirmText: Strings.select,
+      locale: Locale("id"),
       cancelText: Strings.cancel,
       builder: (context, child) {
         return Theme(
@@ -135,7 +136,7 @@ extension ContextExtensions on BuildContext {
     );
   }
 
-  Future<String> timePicker() async {
+/*  Future<String> timePicker() async {
     var result = await showTimePicker(
       initialTime: TimeOfDay.now(),
       context: this,
@@ -168,7 +169,7 @@ extension ContextExtensions on BuildContext {
     //add 0 if length =1
     String twoDigits(int n) => n.toString().padLeft(2, "0");
     return "${twoDigits(result.hour)}:${result.minute}";
-  }
+  }*/
 
   bottomSheet({@required String title, @required Widget child, double height}) {
     showModalBottomSheet(
@@ -195,7 +196,7 @@ extension ContextExtensions on BuildContext {
               children: [
                 Container(
                   width: Dimens.bottomButton,
-                  height: Dimens.radius,
+                  height: Dimens.elevation,
                   margin: EdgeInsets.only(bottom: dp16()),
                   decoration: BoxDecoration(
                       color: Palette.bottomIndicator,

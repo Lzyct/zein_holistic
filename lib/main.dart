@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_localizations/flutter_localizations.dart';
+import 'package:flutter_screenutil/screenutil_init.dart';
+import 'package:oktoast/oktoast.dart';
 import 'package:zein_holistic/di/di.dart';
 import 'package:zein_holistic/pages/splashscreen/splash_screen_page.dart';
 import 'package:zein_holistic/resources/resources.dart';
-import 'package:flutter_screenutil/screenutil_init.dart';
-import 'package:oktoast/oktoast.dart';
 
 void main() async {
   serviceLocator();
@@ -29,6 +30,12 @@ class MyApp extends StatelessWidget {
         designSize: Size(320, 568),
         allowFontScaling: false,
         child: MaterialApp(
+          localizationsDelegates: [
+            GlobalMaterialLocalizations.delegate
+          ],
+          supportedLocales: [
+            const Locale('id'),
+          ],
           debugShowCheckedModeBanner: false,
           builder: (BuildContext context, Widget child) {
             final MediaQueryData data = MediaQuery.of(context);

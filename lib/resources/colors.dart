@@ -52,8 +52,8 @@ import 'package:flutter/material.dart';
 // 51% — 82   ## 1% — 03
 
 class Palette {
-  static Color colorPrimary = Color(0xff121D50);
-  static Color colorPrimaryDark = Color(0xff121D50);
+  static Color colorPrimary = Color(0xff00A859);
+  static Color colorPrimaryDark = Color(0xff5DB022);
   static Color colorAccent = Color(0xff001687);
   static Color colorBackground = Color(0xffffffff);
   static Color colorBackgroundAlt = Color(0xffF7F7F7);

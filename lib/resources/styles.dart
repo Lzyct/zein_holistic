@@ -66,13 +66,13 @@ class BoxDecorations {
   static const BoxDecoration white = BoxDecoration(
     color: Colors.white,
     borderRadius: BorderRadius.all(
-      Radius.circular(Dimens.radius),
+      Radius.circular(Dimens.elevation),
     ),
   );
 
   static BoxDecoration primary = BoxDecoration(
       gradient: Gradients.primary,
-      borderRadius: BorderRadius.all(Radius.circular(Dimens.radius)),
+      borderRadius: BorderRadius.all(Radius.circular(Dimens.elevation)),
       boxShadow: [BoxShadows.primary]);
 
   static BoxDecoration tooltips = BoxDecoration(
@@ -81,7 +81,7 @@ class BoxDecorations {
 
   static BoxDecoration button = BoxDecoration(
       color: Palette.colorPrimary,
-      borderRadius: BorderRadius.all(Radius.circular(Dimens.radius)),
+      borderRadius: BorderRadius.all(Radius.circular(Dimens.elevation)),
       boxShadow: [BoxShadows.primary]);
 }
 

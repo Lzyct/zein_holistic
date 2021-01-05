@@ -26,7 +26,7 @@ class _ChipContainerState extends State<ChipContainer> {
         minHeight: Dimens.height30,
       ),
       decoration: BoxDecoration(
-          borderRadius: BorderRadius.all(Radius.circular(Dimens.radius)),
+          borderRadius: BorderRadius.all(Radius.circular(Dimens.elevation)),
           border: Border.all(color: Palette.colorHint)),
       child: Wrap(
         children: widget.children,

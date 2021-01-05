@@ -1,8 +1,8 @@
-import 'package:zein_holistic/resources/resources.dart';
-import 'package:zein_holistic/utils/utils.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:zein_holistic/resources/resources.dart';
+import 'package:zein_holistic/utils/utils.dart';
 
 ///*********************************************
 /// Created by ukieTux on 22/04/2020 with ♥
@@ -57,6 +57,21 @@ class TextF extends StatefulWidget {
 class _TextFState extends State<TextF> {
   bool isFocus = false;
   String currentVal = "";
+  Color _color = Palette.colorHint;
+
+  @override
+  void initState() {
+    super.initState();
+    widget.curFocusNode.addListener(() {
+      logs("message");
+      setState(() {
+        if (widget.curFocusNode.hasFocus)
+          _color = Palette.colorPrimary;
+        else
+          _color = Palette.colorHint;
+      });
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -70,7 +85,8 @@ class _TextFState extends State<TextF> {
             visible: widget.isHintVisible,
             child: Text(
               widget.hint ?? "",
-              style: TextStyles.textHint.copyWith(fontSize: Dimens.fontSmall),
+              style: TextStyles.textHint
+                  .copyWith(fontSize: Dimens.fontSmall, color: _color),
             ),
           ),
           TextFormField(
@@ -122,7 +138,7 @@ class _TextFState extends State<TextF> {
                   gapPadding: 0,
                   borderRadius: BorderRadius.circular(context.dp4()),
                   borderSide: BorderSide(
-                    color: Palette.blue,
+                    color: Palette.colorPrimary,
                     width: 1.0,
                   ),
                 )),

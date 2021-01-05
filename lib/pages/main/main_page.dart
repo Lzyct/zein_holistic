@@ -1,5 +1,7 @@
+import 'package:animated_search_bar/animated_search_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:zein_holistic/pages/pages.dart';
 import 'package:zein_holistic/resources/resources.dart';
 import 'package:zein_holistic/utils/utils.dart';
 import 'package:zein_holistic/widgets/widgets.dart';
@@ -30,8 +32,16 @@ class _MainPageState extends State<MainPage> {
       isScroll: false,
       child: Column(children: [
         SvgPicture.asset(
-          Images.icLogo,
+          Images.icLogoTextAlt,
           height: context.heightInPercent(6),
+        ),
+        AnimatedSearchBar(
+          label: Strings.search,
+          searchDecoration: InputDecoration(
+              hintText: Strings.searchPatientHint,
+              focusColor: Palette.colorPrimary),
+          cursorColor: Palette.colorPrimary,
+          onChanged: (value) {},
         ),
         Expanded(
           child: ListView.builder(itemBuilder: (_, index) {
@@ -44,6 +54,13 @@ class _MainPageState extends State<MainPage> {
           }),
         )
       ]),
+      floatingButton: FloatingActionButton(
+          backgroundColor: Palette.colorPrimary,
+          onPressed: () {
+            context.goTo(RegisterPage());
+          },
+          tooltip: Strings.addPatient,
+          child: Icon(Icons.person_add)),
     );
   }
 }

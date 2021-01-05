@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:zein_holistic/resources/resources.dart';
-import 'package:zein_holistic/widgets/widgets.dart';
 import 'package:intl/intl.dart';
 import 'package:oktoast/oktoast.dart';
+import 'package:zein_holistic/resources/resources.dart';
+import 'package:zein_holistic/widgets/widgets.dart';
 
 extension StringExtension on String {
   String replaceCharAt(String oldString, int index, String newChar) {
@@ -13,7 +13,7 @@ extension StringExtension on String {
 
   String toDate() {
     var object = new DateFormat("yyyy-MM-dd HH:mm:ss").parse(this);
-    return DateFormat("dd MMMM yyyy").format(object);
+    return DateFormat("dd MMMM yyyy","id").format(object);
   }
 
   String toClock() {

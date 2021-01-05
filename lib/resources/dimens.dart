@@ -24,5 +24,5 @@ class Dimens {
   static double profileSmall = 60.w;
   static double tabHeight = 30.w;
   static double defaultLabel = 120.w;
-  static const double radius = 5;
+  static const double elevation = 5;
 }

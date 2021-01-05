@@ -23,7 +23,8 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
-
+  flutter_localizations:
+    sdk: flutter
 
 
   # The following adds the Cupertino Icons font to your application.
@@ -46,7 +47,7 @@ dependencies:
   flutter_bloc: ^6.1.1
 
   # Use for Time/Date Format
-  intl: ^0.16.1
+  intl: ^0.17.0-nullsafety.2
 
   # Use for custom toast with Status, ex : Loading,Success,Failed
   oktoast: ^2.3.2
@@ -59,6 +60,9 @@ dependencies:
 
   # Use for request permission
   permission_handler: ^5.0.1+1
+
+  # search
+  animated_search_bar: ^1.2.0
 
   # Some good library, eneble it if you need
   #flutter_html: ^1.0.2

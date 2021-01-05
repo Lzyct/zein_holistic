@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:zein_holistic/di/di.dart';
-import 'package:zein_holistic/pages/main/main.dart';
+import 'package:zein_holistic/pages/pages.dart';
 import 'package:zein_holistic/resources/resources.dart';
 import 'package:zein_holistic/utils/utils.dart';
+import 'package:intl/intl.dart';
+import 'package:intl/date_symbol_data_local.dart';
 
 ///*********************************************
 /// Created by ukietux on 24/08/20 with ♥
@@ -25,6 +27,8 @@ class _SplashScreenPageState extends State<SplashScreenPage> {
 
   initData() async {
     await initPrefManager();
+    await initializeDateFormatting('id',null);
+
     Future.delayed(Duration(seconds: 1), () {
       context.goTo(MainPage());
     });

@@ -44,7 +44,7 @@ class _CustomTabState extends State<CustomTab> {
                   padding: EdgeInsets.zero,
                   shape: RoundedRectangleBorder(
                       borderRadius:
-                          BorderRadius.all(Radius.circular(Dimens.radius))),
+                          BorderRadius.all(Radius.circular(Dimens.elevation))),
                   onPressed: () {
                     widget.selected(widget.listData.indexOf(_data));
                     for (var item in widget.listData) {
