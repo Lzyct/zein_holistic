@@ -28,5 +28,11 @@ class Strings {
 
   static var errorEmpty = "Tidak boleh kosong";
 
-  static var age= "Usia";
+  static var age = "Usia";
+
+  static var sex = "Jenis Kelamin";
+  static var man = "L";
+  static var woman = "P";
+
+  static var save= "Simpan";
 }

@@ -3,7 +3,7 @@ import 'package:zein_holistic/data/sources/sources.dart';
 import 'package:zein_holistic/di/di.dart';
 
 class SplashScreenRepository {
-  Future<Resources<String>> dictionary() async {
+/*  Future<Resources<String>> dictionary() async {
     var _restApi = sl<RestApiImpl>();
     try {
       var _responseTest = await _restApi.test();
@@ -16,5 +16,5 @@ class SplashScreenRepository {
     } catch (e) {
       return Resources.error(e.toString());
     }
-  }
+  }*/
 }

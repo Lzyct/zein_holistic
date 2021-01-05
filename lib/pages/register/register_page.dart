@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_toggle_tab/flutter_toggle_tab.dart';
 import 'package:zein_holistic/resources/resources.dart';
 import 'package:zein_holistic/utils/utils.dart';
 import 'package:zein_holistic/widgets/widgets.dart';
@@ -28,12 +29,24 @@ class _RegisterPageState extends State<RegisterPage> {
   var _fnAddress = FocusNode();
   var _fnPhoneNumber = FocusNode();
 
+  var _sex = [Strings.man, Strings.woman];
+  var _selectedSex = "";
+
+  var _formKey = GlobalKey<FormState>();
+
+  @override
+  void initState() {
+    super.initState();
+    _selectedSex = _sex[0];
+  }
+
   @override
   Widget build(BuildContext context) {
     return Parent(
       appBar: context.appBar(title: Strings.addPatient),
       child: SingleChildScrollView(
         child: Form(
+          key: _formKey,
           child: Column(
             children: [
               TextF(
@@ -45,6 +58,27 @@ class _RegisterPageState extends State<RegisterPage> {
                 nextFocusNode: _fnDateBirth,
                 validator: (value) => value.isEmpty ? Strings.errorEmpty : null,
               ),
+              Row(
+                children: [
+                  Text(
+                    Strings.sex,
+                    style: TextStyles.textHint,
+                  ),
+                  SizedBox(width: context.dp16()),
+                  FlutterToggleTab(
+                      labels: _sex,
+                      width: context.widthInPercent(10),
+                      height: Dimens.tabHeight,
+                      initialIndex: 0,
+                      selectedLabelIndex: (index) {
+                        _selectedSex = _sex[index];
+                      },
+                      selectedTextStyle: TextStyles.white,
+                      borderRadius: context.dp16(),
+                      unSelectedTextStyle: TextStyles.primary),
+                ],
+              ).margin(
+                  edgeInsets: EdgeInsets.symmetric(vertical: context.dp8())),
               Row(
                 children: [
                   Expanded(
@@ -61,6 +95,7 @@ class _RegisterPageState extends State<RegisterPage> {
                         var _result = await context.datePicker();
                         if (_result != null) {
                           _conDateBirth.text = _result.toString().toDate();
+                          _conAge.text = calculateAge(_result);
                         }
                       },
                     ),
@@ -72,6 +107,9 @@ class _RegisterPageState extends State<RegisterPage> {
                       textInputAction: TextInputAction.next,
                       curFocusNode: DisableFocusNode(),
                       controller: _conAge,
+                      hint: Strings.age,
+                      validator: (value) =>
+                          value.isEmpty ? Strings.errorEmpty : null,
                     ),
                   ),
                 ],
@@ -92,6 +130,14 @@ class _RegisterPageState extends State<RegisterPage> {
                 curFocusNode: _fnPhoneNumber,
                 validator: (value) => value.isEmpty ? Strings.errorEmpty : null,
               ),
+              SizedBox(height: context.dp16()),
+              Button(
+                title: Strings.save,
+                color: Palette.colorPrimary,
+                onPressed: () {
+                  if (_formKey.currentState.validate()) {}
+                },
+              )
             ],
           ),
         ),
