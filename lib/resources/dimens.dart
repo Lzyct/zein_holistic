@@ -25,4 +25,6 @@ class Dimens {
   static double tabHeight = 30.w;
   static double defaultLabel = 120.w;
   static const double elevation = 5;
+
+  static double radius = 30.w;
 }

@@ -31,7 +31,7 @@ class CardView extends StatelessWidget {
           EdgeInsets.symmetric(
               vertical: context.dp8(), horizontal: context.dp16()),
       color: bgColor ?? Colors.white,
-      elevation: 0,
+      elevation: Dimens.elevation,
       shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.all(Radius.circular(radius ?? 5))),
       child: InkWell(

@@ -36,7 +36,7 @@ class DbHelper {
         id String PRIMARY KEY, 
         name TEXT,
         sex TEXT, 
-        birthDay TEXT, 
+        dateBirth TEXT, 
         address TEXT,
         phoneNumber TEXT,
         createAt Timestamp DATETIME DEFAULT CURRENT_TIMESTAMP,

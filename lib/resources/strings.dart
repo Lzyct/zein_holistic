@@ -34,5 +34,13 @@ class Strings {
   static var man = "L";
   static var woman = "P";
 
-  static var save= "Simpan";
+  static var save = "Simpan";
+
+  static String failedToSave = "Gagal Menyimpan Data";
+
+  static var successSaveData = "Sukses menyimpan data";
+
+  static String errorUserExist = "User telah terdaftar";
+
+  static String errorNoData = "Data tidak di temukan";
 }

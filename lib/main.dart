@@ -31,7 +31,8 @@ class MyApp extends StatelessWidget {
         allowFontScaling: false,
         child: MaterialApp(
           localizationsDelegates: [
-            GlobalMaterialLocalizations.delegate
+            GlobalMaterialLocalizations.delegate,
+            GlobalCupertinoLocalizations.delegate
           ],
           supportedLocales: [
             const Locale('id'),
