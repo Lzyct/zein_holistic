@@ -100,7 +100,7 @@ class _AddMedicalRecordPageState extends State<AddMedicalRecordPage> {
                   textInputAction: TextInputAction.next,
                   controller: _conHistoryOfDisease,
                   curFocusNode: _fnHistoryOfDisease,
-                  nextFocusNode: _fnCheckUpResult,
+                  nextFocusNode: _fnConclusionDiagnosis,
                 ),
                 TextF(
                   hint: Strings.conclusionDiagnosis,

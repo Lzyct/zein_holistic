@@ -135,7 +135,7 @@ class _EditPatientPageState extends State<EditPatientPage> {
                                 FlutterToggleTab(
                                     labels: _sex,
                                     width: context.widthInPercent(10),
-                                    height: Dimens.tabHeight,
+                                    height: Dimens.toggle,
                                     initialIndex: _sex.indexOf(_selectedSex),
                                     selectedLabelIndex: (index) {
                                       _selectedSex = _sex[index];

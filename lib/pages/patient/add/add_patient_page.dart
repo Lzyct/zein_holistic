@@ -80,7 +80,7 @@ class _AddPatientPageState extends State<AddPatientPage> {
                 TextF(
                   hint: Strings.name,
                   textInputAction: TextInputAction.next,
-                  keyboardType: TextInputType.number,
+                  keyboardType: TextInputType.text,
                   controller: _conName,
                   curFocusNode: _fnName,
                   nextFocusNode: _fnDateBirth,
@@ -96,8 +96,8 @@ class _AddPatientPageState extends State<AddPatientPage> {
                     SizedBox(width: context.dp16()),
                     FlutterToggleTab(
                         labels: _sex,
-                        width: context.widthInPercent(10),
-                        height: Dimens.tabHeight,
+                        width: Dimens.toggle,
+                        height: Dimens.toggle,
                         initialIndex: 0,
                         selectedLabelIndex: (index) {
                           _selectedSex = _sex[index];

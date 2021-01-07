@@ -46,7 +46,6 @@ class _ListPatientPageState extends State<ListPatientPage> {
       child: Column(children: [
         Container(
             width: context.widthInPercent(100),
-            height: Dimens.height120,
             decoration: BoxDecoration(
                 color: Colors.white,
                 borderRadius: BorderRadius.only(
@@ -57,7 +56,7 @@ class _ListPatientPageState extends State<ListPatientPage> {
               children: [
                 SvgPicture.asset(
                   Images.icLogoTextAlt,
-                  height: context.heightInPercent(6.5),
+                  height: Dimens.height40,
                 ).margin(edgeInsets: EdgeInsets.all(context.dp16())),
                 AnimatedSearchBar(
                   label: Strings.searchPatient,
@@ -65,8 +64,9 @@ class _ListPatientPageState extends State<ListPatientPage> {
                   searchDecoration: InputDecoration(
                       alignLabelWithHint: true,
                       hintText: Strings.searchPatientHint,
-                      contentPadding: EdgeInsets.symmetric(
-                          vertical: context.dp8(), horizontal: context.dp12()),
+                      hintStyle: TextStyles.textHint,
+                      contentPadding:
+                          EdgeInsets.symmetric(horizontal: context.dp8()),
                       focusedBorder: OutlineInputBorder(
                         gapPadding: 0,
                         borderRadius: BorderRadius.circular(context.dp4()),
@@ -80,11 +80,13 @@ class _ListPatientPageState extends State<ListPatientPage> {
                     _name = value;
                     _getPatient();
                   },
-                ).margin(
-                    edgeInsets:
-                        EdgeInsets.symmetric(horizontal: context.dp16())),
+                )
               ],
-            )),
+            ).padding(
+                edgeInsets: EdgeInsets.only(
+                    bottom: context.dp16(),
+                    left: context.dp16(),
+                    right: context.dp16()))),
         Expanded(
             child: BlocBuilder(
           cubit: _listPatientBloc,
@@ -121,6 +123,7 @@ class _ListPatientPageState extends State<ListPatientPage> {
                       _getPatient();
                     },
                     child: ListView.builder(
+                        physics: AlwaysScrollableScrollPhysics(),
                         itemCount: _listPatient.length,
                         shrinkWrap: true,
                         itemBuilder: (_, index) {

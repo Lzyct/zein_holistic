@@ -92,7 +92,9 @@ class _ListMedicalRecordPageState extends State<ListMedicalRecordPage> {
                     SizedBox(width: context.dp4()),
                     Text(
                       calculateAge(widget.patientEntity.dateBirth.toDateTime()),
-                      style: TextStyles.white,
+                      style: TextStyles.whiteBold.copyWith(
+                        fontSize: Dimens.fontSmall,
+                      ),
                     )
                   ],
                 ),
@@ -140,11 +142,12 @@ class _ListMedicalRecordPageState extends State<ListMedicalRecordPage> {
           AnimatedSearchBar(
             label: Strings.searchMedicalRecord,
             labelStyle: TextStyles.textBold,
+            searchStyle: TextStyles.text,
             searchDecoration: InputDecoration(
                 alignLabelWithHint: true,
                 hintText: Strings.searchMedicalRecordHint,
-                contentPadding: EdgeInsets.symmetric(
-                    vertical: context.dp8(), horizontal: context.dp12()),
+                hintStyle: TextStyles.textHint,
+                contentPadding: EdgeInsets.symmetric(horizontal: context.dp8()),
                 focusedBorder: OutlineInputBorder(
                   gapPadding: 0,
                   borderRadius: BorderRadius.circular(context.dp4()),
@@ -196,6 +199,7 @@ class _ListMedicalRecordPageState extends State<ListMedicalRecordPage> {
                           _getMedicalRecord();
                         },
                         child: ListView.builder(
+                            physics: AlwaysScrollableScrollPhysics(),
                             itemCount: _listMedicalRecord.length,
                             shrinkWrap: true,
                             itemBuilder: (_, index) {
