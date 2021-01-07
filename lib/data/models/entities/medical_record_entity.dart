@@ -1,6 +1,6 @@
 class MedicalRecordEntity {
   int id;
-  String idUser;
+  String idPatient;
   String mainComplaint;
   String additionalComplaint;
   String historyOfDisease;
@@ -12,8 +12,8 @@ class MedicalRecordEntity {
   String updateAt;
 
   MedicalRecordEntity(
-      this.id,
-      this.idUser,
+      {this.id,
+      this.idPatient,
       this.mainComplaint,
       this.additionalComplaint,
       this.historyOfDisease,
@@ -22,10 +22,10 @@ class MedicalRecordEntity {
       this.suggestion,
       this.examiner,
       this.createAt,
-      this.updateAt);
+      this.updateAt});
 
   @override
   String toString() {
-    return 'TableMedicalRecord{id: $id, idUser: $idUser, mainComplaint: $mainComplaint, additionalComplaint: $additionalComplaint, historyOfDisease: $historyOfDisease, checkUpResult: $checkUpResult, conclusionDiagnosis: $conclusionDiagnosis, suggestion: $suggestion, examiner: $examiner, createAt: $createAt, updateAt: $updateAt}';
+    return 'TableMedicalRecord{id: $id, idPatient: $idPatient, mainComplaint: $mainComplaint, additionalComplaint: $additionalComplaint, historyOfDisease: $historyOfDisease, checkUpResult: $checkUpResult, conclusionDiagnosis: $conclusionDiagnosis, suggestion: $suggestion, examiner: $examiner, createAt: $createAt, updateAt: $updateAt}';
   }
 }

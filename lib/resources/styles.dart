@@ -1,4 +1,3 @@
-
 import 'package:flutter/material.dart';
 import 'package:zein_holistic/resources/resources.dart';
 
@@ -71,7 +70,7 @@ class BoxDecorations {
   );
 
   static BoxDecoration primary = BoxDecoration(
-      gradient: Gradients.primary,
+      color: Palette.colorPrimary,
       borderRadius: BorderRadius.all(Radius.circular(Dimens.elevation)),
       boxShadow: [BoxShadows.primary]);
 

@@ -1,4 +1,4 @@
-import 'package:zein_holistic/data/models/entities/patient_entity.dart';
+import 'package:zein_holistic/data/models/models.dart';
 import 'package:zein_holistic/di/di.dart';
 import 'package:zein_holistic/resources/resources.dart';
 import 'package:zein_holistic/utils/utils.dart';
@@ -9,23 +9,23 @@ class Patient {
     try {
       await dbClient.transaction((insert) async => insert.rawInsert('''
       INSERT INTO patient(
-      id,
-      name,
-      sex,
-      dateBirth,
-      address,
-      phoneNumber,
-      createAt,
-      updateAt
+        id,
+        name,
+        sex,
+        dateBirth,
+        address,
+        phoneNumber,
+        createAt,
+        updateAt
       ) VALUES (
-      '${_params['name']}-${_params['dateBirth']}',
-      '${_params['name']}',
-      '${_params['sex']}',
-      '${_params['dateBirth']}',
-      '${_params['address']}',
-      '${_params['phoneNumber']}',
-      '${DateTime.now()}',
-      '${DateTime.now()}'
+        '${_params['name']}-${_params['dateBirth']}',
+        '${_params['name']}',
+        '${_params['sex']}',
+        '${_params['dateBirth']}',
+        '${_params['address']}',
+        '${_params['phoneNumber']}',
+        '${DateTime.now()}',
+        '${DateTime.now()}'
       )
     '''));
       return true;
@@ -40,12 +40,13 @@ class Patient {
     try {
       await dbClient.transaction((update) async => update.rawUpdate('''
       UPDATE patient SET 
-      name='${_params['name']}',
-      sex='${_params['sex']}',
-      dateBirth='${_params['dateBirth']}',
-      address='${_params['address']}',
-      phoneNumber='${_params['phoneNumber']}',
-      updateAt='${DateTime.now()}'
+          name='${_params['name']}',
+          sex='${_params['sex']}',
+          dateBirth='${_params['dateBirth']}',
+          address='${_params['address']}',
+          phoneNumber='${_params['phoneNumber']}',
+          updateAt='${DateTime.now()}'
+      WHERE id='${_params['id']}'
     '''));
       return true;
     } catch (e) {

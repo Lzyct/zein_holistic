@@ -3,7 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:zein_holistic/blocs/blocs.dart';
-import 'package:zein_holistic/data/models/entities/patient_entity.dart';
+import 'package:zein_holistic/data/models/models.dart';
+import 'package:zein_holistic/pages/medical_record/medical_record.dart';
 import 'package:zein_holistic/pages/pages.dart';
 import 'package:zein_holistic/resources/resources.dart';
 import 'package:zein_holistic/utils/utils.dart';
@@ -33,7 +34,7 @@ class _ListPatientPageState extends State<ListPatientPage> {
     super.initState();
     _listPatientBloc = BlocProvider.of(context);
     _deletePatientBloc = BlocProvider.of(context);
-    _listPatientBloc.getListPatient(_name);
+    _getPatient();
   }
 
   @override
@@ -77,7 +78,7 @@ class _ListPatientPageState extends State<ListPatientPage> {
                   cursorColor: Palette.colorPrimary,
                   onChanged: (value) {
                     _name = value;
-                    _listPatientBloc.getListPatient(_name);
+                    _getPatient();
                   },
                 ).margin(
                     edgeInsets:
@@ -117,7 +118,7 @@ class _ListPatientPageState extends State<ListPatientPage> {
                   _listPatient = state.data;
                   return RefreshIndicator(
                     onRefresh: () async {
-                      _listPatientBloc.getListPatient(_name);
+                      _getPatient();
                     },
                     child: ListView.builder(
                         itemCount: _listPatient.length,
@@ -139,7 +140,7 @@ class _ListPatientPageState extends State<ListPatientPage> {
           onPressed: () async {
             await context.goTo(BlocProvider(
                 create: (_) => AddPatientBloc(), child: AddPatientPage()));
-            _listPatientBloc.getListPatient(_name);
+            _getPatient();
           },
           tooltip: Strings.addPatient,
           child: Icon(Icons.person_add)),
@@ -228,6 +229,7 @@ class _ListPatientPageState extends State<ListPatientPage> {
                     ),
                     onPressed: () {
                       _deletePatientBloc.deletePatient(_listPatient[index].id);
+                      _getPatient();
                       Navigator.pop(
                           dialogContext, true); // Dismiss alert dialog
                     },
@@ -245,7 +247,7 @@ class _ListPatientPageState extends State<ListPatientPage> {
               child: EditPatientPage(
                 id: _listPatient[index].id,
               )));
-          _listPatientBloc.getListPatient(_name);
+          _getPatient();
         }
         return false;
       },
@@ -254,11 +256,14 @@ class _ListPatientPageState extends State<ListPatientPage> {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Row(
+                crossAxisAlignment: CrossAxisAlignment.start,
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  Text(
-                    _listPatient[index].name,
-                    style: TextStyles.textBold,
+                  Expanded(
+                    child: Text(
+                      _listPatient[index].name,
+                      style: TextStyles.textBold,
+                    ),
                   ),
                   Text(
                     _listPatient[index].phoneNumber,
@@ -274,7 +279,27 @@ class _ListPatientPageState extends State<ListPatientPage> {
               ),
             ],
           ).padding(edgeInsets: EdgeInsets.all(context.dp16())),
-          onTap: () {}),
+          onTap: () {
+            context.goTo(
+              MultiBlocProvider(
+                providers: [
+                  BlocProvider(
+                    create: (_) => ListMedicalRecordBloc(),
+                  ),
+                  BlocProvider(
+                    create: (_) => DeleteMedicalRecordBloc(),
+                  )
+                ],
+                child: ListMedicalRecordPage(
+                  patientEntity: _listPatient[index],
+                ),
+              ),
+            );
+          }),
     );
+  }
+
+  _getPatient() {
+    _listPatientBloc.getListPatient(_name);
   }
 }

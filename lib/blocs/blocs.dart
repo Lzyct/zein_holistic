@@ -1,6 +1,10 @@
-export 'add_patient/add_patient_bloc.dart';
-export 'delete_patient/delete_patient_bloc.dart';
-export 'detail_patient/detail_patient_bloc.dart';
-export 'edit_patient/edit_patient_bloc.dart';
-export 'list_patient/list_patient_bloc.dart';
+export 'medical_record/add/add_medical_record_bloc.dart';
+export 'medical_record/delete/delete_medical_record_bloc.dart';
+export 'medical_record/edit/edit_medical_record_bloc.dart';
+export 'medical_record/list/list_medical_record_bloc.dart';
+export 'patient/add/add_patient_bloc.dart';
+export 'patient/delete/delete_patient_bloc.dart';
+export 'patient/detail/detail_patient_bloc.dart';
+export 'patient/edit/edit_patient_bloc.dart';
+export 'patient/list/list_patient_bloc.dart';
 export 'resources.dart';

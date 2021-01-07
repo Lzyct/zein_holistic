@@ -36,6 +36,7 @@ class _EditPatientPageState extends State<EditPatientPage> {
 
   var _sex = [Strings.man, Strings.woman];
   var _selectedSex = "";
+  var _id = "";
 
   var _formKey = GlobalKey<FormState>();
 
@@ -108,6 +109,7 @@ class _EditPatientPageState extends State<EditPatientPage> {
                       _conAge.text =
                           calculateAge(_patientEntity.dateBirth.toDateTime());
                       _selectedSex = _patientEntity.sex;
+                      _id = _patientEntity.id;
 
                       return Form(
                         key: _formKey,
@@ -213,6 +215,7 @@ class _EditPatientPageState extends State<EditPatientPage> {
                               onPressed: () {
                                 if (_formKey.currentState.validate()) {
                                   var _params = {
+                                    'id': _id,
                                     'name': _conName.text.toString(),
                                     'sex': _selectedSex,
                                     'dateBirth': _conDateBirth.text.toString(),

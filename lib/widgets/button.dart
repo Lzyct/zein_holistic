@@ -1,8 +1,8 @@
-import 'package:zein_holistic/resources/resources.dart';
-import 'package:zein_holistic/utils/utils.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:zein_holistic/resources/resources.dart';
+import 'package:zein_holistic/utils/utils.dart';
 
 ///*********************************************
 /// Created by ukieTux on 23/04/2020 with ♥

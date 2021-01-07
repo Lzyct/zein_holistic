@@ -50,7 +50,8 @@ extension ContextExtensions on BuildContext {
     return AppBar(
       brightness: Brightness.dark,
       backgroundColor: Palette.colorPrimary,
-      elevation: Dimens.elevation,
+      elevation: 0,
+      bottomOpacity: 0,
       centerTitle: true,
       leading: IconButton(
         icon: Icon(

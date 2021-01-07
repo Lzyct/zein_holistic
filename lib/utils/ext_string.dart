@@ -16,6 +16,11 @@ extension StringExtension on String {
     return DateFormat("dd MMMM yyyy", "id").format(object);
   }
 
+  String toStringDateTime() {
+    var object = new DateFormat("yyyy-MM-dd HH:mm:ss").parse(this);
+    return DateFormat("dd MMMM yyyy HH:mm", "id").format(object);
+  }
+
   DateTime toDate() {
     return DateFormat("dd MMMM yyyy", "id").parse(this);
   }

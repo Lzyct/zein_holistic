@@ -2,55 +2,50 @@ class Strings {
   static String appName = "Zein Holistic";
   static String dataNotFound = "Data tidak ditemukan";
   static String pleaseWait = "Harap Tunggu ...";
-
-  static var searchPatientHint = "Masukkan Nama";
-
-  static var selectDate = "Pilih Tanggal";
+  static String searchPatientHint = "Masukkan Nama";
+  static String selectDate = "Pilih Tanggal";
   static String select = "Pilih";
   static String cancel = "Batal";
-
-  static var searchPatient = "Cari Pasien";
-
-  static var addPatient = "Tambah pasien";
-
-  static var name = "Nama";
-  static var dateBirth = "Tanggal Lahir";
-  static var address = "Alamat";
-  static var phoneNumber = "Nomor Telepon";
-  static var mainComplaint = "Keluhan Utama";
-  static var additionalComplaint = "Keluhan Tambahan";
-  static var historyOfDisease = "Riwayat Penyakit";
-  static var checkUpResult = "Hasil pemeriksaan";
-  static var conclusionDiagnosis = "Kesimpulan Diagnosa";
-  static var suggestion = "Saran";
-  static var cuppingPoint = "Titik bekam";
-  static var examiner = "Pemeriksa";
-
-  static var errorEmpty = "Tidak boleh kosong";
-
-  static var age = "Usia";
-
-  static var sex = "Jenis Kelamin";
-  static var man = "L";
-  static var woman = "P";
-
-  static var save = "Simpan";
-
+  static String searchPatient = "Cari Pasien";
+  static String searchMedicalRecord = "Cari Rekam Medis";
+  static String addPatient = "Tambah pasien";
+  static String name = "Nama";
+  static String dateBirth = "Tanggal Lahir";
+  static String address = "Alamat";
+  static String phoneNumber = "Nomor Telepon";
+  static String mainComplaint = "Keluhan Utama";
+  static String additionalComplaint = "Keluhan Tambahan";
+  static String historyOfDisease = "Riwayat Penyakit";
+  static String checkUpResult = "Hasil pemeriksaan";
+  static String conclusionDiagnosis = "Kesimpulan Diagnosa";
+  static String suggestion = "Saran";
+  static String cuppingPoint = "Titik bekam";
+  static String examiner = "Pemeriksa";
+  static String errorEmpty = "Tidak boleh kosong";
+  static String age = "Usia";
+  static String sex = "Jenis Kelamin";
+  static String man = "L";
+  static String woman = "P";
+  static String save = "Simpan";
   static String failedToSave = "Gagal Menyimpan Data";
-
-  static var successSaveData = "Sukses menyimpan data";
-
+  static String successSaveData = "Sukses menyimpan data";
   static String errorPatientExist = "Pasien telah terdaftar";
-
   static String errorNoData = "Data tidak di temukan";
   static String errorNoPatient =
       "Pasien tidak di temukan\nSilahkan tambahkan pasien";
-
   static String edit = "Ubah";
   static String delete = "Hapus";
-
-  static var askDeletePatient = "Hapus pasien";
-  static var questionMark = "?";
-
-  static var editPatient = "Edit Pasien";
+  static String askDeletePatient = "Hapus pasien";
+  static String questionMark = "?";
+  static String editPatient = "Edit Pasien";
+  static String medicalRecord = "Rekam Medis";
+  static String errorMedicalRecordExist = "Rekam medis duplikat";
+  static String errorNoMedicalRecord =
+      "Rekam medis tidak ditemukan\nSilahkan tambahkan rekam medis";
+  static String addMedicalRecord = "Tambah Rekam Medis";
+  static String patientInformation = "Informasi Pasien";
+  static String detailMedicalRecord = "Detail Rekam Medis";
+  static String editMedicalRecord = "Edit Rekam Medis";
+  static String searchMedicalRecordHint = "Masukkan keluhan";
+  static String askDeleteMedicalRecord = "Hapus Rekam Medis";
 }

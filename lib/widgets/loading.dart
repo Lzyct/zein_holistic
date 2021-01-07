@@ -1,7 +1,6 @@
-import 'package:zein_holistic/resources/resources.dart';
-import 'package:zein_holistic/utils/utils.dart';
-import 'package:zein_holistic/widgets/color_loaders.dart';
 import 'package:flutter/material.dart';
+import 'package:zein_holistic/resources/resources.dart';
+import 'package:zein_holistic/widgets/color_loaders.dart';
 
 ///*********************************************
 /// Created by ukietux on 25/06/20 with ♥

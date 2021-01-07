@@ -20,7 +20,7 @@ class Dimens {
   static double height120 = 120.h;
   static double searchLabel = 60.h;
   static double bottomButton = 60.w;
-  static double dropdown = 45.w;
+  static double height40 = 40.h;
   static double buttonHeight = 40.w;
   static double profileSmall = 60.w;
   static double tabHeight = 30.w;
