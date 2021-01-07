@@ -30,9 +30,9 @@ class DbHelper {
   void onCreate(Database db, int version) async {
     // When creating the db, create the table
 
-    // Create table User
+    // Create table Patient
     await db.execute('''
-    CREATE TABLE user (
+    CREATE TABLE patient (
         id String PRIMARY KEY, 
         name TEXT,
         sex TEXT, 
@@ -48,7 +48,7 @@ class DbHelper {
     await db.execute('''
     CREATE TABLE medicalRecord (
         id INTEGER PRIMARY KEY,
-        idUser TEXT,
+        idPatient TEXT,
         mainComplaint TEXT,
         additionalComplaint TEXT, 
         historyOfDisease TEXT, 

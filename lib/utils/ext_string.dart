@@ -13,7 +13,7 @@ extension StringExtension on String {
 
   String toDate() {
     var object = new DateFormat("yyyy-MM-dd HH:mm:ss").parse(this);
-    return DateFormat("dd MMMM yyyy","id").format(object);
+    return DateFormat("dd MMMM yyyy", "id").format(object);
   }
 
   String toClock() {
@@ -21,12 +21,16 @@ extension StringExtension on String {
     return DateFormat("HH:mm").format(object);
   }
 
+  DateTime toDateTime() {
+    return DateFormat("dd MMMM yyyy", "id").parse(this);
+  }
+
   toToastError() {
     try {
       var message = this == null || this.isEmpty ? "error" : this;
 
       //dismiss before show toast
-      dismissAllToast(showAnim: true);
+      dismissAllToast(showAnim: false);
 
       showToastWidget(
           Toast(
@@ -48,7 +52,7 @@ extension StringExtension on String {
       var message = (this == null || this.isEmpty) ? "success" : this;
 
       //dismiss before show toast
-      dismissAllToast(showAnim: true);
+      dismissAllToast(showAnim: false);
 
       // showToast(msg)
       showToastWidget(

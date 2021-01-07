@@ -23,7 +23,7 @@ class _ChipContainerState extends State<ChipContainer> {
       width: double.infinity,
       margin: EdgeInsets.symmetric(vertical: context.dp8()),
       constraints: BoxConstraints(
-        minHeight: Dimens.height30,
+        minHeight: Dimens.height177,
       ),
       decoration: BoxDecoration(
           borderRadius: BorderRadius.all(Radius.circular(Dimens.elevation)),

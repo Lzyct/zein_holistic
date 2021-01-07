@@ -1,5 +1,5 @@
-import 'package:zein_holistic/resources/resources.dart';
 import 'package:flutter/material.dart';
+import 'package:zein_holistic/resources/resources.dart';
 import 'package:zein_holistic/utils/utils.dart';
 
 ///*********************************************
@@ -32,6 +32,7 @@ class CardView extends StatelessWidget {
               vertical: context.dp8(), horizontal: context.dp16()),
       color: bgColor ?? Colors.white,
       elevation: Dimens.elevation,
+      shadowColor: Colors.black54,
       shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.all(Radius.circular(radius ?? 5))),
       child: InkWell(

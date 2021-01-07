@@ -1,15 +1,15 @@
 class Strings {
   static String appName = "Zein Holistic";
-  static String noData = "Tidak ada data";
+  static String dataNotFound = "Data tidak ditemukan";
   static String pleaseWait = "Harap Tunggu ...";
 
-  static var searchPatientHint = "Masukkan Nama/ Nomor Telepon";
+  static var searchPatientHint = "Masukkan Nama";
 
   static var selectDate = "Pilih Tanggal";
   static String select = "Pilih";
   static String cancel = "Batal";
 
-  static var search = "Cari";
+  static var searchPatient = "Cari Pasien";
 
   static var addPatient = "Tambah pasien";
 
@@ -40,7 +40,17 @@ class Strings {
 
   static var successSaveData = "Sukses menyimpan data";
 
-  static String errorUserExist = "User telah terdaftar";
+  static String errorPatientExist = "Pasien telah terdaftar";
 
   static String errorNoData = "Data tidak di temukan";
+  static String errorNoPatient =
+      "Pasien tidak di temukan\nSilahkan tambahkan pasien";
+
+  static String edit = "Ubah";
+  static String delete = "Hapus";
+
+  static var askDeletePatient = "Hapus pasien";
+  static var questionMark = "?";
+
+  static var editPatient = "Edit Pasien";
 }

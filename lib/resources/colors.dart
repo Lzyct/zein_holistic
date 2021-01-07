@@ -56,7 +56,7 @@ class Palette {
   static Color colorPrimaryDark = Color(0xff5DB022);
   static Color colorAccent = Color(0xff001687);
   static Color colorBackground = Color(0xffffffff);
-  static Color colorBackgroundAlt = Color(0xffF7F7F7);
+  static Color colorBackgroundAlt = Color(0xffF6F7F9);
   static Color colorText = Color(0xff212529);
   static Color colorHint = Color(0xCC5E748A);
   static Color colorHintSoft = Color(0x1A5E748A);
@@ -79,7 +79,7 @@ class Palette {
 
 ThemeData themeDefault = ThemeData(
   fontFamily: 'Poppins',
-  backgroundColor: Palette.colorBackground,
+  backgroundColor: Palette.colorBackgroundAlt,
   primaryColor: Palette.colorPrimary,
   accentColor: Palette.colorAccent,
   textSelectionTheme: TextSelectionThemeData(cursorColor: Palette.colorAccent),
@@ -90,7 +90,7 @@ ThemeData themeDefault = ThemeData(
     bodyColor: Palette.colorText,
     displayColor: Palette.colorText,
   ),
-  scaffoldBackgroundColor: Palette.colorBackground,
+  scaffoldBackgroundColor: Palette.colorBackgroundAlt,
   iconTheme: IconThemeData(color: Colors.black),
   appBarTheme: AppBarTheme(
     elevation: 10,

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_toggle_tab/flutter_toggle_tab.dart';
 import 'package:zein_holistic/blocs/blocs.dart';
@@ -12,14 +13,14 @@ import 'package:zein_holistic/widgets/widgets.dart';
 /// github : https://www.github.com/ukieTux <(’_’<)
 ///*********************************************
 /// © 2021 | All Right Reserved
-class RegisterPage extends StatefulWidget {
-  RegisterPage({Key key}) : super(key: key);
+class AddPatientPage extends StatefulWidget {
+  AddPatientPage({Key key}) : super(key: key);
 
   @override
-  _RegisterPageState createState() => _RegisterPageState();
+  _AddPatientPageState createState() => _AddPatientPageState();
 }
 
-class _RegisterPageState extends State<RegisterPage> {
+class _AddPatientPageState extends State<AddPatientPage> {
   var _conName = TextEditingController();
   var _conDateBirth = TextEditingController();
   var _conAddress = TextEditingController();
@@ -36,13 +37,13 @@ class _RegisterPageState extends State<RegisterPage> {
 
   var _formKey = GlobalKey<FormState>();
 
-  AddUserBloc _addUserBloc;
+  AddPatientBloc _addPatientBloc;
 
   @override
   void initState() {
     super.initState();
     _selectedSex = _sex[0];
-    _addUserBloc = BlocProvider.of(context);
+    _addPatientBloc = BlocProvider.of(context);
   }
 
   @override
@@ -51,7 +52,7 @@ class _RegisterPageState extends State<RegisterPage> {
       appBar: context.appBar(title: Strings.addPatient),
       child: SingleChildScrollView(
         child: BlocListener(
-          cubit: _addUserBloc,
+          cubit: _addPatientBloc,
           listener: (_, state) {
             switch (state.status) {
               case Status.LOADING:
@@ -156,6 +157,7 @@ class _RegisterPageState extends State<RegisterPage> {
                   textInputAction: TextInputAction.done,
                   keyboardType: TextInputType.phone,
                   controller: _conPhoneNumber,
+                  inputFormatter: [FilteringTextInputFormatter.digitsOnly],
                   curFocusNode: _fnPhoneNumber,
                   validator: (value) =>
                       value.isEmpty ? Strings.errorEmpty : null,
@@ -173,7 +175,7 @@ class _RegisterPageState extends State<RegisterPage> {
                         'address': _conAddress.text.toString(),
                         'phoneNumber': _conPhoneNumber.text.toString()
                       };
-                      _addUserBloc.addUser(_params);
+                      _addPatientBloc.addPatient(_params);
                     }
                   },
                 )

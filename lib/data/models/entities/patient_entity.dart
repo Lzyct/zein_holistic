@@ -1,4 +1,4 @@
-class TableUser {
+class PatientEntity {
   String id;
   String name;
   String sex;
@@ -8,7 +8,7 @@ class TableUser {
   String createAt;
   String updateAt;
 
-  TableUser(
+  PatientEntity(
       {this.id,
       this.name,
       this.sex,

@@ -1,4 +1,4 @@
-class TableMedicalRecord {
+class MedicalRecordEntity {
   int id;
   String idUser;
   String mainComplaint;
@@ -11,7 +11,7 @@ class TableMedicalRecord {
   String createAt;
   String updateAt;
 
-  TableMedicalRecord(
+  MedicalRecordEntity(
       this.id,
       this.idUser,
       this.mainComplaint,

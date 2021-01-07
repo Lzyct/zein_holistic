@@ -14,7 +14,6 @@ class Parent extends StatefulWidget {
   final Widget appBar;
   final bool avoidBottomInset;
   final Widget floatingButton;
-  final Color bgColor;
 
   const Parent({
     Key key,
@@ -24,7 +23,6 @@ class Parent extends StatefulWidget {
     @required this.appBar,
     this.avoidBottomInset = false,
     this.floatingButton,
-    this.bgColor = Colors.white,
   }) : super(key: key);
 
   @override
@@ -40,7 +38,6 @@ class _ParentState extends State<Parent> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: widget.bgColor,
       resizeToAvoidBottomInset: widget.avoidBottomInset,
       appBar: widget.appBar ??
           PreferredSize(

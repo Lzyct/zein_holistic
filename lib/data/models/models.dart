@@ -1,2 +1,2 @@
-export 'entities/table_medical_record.dart';
-export 'entities/table_user.dart';
+export 'entities/medical_record_entity.dart';
+export 'entities/patient_entity.dart';

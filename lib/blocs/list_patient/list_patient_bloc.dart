@@ -4,13 +4,13 @@ import 'package:zein_holistic/data/models/models.dart';
 import 'package:zein_holistic/data/repositories/repositories.dart';
 import 'package:zein_holistic/di/di.dart';
 
-class ListUserBloc extends Cubit<Resources<List<TableUser>>> {
-  ListUserBloc() : super(Resources.loading());
+class ListPatientBloc extends Cubit<Resources<List<PatientEntity>>> {
+  ListPatientBloc() : super(Resources.loading());
 
-  var _userRepo = sl<UserRepository>();
+  var _userRepo = sl<PatientRepository>();
 
-  listUser(String name) async {
+  getListPatient(String name) async {
     emit(Resources.loading());
-    emit(await _userRepo.listUser(name));
+    emit(await _userRepo.getListPatient(name));
   }
 }
