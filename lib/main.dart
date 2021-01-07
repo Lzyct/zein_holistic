@@ -27,7 +27,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return OKToast(
       child: ScreenUtilInit(
-        designSize: Size(320, 568),
+        designSize: Size(375, 667),
         allowFontScaling: false,
         child: MaterialApp(
           localizationsDelegates: [
