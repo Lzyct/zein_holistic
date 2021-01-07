@@ -101,10 +101,10 @@ extension ContextExtensions on BuildContext {
           brightness: Brightness.light),
       preferredSize: Size.fromHeight(0.0));
 
-  Future<DateTime> datePicker() async {
+  Future<DateTime> datePicker({DateTime currentDate}) async {
     return await showDatePicker(
       context: this,
-      initialDate: DateTime.now(),
+      initialDate: currentDate ?? DateTime.now(),
       firstDate: DateTime(DateTime.now().year - 100),
       lastDate: DateTime(DateTime.now().year + 100),
       initialEntryMode: DatePickerEntryMode.input,

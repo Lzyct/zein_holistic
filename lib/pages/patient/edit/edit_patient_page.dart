@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_toggle_tab/flutter_toggle_tab.dart';
-import 'package:oktoast/oktoast.dart';
 import 'package:zein_holistic/blocs/blocs.dart';
 import 'package:zein_holistic/data/models/entities/patient_entity.dart';
 import 'package:zein_holistic/resources/resources.dart';
@@ -160,10 +159,12 @@ class _EditPatientPageState extends State<EditPatientPage> {
                                         ? Strings.errorEmpty
                                         : null,
                                     onTap: () async {
-                                      var _result = await context.datePicker();
+                                      var _result = await context.datePicker(
+                                          currentDate:
+                                              _conDateBirth.text.toDate());
                                       if (_result != null) {
                                         _conDateBirth.text =
-                                            _result.toString().toDate();
+                                            _result.toString().toStringDate();
                                         _conAge.text = calculateAge(_result);
                                       }
                                     },

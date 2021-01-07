@@ -11,9 +11,13 @@ extension StringExtension on String {
         oldString.substring(index + 1);
   }
 
-  String toDate() {
+  String toStringDate() {
     var object = new DateFormat("yyyy-MM-dd HH:mm:ss").parse(this);
     return DateFormat("dd MMMM yyyy", "id").format(object);
+  }
+
+  DateTime toDate() {
+    return DateFormat("dd MMMM yyyy", "id").parse(this);
   }
 
   String toClock() {

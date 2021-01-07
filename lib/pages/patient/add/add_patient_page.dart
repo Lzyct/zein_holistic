@@ -121,9 +121,13 @@ class _AddPatientPageState extends State<AddPatientPage> {
                         validator: (value) =>
                             value.isEmpty ? Strings.errorEmpty : null,
                         onTap: () async {
-                          var _result = await context.datePicker();
+                          var _result = await context.datePicker(
+                              currentDate: _conDateBirth.text.isNotEmpty
+                                  ? _conDateBirth.text.toDate()
+                                  : null);
                           if (_result != null) {
-                            _conDateBirth.text = _result.toString().toDate();
+                            _conDateBirth.text =
+                                _result.toString().toStringDate();
                             _conAge.text = calculateAge(_result);
                           }
                         },
