@@ -3,6 +3,9 @@ import 'dart:io';
 import 'package:path/path.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:sqflite/sqflite.dart';
+import 'package:zein_holistic/di/di.dart';
+import 'package:zein_holistic/resources/resources.dart';
+import 'package:zein_holistic/utils/utils.dart';
 
 ///*********************************************
 /// Created by ukietux on 2019-12-30 with ♥
@@ -14,14 +17,16 @@ class DbHelper {
   Database db;
 
   Future<Database> get dataBase async {
-    if (db != null) return db;
     db = await initDb();
     return db;
   }
 
   initDb() async {
     Directory documentsDirectory = await getApplicationDocumentsDirectory();
-    String path = join(documentsDirectory.path, "zeinholistic.db");
+    String path = join(documentsDirectory.path, Strings.dbName);
+
+    logs("Path DB -> $path");
+    sl<PrefManager>().setDbPath(path);
     var theDb = await openDatabase(path, version: 1, onCreate: onCreate);
     return theDb;
   }

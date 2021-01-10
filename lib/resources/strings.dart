@@ -1,5 +1,6 @@
 class Strings {
   static String appName = "Zein Holistic";
+  static String dbName = "zeinholistic.db";
   static String dataNotFound = "Data tidak ditemukan";
   static String pleaseWait = "Harap Tunggu ...";
   static String searchPatientHint = "Masukkan Nama";
@@ -29,6 +30,8 @@ class Strings {
   static String save = "Simpan";
   static String failedToSave = "Gagal Menyimpan Data";
   static String successSaveData = "Sukses menyimpan data";
+  static String successBackupData = "Berhasil membackup data";
+  static String successRestoreData = "Berhasil merestore data";
   static String errorPatientExist = "Pasien telah terdaftar";
   static String errorNoData = "Data tidak di temukan";
   static String errorNoPatient =
@@ -48,4 +51,12 @@ class Strings {
   static String editMedicalRecord = "Edit Rekam Medis";
   static String searchMedicalRecordHint = "Masukkan keluhan";
   static String askDeleteMedicalRecord = "Hapus Rekam Medis";
+
+  static var settings = "Pengaturan";
+
+  static String backup = "Backup";
+  static String restore = "Restore";
+
+  static String backupDesc = "Backup database ke folder ";
+  static String restoreDesc = "Pilih database untuk di restore";
 }

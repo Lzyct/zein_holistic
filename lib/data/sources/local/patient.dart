@@ -92,6 +92,7 @@ class Patient {
         updateAt: element['updateAt'],
       ));
     });
+    logs("list patient $_listPatient");
     return _listPatient;
   }
 

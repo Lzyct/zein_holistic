@@ -40,7 +40,26 @@ class _ListPatientPageState extends State<ListPatientPage> {
   @override
   Widget build(BuildContext context) {
     return Parent(
-      appBar: null,
+      appBar: AppBar(
+        title: SvgPicture.asset(
+          Images.icLogoTextAlt,
+          height: Dimens.height40,
+        ),
+        centerTitle: true,
+        backgroundColor: Colors.white,
+        elevation: 0,
+        automaticallyImplyLeading: false,
+        actions: [
+          IconButton(
+              icon: Icon(
+                Icons.settings,
+                color: Palette.colorPrimary,
+              ),
+              onPressed: () {
+                context.goTo(SettingsPage());
+              })
+        ],
+      ),
       isPadding: false,
       isScroll: false,
       child: Column(children: [
@@ -54,10 +73,6 @@ class _ListPatientPageState extends State<ListPatientPage> {
                 boxShadow: [BoxShadows.primary]),
             child: Column(
               children: [
-                SvgPicture.asset(
-                  Images.icLogoTextAlt,
-                  height: Dimens.height40,
-                ).margin(edgeInsets: EdgeInsets.all(context.dp16())),
                 AnimatedSearchBar(
                   label: Strings.searchPatient,
                   labelStyle: TextStyles.textBold,
