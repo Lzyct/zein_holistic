@@ -31,7 +31,7 @@ class _SplashScreenPageState extends State<SplashScreenPage> {
     await initializeDateFormatting('id', null);
 
     Future.delayed(Duration(seconds: 1), () {
-      context.goTo(MultiBlocProvider(providers: [
+      context.goToReplace(MultiBlocProvider(providers: [
         BlocProvider(create: (_) => ListPatientBloc()),
         BlocProvider(create: (_) => DeletePatientBloc())
       ], child: ListPatientPage()));
