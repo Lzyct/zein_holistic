@@ -41,9 +41,11 @@ class _ListPatientPageState extends State<ListPatientPage> {
   Widget build(BuildContext context) {
     return Parent(
       appBar: AppBar(
+        toolbarHeight: Dimens.height55,
+        brightness: Brightness.light,
         title: SvgPicture.asset(
           Images.icLogoTextAlt,
-          height: Dimens.height40,
+          height: Dimens.height35,
         ),
         centerTitle: true,
         backgroundColor: Colors.white,
@@ -55,8 +57,9 @@ class _ListPatientPageState extends State<ListPatientPage> {
                 Icons.settings,
                 color: Palette.colorPrimary,
               ),
-              onPressed: () {
-                context.goTo(SettingsPage());
+              onPressed: () async {
+                await context.goTo(SettingsPage());
+                _getPatient();
               })
         ],
       ),

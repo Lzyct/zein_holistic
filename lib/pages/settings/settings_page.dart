@@ -143,6 +143,8 @@ class _SettingsPageState extends State<SettingsPage> {
       await _restoreFile.copy(sl<PrefManager>().getDbPath());
       logs(
           "Copy file from ${_restoreFile.path} to ${sl<PrefManager>().getDbPath()}");
+
+      await sl<DbHelper>().initDb();
       Strings.successRestoreData.toToastSuccess();
     } catch (e) {
       e.toString().toToastError();
