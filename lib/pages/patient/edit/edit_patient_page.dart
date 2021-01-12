@@ -23,20 +23,21 @@ class EditPatientPage extends StatefulWidget {
 }
 
 class _EditPatientPageState extends State<EditPatientPage> {
-  var _conName = TextEditingController();
-  var _conDateBirth = TextEditingController();
-  var _conAddress = TextEditingController();
-  var _conPhoneNumber = TextEditingController();
-  var _conAge = TextEditingController();
+  TextEditingController _conName = TextEditingController();
+  TextEditingController _conDateBirth = TextEditingController();
+  TextEditingController _conAddress = TextEditingController();
+  TextEditingController _conPhoneNumber = TextEditingController();
+  TextEditingController _conAge = TextEditingController();
 
-  var _fnName = FocusNode();
-  var _fnDateBirth = FocusNode();
-  var _fnAddress = FocusNode();
-  var _fnPhoneNumber = FocusNode();
+  FocusNode _fnName = FocusNode();
+  FocusNode _fnDateBirth = FocusNode();
+  FocusNode _fnAddress = FocusNode();
+  FocusNode _fnPhoneNumber = FocusNode();
 
   var _sex = [Strings.man, Strings.woman];
   var _selectedSex = "";
   var _id = "";
+  var _isFirstLoad = true;
 
   var _formKey = GlobalKey<FormState>();
 
@@ -100,16 +101,20 @@ class _EditPatientPageState extends State<EditPatientPage> {
                     break;
                   case Status.SUCCESS:
                     {
-                      //set initial data
-                      PatientEntity _patientEntity = state.data;
-                      _conName.text = _patientEntity.name;
-                      _conDateBirth.text = _patientEntity.dateBirth;
-                      _conAddress.text = _patientEntity.address;
-                      _conPhoneNumber.text = _patientEntity.phoneNumber;
-                      _conAge.text =
-                          calculateAge(_patientEntity.dateBirth.toDateTime());
-                      _selectedSex = _patientEntity.sex;
-                      _id = _patientEntity.id;
+                      if (_isFirstLoad) {
+                        //set initial data
+                        PatientEntity _patientEntity = state.data;
+                        _conName.text = _patientEntity.name;
+                        _conDateBirth.text = _patientEntity.dateBirth;
+                        _conAddress.text = _patientEntity.address;
+                        _conPhoneNumber.text = _patientEntity.phoneNumber;
+                        _conAge.text =
+                            calculateAge(_patientEntity.dateBirth.toDateTime());
+                        _selectedSex = _patientEntity.sex;
+                        _id = _patientEntity.id;
+
+                        _isFirstLoad = false;
+                      }
 
                       return Form(
                         key: _formKey,

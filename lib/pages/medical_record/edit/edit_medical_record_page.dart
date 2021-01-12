@@ -23,23 +23,23 @@ class EditMedicalRecordPage extends StatefulWidget {
 }
 
 class _EditMedicalRecordPageState extends State<EditMedicalRecordPage> {
-  var _conMainComplaint = TextEditingController();
-  var _conAdditionalComplaint = TextEditingController();
-  var _conHistoryOfDisease = TextEditingController();
-  var _conCheckUpResult = TextEditingController();
-  var _conConclusionDiagnosis = TextEditingController();
-  var _conSuggestion = TextEditingController();
-  var _conExaminer = TextEditingController();
+  TextEditingController _conMainComplaint = TextEditingController();
+  TextEditingController _conAdditionalComplaint = TextEditingController();
+  TextEditingController _conHistoryOfDisease = TextEditingController();
+  TextEditingController _conCheckUpResult = TextEditingController();
+  TextEditingController _conConclusionDiagnosis = TextEditingController();
+  TextEditingController _conSuggestion = TextEditingController();
+  TextEditingController _conExaminer = TextEditingController();
 
-  var _fnMainComplaint = FocusNode();
-  var _fnAdditionalComplaint = FocusNode();
-  var _fnHistoryOfDisease = FocusNode();
-  var _fnCheckUpResult = FocusNode();
-  var _fnConclusionDiagnosis = FocusNode();
-  var _fnSuggestion = FocusNode();
-  var _fnExaminer = FocusNode();
+  FocusNode _fnMainComplaint = FocusNode();
+  FocusNode _fnAdditionalComplaint = FocusNode();
+  FocusNode _fnHistoryOfDisease = FocusNode();
+  FocusNode _fnConclusionDiagnosis = FocusNode();
+  FocusNode _fnSuggestion = FocusNode();
+  FocusNode _fnExaminer = FocusNode();
 
   var _formKey = GlobalKey<FormState>();
+  var _isFirstLoad = true;
 
   EditMedicalRecordBloc _editMedicalRecordBloc;
   DetailMedicalRecordBloc _detailMedicalRecordBloc;
@@ -50,10 +50,15 @@ class _EditMedicalRecordPageState extends State<EditMedicalRecordPage> {
     _editMedicalRecordBloc = BlocProvider.of(context);
     _detailMedicalRecordBloc = BlocProvider.of(context);
     _detailMedicalRecordBloc.getDetailMedicalRecord(widget.id);
+
+    _conMainComplaint.addListener(() {
+      logs("listener : ${_conMainComplaint.text}");
+    });
   }
 
   @override
   Widget build(BuildContext context) {
+    logs("isBuild");
     return Parent(
       appBar: context.appBar(title: Strings.editMedicalRecord),
       child: SingleChildScrollView(
@@ -100,17 +105,23 @@ class _EditMedicalRecordPageState extends State<EditMedicalRecordPage> {
                 case Status.SUCCESS:
                   {
                     //set initial data
-                    MedicalRecordEntity _medicalRecordEntity = state.data;
-                    _conMainComplaint.text = _medicalRecordEntity.mainComplaint;
-                    _conAdditionalComplaint.text =
-                        _medicalRecordEntity.additionalComplaint;
-                    _conHistoryOfDisease.text =
-                        _medicalRecordEntity.historyOfDisease;
-                    _conCheckUpResult.text = _medicalRecordEntity.checkUpResult;
-                    _conConclusionDiagnosis.text =
-                        _medicalRecordEntity.conclusionDiagnosis;
-                    _conSuggestion.text = _medicalRecordEntity.suggestion;
-                    _conExaminer.text = _medicalRecordEntity.examiner;
+                    if (_isFirstLoad) {
+                      MedicalRecordEntity _medicalRecordEntity = state.data;
+                      _conMainComplaint.text =
+                          _medicalRecordEntity.mainComplaint;
+                      _conAdditionalComplaint.text =
+                          _medicalRecordEntity.additionalComplaint;
+                      _conHistoryOfDisease.text =
+                          _medicalRecordEntity.historyOfDisease;
+                      _conCheckUpResult.text =
+                          _medicalRecordEntity.checkUpResult;
+                      _conConclusionDiagnosis.text =
+                          _medicalRecordEntity.conclusionDiagnosis;
+                      _conSuggestion.text = _medicalRecordEntity.suggestion;
+                      _conExaminer.text = _medicalRecordEntity.examiner;
+
+                      _isFirstLoad = false;
+                    }
                     return Form(
                       key: _formKey,
                       child: Column(
@@ -136,7 +147,7 @@ class _EditMedicalRecordPageState extends State<EditMedicalRecordPage> {
                             textInputAction: TextInputAction.next,
                             controller: _conHistoryOfDisease,
                             curFocusNode: _fnHistoryOfDisease,
-                            nextFocusNode: _fnCheckUpResult,
+                            nextFocusNode: _fnConclusionDiagnosis,
                           ),
                           TextF(
                             hint: Strings.conclusionDiagnosis,
@@ -154,9 +165,10 @@ class _EditMedicalRecordPageState extends State<EditMedicalRecordPage> {
                           ),
                           TextF(
                             hint: Strings.examiner,
-                            textInputAction: TextInputAction.done,
+                            textInputAction: TextInputAction.next,
                             controller: _conExaminer,
                             curFocusNode: _fnExaminer,
+                            nextFocusNode: null,
                             validator: (value) =>
                                 value.isEmpty ? Strings.errorEmpty : null,
                           ),
