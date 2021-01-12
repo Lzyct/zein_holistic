@@ -148,7 +148,7 @@ class _ListMedicalRecordPageState extends State<ListMedicalRecordPage> {
                 hintText: Strings.searchMedicalRecordHint,
                 hintStyle: TextStyles.textHint,
                 contentPadding: EdgeInsets.symmetric(horizontal: context.dp8()),
-                focusedBorder: OutlineInputBorder(
+                border: OutlineInputBorder(
                   gapPadding: 0,
                   borderRadius: BorderRadius.circular(context.dp4()),
                   borderSide: BorderSide(

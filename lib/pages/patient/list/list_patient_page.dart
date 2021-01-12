@@ -85,7 +85,7 @@ class _ListPatientPageState extends State<ListPatientPage> {
                       hintStyle: TextStyles.textHint,
                       contentPadding:
                           EdgeInsets.symmetric(horizontal: context.dp8()),
-                      focusedBorder: OutlineInputBorder(
+                      border: OutlineInputBorder(
                         gapPadding: 0,
                         borderRadius: BorderRadius.circular(context.dp4()),
                         borderSide: BorderSide(
