@@ -90,8 +90,8 @@ class _AddMedicalRecordPageState extends State<AddMedicalRecordPage> {
                   controller: _conMainComplaint,
                   curFocusNode: _fnMainComplaint,
                   nextFocusNode: _fnAdditionalComplaint,
-                  validator: (value) =>
-                      value.isEmpty ? Strings.errorEmpty : null,
+                  validator: (String? value) =>
+                      value!.isEmpty ? Strings.errorEmpty : null,
                 ),
                 TextF(
                   hint: Strings.additionalComplaint,
@@ -126,8 +126,8 @@ class _AddMedicalRecordPageState extends State<AddMedicalRecordPage> {
                   textInputAction: TextInputAction.done,
                   controller: _conExaminer,
                   curFocusNode: _fnExaminer,
-                  validator: (value) =>
-                      value.isEmpty ? Strings.errorEmpty : null,
+                  validator: (String? value) =>
+                      value!.isEmpty ? Strings.errorEmpty : null,
                 ),
                 SizedBox(height: context.dp16()),
                 Button(

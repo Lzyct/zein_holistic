@@ -47,11 +47,13 @@ class _AddPatientPageState extends State<AddPatientPage> {
     _selectedSex = _sex[0];
     _addPatientBloc = BlocProvider.of(context);
   }
-@override
+
+  @override
   void dispose() {
     super.dispose();
     _addPatientBloc.close();
   }
+
   @override
   Widget build(BuildContext context) {
     return Parent(
@@ -90,8 +92,8 @@ class _AddPatientPageState extends State<AddPatientPage> {
                   controller: _conName,
                   curFocusNode: _fnName,
                   nextFocusNode: _fnDateBirth,
-                  validator: (value) =>
-                      value.isEmpty ? Strings.errorEmpty : null,
+                  validator: (String? value) =>
+                      value!.isEmpty ? Strings.errorEmpty : null,
                 ),
                 Row(
                   children: [
@@ -124,8 +126,8 @@ class _AddPatientPageState extends State<AddPatientPage> {
                         controller: _conDateBirth,
                         curFocusNode: DisableFocusNode(),
                         nextFocusNode: _fnAddress,
-                        validator: (value) =>
-                            value.isEmpty ? Strings.errorEmpty : null,
+                        validator: (String? value) =>
+                            value!.isEmpty ? Strings.errorEmpty : null,
                         onTap: () async {
                           var _result = await context.datePicker(
                               currentDate: _conDateBirth.text.isNotEmpty
@@ -147,8 +149,8 @@ class _AddPatientPageState extends State<AddPatientPage> {
                         curFocusNode: DisableFocusNode(),
                         controller: _conAge,
                         hint: Strings.age,
-                        validator: (value) =>
-                            value.isEmpty ? Strings.errorEmpty : null,
+                        validator: (String? value) =>
+                            value!.isEmpty ? Strings.errorEmpty : null,
                       ),
                     ),
                   ],
@@ -159,8 +161,8 @@ class _AddPatientPageState extends State<AddPatientPage> {
                   controller: _conAddress,
                   curFocusNode: _fnAddress,
                   nextFocusNode: _fnPhoneNumber,
-                  validator: (value) =>
-                      value.isEmpty ? Strings.errorEmpty : null,
+                  validator: (String? value) =>
+                      value!.isEmpty ? Strings.errorEmpty : null,
                 ),
                 TextF(
                   hint: Strings.phoneNumber,
@@ -169,8 +171,8 @@ class _AddPatientPageState extends State<AddPatientPage> {
                   controller: _conPhoneNumber,
                   inputFormatter: [FilteringTextInputFormatter.digitsOnly],
                   curFocusNode: _fnPhoneNumber,
-                  validator: (value) =>
-                      value.isEmpty ? Strings.errorEmpty : null,
+                  validator: (String? value) =>
+                      value!.isEmpty ? Strings.errorEmpty : null,
                 ),
                 SizedBox(height: context.dp16()),
                 Button(
