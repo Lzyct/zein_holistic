@@ -4,8 +4,8 @@ import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter_screenutil/screenutil_init.dart';
 import 'package:oktoast/oktoast.dart';
 import 'package:zein_holistic/di/di.dart';
-import 'package:zein_holistic/pages/splashscreen/splash_screen_page.dart';
-import 'package:zein_holistic/resources/resources.dart';
+import 'package:zein_holistic/ui/pages/splashscreen/splash_screen_page.dart';
+import 'package:zein_holistic/ui/resources/resources.dart';
 
 void main() async {
   serviceLocator();

@@ -1,8 +1,8 @@
 import 'package:get_it/get_it.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:zein_holistic/data/repositories/repositories.dart';
-import 'package:zein_holistic/data/sources/local/patient.dart';
-import 'package:zein_holistic/data/sources/sources.dart';
+import 'package:zein_holistic/core/data/repositories/repositories.dart';
+import 'package:zein_holistic/core/data/sources/local/patient.dart';
+import 'package:zein_holistic/core/data/sources/sources.dart';
 
 import 'di.dart';
 
