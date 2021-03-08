@@ -2,9 +2,9 @@ import 'package:zein_holistic/core/enums/enums.dart';
 
 class Result<T> {
   Status status;
-  T data;
-  String message;
-  String tag;
+  T? data;
+  String? message;
+  String? tag;
 
   Result.isUninitialized() : status = Status.UNINITIALIZED;
 

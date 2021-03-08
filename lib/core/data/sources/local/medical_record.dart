@@ -5,10 +5,12 @@ import 'package:zein_holistic/ui/resources/resources.dart';
 import 'package:zein_holistic/utils/utils.dart';
 
 class MedicalRecord {
-  Future<dynamic> addMedicalRecord(Map<String, String> _params) async {
+  Future<dynamic> addMedicalRecord(Map<String, String?> _params) async {
     var dbClient = await sl.get<DbHelper>().dataBase;
-    try {
-      await dbClient.transaction((insert) async => insert.rawInsert('''
+
+    if (dbClient != null)
+      try {
+        await dbClient.transaction((insert) async => insert.rawInsert('''
       INSERT INTO medicalRecord(
         idPatient,
         mainComplaint,
@@ -33,17 +35,18 @@ class MedicalRecord {
         '${DateTime.now()}'
       )
     '''));
-      return true;
-    } catch (e) {
-      logs(e);
-      return Strings.errorMedicalRecordExist;
-    }
+        return true;
+      } catch (e) {
+        logs(e);
+        return Strings.errorMedicalRecordExist;
+      }
   }
 
-  Future<dynamic> editMedicalRecord(Map<String, String> _params) async {
+  Future<dynamic> editMedicalRecord(Map<String, String?> _params) async {
     var dbClient = await sl.get<DbHelper>().dataBase;
-    try {
-      await dbClient.transaction((update) async => update.rawUpdate('''
+    if (dbClient != null)
+      try {
+        await dbClient.transaction((update) async => update.rawUpdate('''
       UPDATE medicalRecord SET 
           mainComplaint = '${_params['mainComplaint']}',
           additionalComplaint = '${_params['additionalComplaint']}',
@@ -55,79 +58,86 @@ class MedicalRecord {
           updateAt='${DateTime.now()}'
       WHERE id='${_params['id']}'
     '''));
-      return true;
-    } catch (e) {
-      logs(e);
-      return Strings.failedToSave;
-    }
+        return true;
+      } catch (e) {
+        logs(e);
+        return Strings.failedToSave;
+      }
   }
 
   Future<dynamic> deleteMedicalRecord(String id) async {
     var dbClient = await sl.get<DbHelper>().dataBase;
-    try {
-      await dbClient.transaction((delete) async => delete.rawDelete('''
+    if (dbClient != null)
+      try {
+        await dbClient.transaction((delete) async => delete.rawDelete('''
         DELETE FROM medicalRecord WHERE id='$id'
       '''));
-      return true;
-    } catch (e) {
-      logs(e);
-      return e;
-    }
+        return true;
+      } catch (e) {
+        logs(e);
+        return e;
+      }
   }
 
   Future<List<MedicalRecordEntity>> getListMedicalRecord(
-      String idPatient, String mainComplaint) async {
+      String? idPatient, String mainComplaint) async {
     //connect db
     var _dbClient = await sl.get<DbHelper>().dataBase;
-    var _query =
-        "SELECT * FROM medicalRecord WHERE mainComplaint like '%$mainComplaint%' AND idPatient='$idPatient' ORDER BY createAt DESC";
-    if (mainComplaint.isEmpty) {
-      _query =
-          "SELECT * FROM medicalRecord WHERE idPatient='$idPatient' ORDER BY createAt DESC";
+    List<MedicalRecordEntity> _listMedicalRecord = [];
+    if (_dbClient != null) {
+      String _query =
+          "SELECT * FROM medicalRecord WHERE mainComplaint like '%$mainComplaint%' AND idPatient='$idPatient' ORDER BY createAt DESC";
+      if (mainComplaint.isEmpty) {
+        _query =
+            "SELECT * FROM medicalRecord WHERE idPatient='$idPatient' ORDER BY createAt DESC";
+      }
+
+      logs("Query -> $_query");
+      List<Map> _queryMap = await _dbClient.rawQuery(_query);
+      _queryMap.forEach((element) {
+        _listMedicalRecord.add(MedicalRecordEntity(
+            id: element["id"],
+            idPatient: element["idPatient"],
+            mainComplaint: element["mainComplaint"],
+            additionalComplaint: element["additionalComplaint"],
+            historyOfDisease: element["historyOfDisease"],
+            checkUpResult: element["checkUpResult"],
+            conclusionDiagnosis: element["conclusionDiagnosis"],
+            suggestion: element["suggestion"],
+            examiner: element["examiner"],
+            createAt: element["createAt"],
+            updateAt: element["updateAt"]));
+      });
     }
 
-    logs("Query -> $_query");
-    List<Map> _queryMap = await _dbClient.rawQuery(_query);
-    List<MedicalRecordEntity> _listMedicalRecord = [];
-    _queryMap.forEach((element) {
-      _listMedicalRecord.add(MedicalRecordEntity(
-          id: element["id"],
-          idPatient: element["idPatient"],
-          mainComplaint: element["mainComplaint"],
-          additionalComplaint: element["additionalComplaint"],
-          historyOfDisease: element["historyOfDisease"],
-          checkUpResult: element["checkUpResult"],
-          conclusionDiagnosis: element["conclusionDiagnosis"],
-          suggestion: element["suggestion"],
-          examiner: element["examiner"],
-          createAt: element["createAt"],
-          updateAt: element["updateAt"]));
-    });
     return _listMedicalRecord;
   }
 
-  Future<MedicalRecordEntity> getDetailMedicalRecord(String id) async {
+  Future<MedicalRecordEntity> getDetailMedicalRecord(String? id) async {
     //connect db
     var _dbClient = await sl.get<DbHelper>().dataBase;
-    var _query =
-        "SELECT * FROM medicalRecord WHERE id='$id' ORDER BY updateAt DESC";
-
-    List<Map> _queryMap = await _dbClient.rawQuery(_query);
     List<MedicalRecordEntity> _listMedicalRecord = [];
-    _queryMap.forEach((element) {
-      _listMedicalRecord.add(MedicalRecordEntity(
-          id: element["id"],
-          idPatient: element["idPatient"],
-          mainComplaint: element["mainComplaint"],
-          additionalComplaint: element["additionalComplaint"],
-          historyOfDisease: element["historyOfDisease"],
-          checkUpResult: element["checkUpResult"],
-          conclusionDiagnosis: element["conclusionDiagnosis"],
-          suggestion: element["suggestion"],
-          examiner: element["examiner"],
-          createAt: element["createAt"],
-          updateAt: element["updateAt"]));
-    });
+    if (_dbClient != null) {
+      var _query =
+          "SELECT * FROM medicalRecord WHERE id='$id' ORDER BY updateAt DESC";
+
+      List<Map> _queryMap = await _dbClient.rawQuery(_query);
+      _queryMap.forEach((element) {
+        _listMedicalRecord.add(MedicalRecordEntity(
+            id: element["id"],
+            idPatient: element["idPatient"],
+            mainComplaint: element["mainComplaint"],
+            additionalComplaint: element["additionalComplaint"],
+            historyOfDisease: element["historyOfDisease"],
+            checkUpResult: element["checkUpResult"],
+            conclusionDiagnosis: element["conclusionDiagnosis"],
+            suggestion: element["suggestion"],
+            examiner: element["examiner"],
+            createAt: element["createAt"],
+            updateAt: element["updateAt"]));
+      });
+    }
+
     return _listMedicalRecord[0];
   }
 }

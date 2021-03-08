@@ -1,12 +1,12 @@
 class PatientEntity {
-  String id;
-  String name;
-  String sex;
-  String dateBirth;
-  String address;
-  String phoneNumber;
-  String createAt;
-  String updateAt;
+  String? id;
+  String? name;
+  String? sex;
+  String? dateBirth;
+  String? address;
+  String? phoneNumber;
+  String? createAt;
+  String? updateAt;
 
   PatientEntity(
       {this.id,

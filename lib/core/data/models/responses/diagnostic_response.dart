@@ -1,7 +1,7 @@
 import 'package:zein_holistic/core/data/models/responses/diagnostic.dart';
 
 class DiagnosticResponse {
-  Diagnostic diagnostic;
+  Diagnostic? diagnostic;
 
   DiagnosticResponse({this.diagnostic});
 
@@ -14,7 +14,7 @@ class DiagnosticResponse {
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = new Map<String, dynamic>();
     if (this.diagnostic != null) {
-      data['diagnostic'] = this.diagnostic.toJson();
+      data['diagnostic'] = this.diagnostic!.toJson();
     }
     return data;
   }

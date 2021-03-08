@@ -29,7 +29,7 @@ class MyApp extends StatelessWidget {
       child: ScreenUtilInit(
         designSize: Size(375, 667),
         allowFontScaling: false,
-        child: MaterialApp(
+        builder: () => MaterialApp(
           localizationsDelegates: [
             GlobalMaterialLocalizations.delegate,
             GlobalCupertinoLocalizations.delegate
@@ -38,12 +38,12 @@ class MyApp extends StatelessWidget {
             const Locale('id'),
           ],
           debugShowCheckedModeBanner: false,
-          builder: (BuildContext context, Widget child) {
+          builder: (BuildContext context, Widget? child) {
             final MediaQueryData data = MediaQuery.of(context);
             return MediaQuery(
               data: data.copyWith(
                   textScaleFactor: 1, alwaysUse24HourFormat: true),
-              child: child,
+              child: child!,
             );
           },
           title: Strings.appName,

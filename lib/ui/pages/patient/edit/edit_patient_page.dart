@@ -17,8 +17,8 @@ import 'package:zein_holistic/utils/utils.dart';
 ///*********************************************
 /// © 2021 | All Right Reserved
 class EditPatientPage extends StatefulWidget {
-  EditPatientPage({Key key, this.id}) : super(key: key);
-  final String id;
+  EditPatientPage({Key? key, this.id}) : super(key: key);
+  final String? id;
 
   @override
   _EditPatientPageState createState() => _EditPatientPageState();
@@ -37,14 +37,14 @@ class _EditPatientPageState extends State<EditPatientPage> {
   FocusNode _fnPhoneNumber = FocusNode();
 
   var _sex = [Strings.man, Strings.woman];
-  var _selectedSex = "";
-  var _id = "";
+  String? _selectedSex = "";
+  String? _id = "";
   var _isFirstLoad = true;
 
   var _formKey = GlobalKey<FormState>();
 
-  EditPatientBloc _editPatientBloc;
-  DetailPatientBloc _detailPatientBloc;
+  late EditPatientBloc _editPatientBloc;
+  late DetailPatientBloc _detailPatientBloc;
 
   @override
   void initState() {
@@ -57,13 +57,20 @@ class _EditPatientPageState extends State<EditPatientPage> {
   }
 
   @override
+  void dispose() {
+    super.dispose();
+    _editPatientBloc.close();
+    _detailPatientBloc.close();
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Parent(
         appBar: context.appBar(title: Strings.editPatient),
         child: SingleChildScrollView(
           child: BlocListener(
-            cubit: _editPatientBloc,
-            listener: (_, state) {
+            bloc: _editPatientBloc,
+            listener: (_, dynamic state) {
               switch (state.status) {
                 case Status.LOADING:
                   {
@@ -84,14 +91,13 @@ class _EditPatientPageState extends State<EditPatientPage> {
               }
             },
             child: BlocBuilder(
-              cubit: _detailPatientBloc,
-              builder: (_, state) {
+              bloc: _detailPatientBloc,
+              builder: (_, dynamic state) {
                 switch (state.status) {
                   case Status.LOADING:
                     {
                       return Center(child: Loading());
                     }
-                    break;
                   case Status.ERROR:
                     {
                       return Center(
@@ -100,18 +106,17 @@ class _EditPatientPageState extends State<EditPatientPage> {
                         ),
                       );
                     }
-                    break;
                   case Status.SUCCESS:
                     {
                       if (_isFirstLoad) {
                         //set initial data
                         PatientEntity _patientEntity = state.data;
-                        _conName.text = _patientEntity.name;
-                        _conDateBirth.text = _patientEntity.dateBirth;
-                        _conAddress.text = _patientEntity.address;
-                        _conPhoneNumber.text = _patientEntity.phoneNumber;
-                        _conAge.text =
-                            calculateAge(_patientEntity.dateBirth.toDateTime());
+                        _conName.text = _patientEntity.name!;
+                        _conDateBirth.text = _patientEntity.dateBirth!;
+                        _conAddress.text = _patientEntity.address!;
+                        _conPhoneNumber.text = _patientEntity.phoneNumber!;
+                        _conAge.text = calculateAge(
+                            _patientEntity.dateBirth!.toDateTime());
                         _selectedSex = _patientEntity.sex;
                         _id = _patientEntity.id;
 
@@ -140,10 +145,10 @@ class _EditPatientPageState extends State<EditPatientPage> {
                                 ),
                                 SizedBox(width: context.dp16()),
                                 FlutterToggleTab(
-                                    labels: _sex,
+                                    labels: _sex ,
                                     width: context.widthInPercent(10),
                                     height: Dimens.toggle,
-                                    initialIndex: _sex.indexOf(_selectedSex),
+                                    initialIndex: _sex.indexOf(_selectedSex!),
                                     selectedLabelIndex: (index) {
                                       _selectedSex = _sex[index];
                                     },
@@ -220,7 +225,7 @@ class _EditPatientPageState extends State<EditPatientPage> {
                               title: Strings.save,
                               color: Palette.colorPrimary,
                               onPressed: () {
-                                if (_formKey.currentState.validate()) {
+                                if (_formKey.currentState!.validate()) {
                                   var _params = {
                                     'id': _id,
                                     'name': _conName.text.toString(),
@@ -238,7 +243,6 @@ class _EditPatientPageState extends State<EditPatientPage> {
                         ),
                       );
                     }
-                    break;
                   default:
                     return Container();
                 }

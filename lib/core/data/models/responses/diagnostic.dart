@@ -1,6 +1,6 @@
 class Diagnostic {
-  bool status;
-  String message;
+  bool? status;
+  String? message;
 
   Diagnostic({this.status, this.message});
 

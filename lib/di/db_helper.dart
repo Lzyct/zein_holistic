@@ -14,9 +14,9 @@ import 'package:zein_holistic/utils/utils.dart';
 ///*********************************************
 /// © 2019 | All Right Reserved
 class DbHelper {
-  Database db;
+  Database? db;
 
-  Future<Database> get dataBase async {
+  Future<Database?> get dataBase async {
     db = await initDb();
     return db;
   }

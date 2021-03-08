@@ -22,32 +22,32 @@ class PrefManager {
   Future<bool> setToken(String value) async =>
       await preferences.setString(kToken, value);
 
-  String getToken() => preferences.getString(kToken) ?? null;
+  String? getToken() => preferences.getString(kToken) ?? null;
 
   Future<bool> setUser(String value) async =>
       await preferences.setString(kUser, value);
 
-  String getUser() => preferences.getString(kUser) ?? null;
+  String? getUser() => preferences.getString(kUser) ?? null;
 
   Future<bool> setTexts(String value) async =>
       await preferences.setString(kText, value);
 
-  String getText() => preferences.getString(kText) ?? null;
+  String? getText() => preferences.getString(kText) ?? null;
 
   Future<bool> setColors(String value) async =>
       await preferences.setString(kColor, value);
 
-  String getColor() => preferences.getString(kColor) ?? null;
+  String? getColor() => preferences.getString(kColor) ?? null;
 
   Future<bool> setIcons(String value) async =>
       await preferences.setString(kIcon, value);
 
-  String getIcon() => preferences.getString(kIcon) ?? null;
+  String? getIcon() => preferences.getString(kIcon) ?? null;
 
   Future<bool> setDbPath(String value) async =>
       await preferences.setString(kDbPath, value);
 
-  String getDbPath() => preferences.getString(kDbPath) ?? null;
+  String? getDbPath() => preferences.getString(kDbPath) ?? null;
 
   logout() => preferences.clear();
 }

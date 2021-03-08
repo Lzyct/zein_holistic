@@ -20,13 +20,13 @@ class ColorLoader extends StatefulWidget {
 
 class _ColorLoaderState extends State<ColorLoader>
     with SingleTickerProviderStateMixin {
-  Animation<double> animation_rotation;
-  Animation<double> animation_radius_in;
-  Animation<double> animation_radius_out;
-  AnimationController controller;
+  late Animation<double> animation_rotation;
+  late Animation<double> animation_radius_in;
+  late Animation<double> animation_radius_out;
+  late AnimationController controller;
 
-  double radius;
-  double dotRadius;
+  double? radius;
+  double? dotRadius;
 
   @override
   void initState() {
@@ -108,8 +108,8 @@ class _ColorLoaderState extends State<ColorLoader>
                       color: Palette.colorPrimary,
                     ),
                     offset: Offset(
-                      radius * cos(0.0),
-                      radius * sin(0.0),
+                      radius! * cos(0.0),
+                      radius! * sin(0.0),
                     ),
                   ),
                   new Transform.translate(
@@ -118,8 +118,8 @@ class _ColorLoaderState extends State<ColorLoader>
                       color: Palette.colorPrimary,
                     ),
                     offset: Offset(
-                      radius * cos(0.0 + 1 * pi / 4),
-                      radius * sin(0.0 + 1 * pi / 4),
+                      radius! * cos(0.0 + 1 * pi / 4),
+                      radius! * sin(0.0 + 1 * pi / 4),
                     ),
                   ),
                   new Transform.translate(
@@ -128,8 +128,8 @@ class _ColorLoaderState extends State<ColorLoader>
                       color: Palette.colorPrimary,
                     ),
                     offset: Offset(
-                      radius * cos(0.0 + 2 * pi / 4),
-                      radius * sin(0.0 + 2 * pi / 4),
+                      radius! * cos(0.0 + 2 * pi / 4),
+                      radius! * sin(0.0 + 2 * pi / 4),
                     ),
                   ),
                   new Transform.translate(
@@ -138,8 +138,8 @@ class _ColorLoaderState extends State<ColorLoader>
                       color: Palette.colorPrimary,
                     ),
                     offset: Offset(
-                      radius * cos(0.0 + 3 * pi / 4),
-                      radius * sin(0.0 + 3 * pi / 4),
+                      radius! * cos(0.0 + 3 * pi / 4),
+                      radius! * sin(0.0 + 3 * pi / 4),
                     ),
                   ),
                   new Transform.translate(
@@ -148,8 +148,8 @@ class _ColorLoaderState extends State<ColorLoader>
                       color: Palette.colorPrimary,
                     ),
                     offset: Offset(
-                      radius * cos(0.0 + 4 * pi / 4),
-                      radius * sin(0.0 + 4 * pi / 4),
+                      radius! * cos(0.0 + 4 * pi / 4),
+                      radius! * sin(0.0 + 4 * pi / 4),
                     ),
                   ),
                   new Transform.translate(
@@ -158,22 +158,22 @@ class _ColorLoaderState extends State<ColorLoader>
                       color: Palette.colorPrimary,
                     ),
                     offset: Offset(
-                      radius * cos(0.0 + 5 * pi / 4),
-                      radius * sin(0.0 + 5 * pi / 4),
+                      radius! * cos(0.0 + 5 * pi / 4),
+                      radius! * sin(0.0 + 5 * pi / 4),
                     ),
                   ),
                   new Transform.translate(
                     child: Dot(radius: dotRadius, color: Palette.colorPrimary),
                     offset: Offset(
-                      radius * cos(0.0 + 6 * pi / 4),
-                      radius * sin(0.0 + 6 * pi / 4),
+                      radius! * cos(0.0 + 6 * pi / 4),
+                      radius! * sin(0.0 + 6 * pi / 4),
                     ),
                   ),
                   new Transform.translate(
                     child: Dot(radius: dotRadius, color: Palette.colorPrimary),
                     offset: Offset(
-                      radius * cos(0.0 + 7 * pi / 4),
-                      radius * sin(0.0 + 7 * pi / 4),
+                      radius! * cos(0.0 + 7 * pi / 4),
+                      radius! * sin(0.0 + 7 * pi / 4),
                     ),
                   ),
                 ],
@@ -193,8 +193,8 @@ class _ColorLoaderState extends State<ColorLoader>
 }
 
 class Dot extends StatelessWidget {
-  final double radius;
-  final Color color;
+  final double? radius;
+  final Color? color;
 
   Dot({this.radius, this.color});
 

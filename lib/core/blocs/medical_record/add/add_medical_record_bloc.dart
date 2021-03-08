@@ -6,10 +6,10 @@ import 'package:zein_holistic/di/di.dart';
 class AddMedicalRecordBloc extends Cubit<Result<dynamic>> {
   AddMedicalRecordBloc() : super(Result.isLoading());
 
-  var _medicalRecordRepo = sl<MedicalRecordRepository>();
+  MedicalRecordRepository? _medicalRecordRepo = sl<MedicalRecordRepository>();
 
-  addMedicalRecord(Map<String, String> _params) async {
+  addMedicalRecord(Map<String, String?> _params) async {
     emit(Result.isLoading());
-    emit(await _medicalRecordRepo.addMedicalRecord(_params));
+    emit(await _medicalRecordRepo!.addMedicalRecord(_params));
   }
 }

@@ -6,10 +6,10 @@ import 'package:zein_holistic/di/di.dart';
 class DeleteMedicalRecordBloc extends Cubit<Result<dynamic>> {
   DeleteMedicalRecordBloc() : super(Result.isLoading());
 
-  var _userRepo = sl<MedicalRecordRepository>();
+  MedicalRecordRepository? _userRepo = sl<MedicalRecordRepository>();
 
   deleteMedicalRecord(String id) async {
     emit(Result.isLoading());
-    emit(await _userRepo.deleteMedicalRecord(id));
+    emit(await _userRepo!.deleteMedicalRecord(id));
   }
 }

@@ -11,17 +11,17 @@ import 'package:zein_holistic/ui/resources/resources.dart';
 ///*********************************************
 /// © 2020 | All Right Reserved
 class Button extends StatelessWidget {
-  final String title;
-  final Function onPressed;
-  final double width;
-  final double height;
-  final Color color;
-  final Color titleColor;
-  final double fontSize;
-  final Color splashColor;
+  final String? title;
+  final Function? onPressed;
+  final double? width;
+  final double? height;
+  final Color? color;
+  final Color? titleColor;
+  final double? fontSize;
+  final Color? splashColor;
 
   const Button(
-      {Key key,
+      {Key? key,
       this.title,
       this.onPressed,
       this.width,
@@ -39,15 +39,16 @@ class Button extends StatelessWidget {
       margin: EdgeInsets.symmetric(vertical: context.dp8()),
       height: height ?? 40.w,
       decoration: BoxDecorations.button.copyWith(color: color ?? Palette.blue),
-      child: FlatButton(
-          onPressed: onPressed,
-          splashColor: splashColor,
-          highlightColor: splashColor,
-          shape: new RoundedRectangleBorder(
-              borderRadius: new BorderRadius.circular(context.dp4())),
-          padding: EdgeInsets.all(0.0),
+      child: TextButton(
+          onPressed: onPressed as void Function()?,
+          style: TextButton.styleFrom(
+            backgroundColor: splashColor,
+            shape: new RoundedRectangleBorder(
+                borderRadius: new BorderRadius.circular(context.dp4())),
+            padding: EdgeInsets.all(0.0),
+          ),
           child: Text(
-            title,
+            title!,
             style: TextStyle(
                 color: titleColor ?? Colors.white,
                 fontSize: fontSize ?? Dimens.fontNormal,

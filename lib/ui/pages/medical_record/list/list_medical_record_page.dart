@@ -18,17 +18,17 @@ import 'package:zein_holistic/utils/utils.dart';
 ///*********************************************
 /// © 2021 | All Right Reserved
 class ListMedicalRecordPage extends StatefulWidget {
-  ListMedicalRecordPage({Key key, this.patientEntity}) : super(key: key);
-  final PatientEntity patientEntity;
+  ListMedicalRecordPage({Key? key, this.patientEntity}) : super(key: key);
+  final PatientEntity? patientEntity;
 
   @override
   _ListMedicalRecordPageState createState() => _ListMedicalRecordPageState();
 }
 
 class _ListMedicalRecordPageState extends State<ListMedicalRecordPage> {
-  ListMedicalRecordBloc _listMedicalRecordBloc;
-  DeleteMedicalRecordBloc _deleteMedicalRecordBloc;
-  List<MedicalRecordEntity> _listMedicalRecord = [];
+  late ListMedicalRecordBloc _listMedicalRecordBloc;
+  late DeleteMedicalRecordBloc _deleteMedicalRecordBloc;
+  List<MedicalRecordEntity>? _listMedicalRecord = [];
   var _mainComplaint = "";
 
   @override
@@ -37,6 +37,13 @@ class _ListMedicalRecordPageState extends State<ListMedicalRecordPage> {
     _listMedicalRecordBloc = BlocProvider.of(context);
     _deleteMedicalRecordBloc = BlocProvider.of(context);
     _getMedicalRecord();
+  }
+
+  @override
+  void dispose() {
+    super.dispose();
+    _listMedicalRecordBloc.close();
+    _deleteMedicalRecordBloc.close();
   }
 
   @override
@@ -51,7 +58,7 @@ class _ListMedicalRecordPageState extends State<ListMedicalRecordPage> {
             await context.goTo(BlocProvider(
                 create: (_) => AddMedicalRecordBloc(),
                 child: AddMedicalRecordPage(
-                  idPatient: widget.patientEntity.id,
+                  idPatient: widget.patientEntity!.id,
                 )));
             _getMedicalRecord();
           },
@@ -74,7 +81,7 @@ class _ListMedicalRecordPageState extends State<ListMedicalRecordPage> {
                   children: [
                     Expanded(
                       child: Text(
-                        widget.patientEntity.name,
+                        widget.patientEntity!.name!,
                         style: TextStyles.whiteBold
                             .copyWith(fontSize: Dimens.fontLarge),
                       ),
@@ -83,14 +90,15 @@ class _ListMedicalRecordPageState extends State<ListMedicalRecordPage> {
                         backgroundColor: Colors.white,
                         maxRadius: context.dp16(),
                         child: SvgPicture.asset(
-                          widget.patientEntity.sex == Strings.man
+                          widget.patientEntity!.sex == Strings.man
                               ? Images.icMan
                               : Images.icWoman,
                           color: Palette.colorPrimary,
                         )),
                     SizedBox(width: context.dp4()),
                     Text(
-                      calculateAge(widget.patientEntity.dateBirth.toDateTime()),
+                      calculateAge(
+                          widget.patientEntity!.dateBirth!.toDateTime()),
                       style: TextStyles.whiteBold.copyWith(
                         fontSize: Dimens.fontSmall,
                       ),
@@ -107,7 +115,7 @@ class _ListMedicalRecordPageState extends State<ListMedicalRecordPage> {
                     width: context.dp8(),
                   ),
                   Text(
-                    widget.patientEntity.dateBirth,
+                    widget.patientEntity!.dateBirth!,
                     textAlign: TextAlign.start,
                     style:
                         TextStyles.white.copyWith(fontSize: Dimens.fontSmall),
@@ -124,7 +132,7 @@ class _ListMedicalRecordPageState extends State<ListMedicalRecordPage> {
                     width: context.dp8(),
                   ),
                   Text(
-                    widget.patientEntity.address,
+                    widget.patientEntity!.address!,
                     textAlign: TextAlign.start,
                     style:
                         TextStyles.white.copyWith(fontSize: Dimens.fontSmall),
@@ -164,14 +172,13 @@ class _ListMedicalRecordPageState extends State<ListMedicalRecordPage> {
               edgeInsets: EdgeInsets.symmetric(horizontal: context.dp16())),
           Expanded(
             child: BlocBuilder(
-              cubit: _listMedicalRecordBloc,
-              builder: (_, state) {
+              bloc: _listMedicalRecordBloc,
+              builder: (_, dynamic state) {
                 switch (state.status) {
                   case Status.LOADING:
                     {
                       return Center(child: Loading());
                     }
-                    break;
                   case Status.EMPTY:
                     {
                       return Center(
@@ -180,7 +187,6 @@ class _ListMedicalRecordPageState extends State<ListMedicalRecordPage> {
                         ),
                       );
                     }
-                    break;
                   case Status.ERROR:
                     {
                       return Center(
@@ -189,7 +195,6 @@ class _ListMedicalRecordPageState extends State<ListMedicalRecordPage> {
                         ),
                       );
                     }
-                    break;
                   case Status.SUCCESS:
                     {
                       _listMedicalRecord = state.data;
@@ -199,14 +204,13 @@ class _ListMedicalRecordPageState extends State<ListMedicalRecordPage> {
                         },
                         child: ListView.builder(
                             physics: AlwaysScrollableScrollPhysics(),
-                            itemCount: _listMedicalRecord.length,
+                            itemCount: _listMedicalRecord!.length,
                             shrinkWrap: true,
                             itemBuilder: (_, index) {
                               return _listItem(index);
                             }),
                       );
                     }
-                    break;
                   default:
                     return Container();
                 }
@@ -220,7 +224,7 @@ class _ListMedicalRecordPageState extends State<ListMedicalRecordPage> {
 
   _listItem(int index) {
     return Dismissible(
-      key: Key(_listMedicalRecord[index].id.toString()),
+      key: Key(_listMedicalRecord![index].id.toString()),
       background: Container(
         color: Palette.red,
         child: Row(
@@ -274,7 +278,7 @@ class _ListMedicalRecordPageState extends State<ListMedicalRecordPage> {
                       style: TextStyles.text,
                     ),
                     TextSpan(
-                        text: " ${_listMedicalRecord[index].mainComplaint} ",
+                        text: " ${_listMedicalRecord![index].mainComplaint} ",
                         style: TextStyles.textBold),
                     TextSpan(
                       text: Strings.questionMark,
@@ -283,7 +287,7 @@ class _ListMedicalRecordPageState extends State<ListMedicalRecordPage> {
                   ]),
                 ),
                 actions: <Widget>[
-                  FlatButton(
+                  TextButton(
                     child: Text(
                       Strings.cancel,
                       style: TextStyles.textHint,
@@ -293,14 +297,14 @@ class _ListMedicalRecordPageState extends State<ListMedicalRecordPage> {
                           dialogContext, false); // Dismiss alert dialog
                     },
                   ),
-                  FlatButton(
+                  TextButton(
                     child: Text(
                       Strings.delete,
                       style: TextStyles.text.copyWith(color: Palette.red),
                     ),
                     onPressed: () {
                       _deleteMedicalRecordBloc.deleteMedicalRecord(
-                          _listMedicalRecord[index].id.toString());
+                          _listMedicalRecord![index].id.toString());
                       _getMedicalRecord();
                       Navigator.pop(
                           dialogContext, true); // Dismiss alert dialog
@@ -317,7 +321,7 @@ class _ListMedicalRecordPageState extends State<ListMedicalRecordPage> {
                 BlocProvider(create: (_) => DetailMedicalRecordBloc()),
               ],
               child: EditMedicalRecordPage(
-                id: _listMedicalRecord[index].id.toString(),
+                id: _listMedicalRecord![index].id.toString(),
               )));
           _getMedicalRecord();
         }
@@ -333,13 +337,13 @@ class _ListMedicalRecordPageState extends State<ListMedicalRecordPage> {
                 children: [
                   Expanded(
                     child: Text(
-                      _listMedicalRecord[index].mainComplaint,
+                      _listMedicalRecord![index].mainComplaint!,
                       style: TextStyles.textBold,
                       textAlign: TextAlign.left,
                     ),
                   ),
                   Text(
-                    _listMedicalRecord[index].examiner,
+                    _listMedicalRecord![index].examiner!,
                     style: TextStyles.textHint
                         .copyWith(fontSize: Dimens.fontSmall),
                   )
@@ -355,7 +359,7 @@ class _ListMedicalRecordPageState extends State<ListMedicalRecordPage> {
                   ),
                   SizedBox(width: context.dp4()),
                   Text(
-                    _listMedicalRecord[index].createAt.toStringDateTime(),
+                    _listMedicalRecord![index].createAt!.toStringDateTime(),
                     style: TextStyles.textHint
                         .copyWith(fontSize: Dimens.fontSmall),
                   ),
@@ -367,7 +371,7 @@ class _ListMedicalRecordPageState extends State<ListMedicalRecordPage> {
             context.goTo(BlocProvider(
               create: (_) => DetailMedicalRecordBloc(),
               child: DetailMedicalRecordPage(
-                id: _listMedicalRecord[index].id.toString(),
+                id: _listMedicalRecord![index].id.toString(),
               ),
             ));
           }),
@@ -376,6 +380,6 @@ class _ListMedicalRecordPageState extends State<ListMedicalRecordPage> {
 
   _getMedicalRecord() {
     _listMedicalRecordBloc.getListMedicalRecord(
-        widget.patientEntity.id, _mainComplaint);
+        widget.patientEntity!.id, _mainComplaint);
   }
 }

@@ -15,8 +15,8 @@ import 'package:zein_holistic/ui/widgets/widgets.dart';
 ///*********************************************
 /// © 2021 | All Right Reserved
 class DetailMedicalRecordPage extends StatefulWidget {
-  DetailMedicalRecordPage({Key key, this.id}) : super(key: key);
-  final String id;
+  DetailMedicalRecordPage({Key? key, this.id}) : super(key: key);
+  final String? id;
 
   @override
   _DetailMedicalRecordPageState createState() =>
@@ -32,13 +32,18 @@ class _DetailMedicalRecordPageState extends State<DetailMedicalRecordPage> {
   var _conSuggestion = TextEditingController();
   var _conExaminer = TextEditingController();
 
-  DetailMedicalRecordBloc _detailMedicalRecordBloc;
+  late DetailMedicalRecordBloc _detailMedicalRecordBloc;
 
   @override
   void initState() {
     super.initState();
     _detailMedicalRecordBloc = BlocProvider.of(context);
     _detailMedicalRecordBloc.getDetailMedicalRecord(widget.id);
+  }
+  @override
+  void dispose() {
+    super.dispose();
+    _detailMedicalRecordBloc.close();
   }
 
   @override
@@ -47,14 +52,13 @@ class _DetailMedicalRecordPageState extends State<DetailMedicalRecordPage> {
       appBar: context.appBar(title: Strings.detailMedicalRecord),
       child: SingleChildScrollView(
         child: BlocBuilder(
-          cubit: _detailMedicalRecordBloc,
-          builder: (_, state) {
+          bloc: _detailMedicalRecordBloc,
+          builder: (_, dynamic state) {
             switch (state.status) {
               case Status.LOADING:
                 {
                   return Center(child: Loading());
                 }
-                break;
               case Status.ERROR:
                 {
                   return Center(
@@ -63,21 +67,20 @@ class _DetailMedicalRecordPageState extends State<DetailMedicalRecordPage> {
                     ),
                   );
                 }
-                break;
               case Status.SUCCESS:
                 {
                   //set initial data
                   MedicalRecordEntity _medicalRecordEntity = state.data;
-                  _conMainComplaint.text = _medicalRecordEntity.mainComplaint;
+                  _conMainComplaint.text = _medicalRecordEntity.mainComplaint!;
                   _conAdditionalComplaint.text =
-                      _medicalRecordEntity.additionalComplaint;
+                      _medicalRecordEntity.additionalComplaint!;
                   _conHistoryOfDisease.text =
-                      _medicalRecordEntity.historyOfDisease;
-                  _conCheckUpResult.text = _medicalRecordEntity.checkUpResult;
+                      _medicalRecordEntity.historyOfDisease!;
+                  _conCheckUpResult.text = _medicalRecordEntity.checkUpResult!;
                   _conConclusionDiagnosis.text =
-                      _medicalRecordEntity.conclusionDiagnosis;
-                  _conSuggestion.text = _medicalRecordEntity.suggestion;
-                  _conExaminer.text = _medicalRecordEntity.examiner;
+                      _medicalRecordEntity.conclusionDiagnosis!;
+                  _conSuggestion.text = _medicalRecordEntity.suggestion!;
+                  _conExaminer.text = _medicalRecordEntity.examiner!;
                   return Form(
                     child: Column(
                       children: [
@@ -123,7 +126,6 @@ class _DetailMedicalRecordPageState extends State<DetailMedicalRecordPage> {
                     ),
                   );
                 }
-                break;
               default:
                 return Container();
             }

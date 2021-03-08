@@ -10,9 +10,9 @@ import 'package:zein_holistic/ui/resources/resources.dart';
 ///*********************************************
 /// © 2020 | All Right Reserved
 class Empty extends StatelessWidget {
-  final String errorMessage;
+  final String? errorMessage;
 
-  const Empty({Key key, this.errorMessage}) : super(key: key);
+  const Empty({Key? key, this.errorMessage}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -30,7 +30,7 @@ class Empty extends StatelessWidget {
             height: context.dp16(),
           ),
           Text(
-            errorMessage,
+            errorMessage!,
             textAlign: TextAlign.center,
             style: TextStyles.textHint,
           )

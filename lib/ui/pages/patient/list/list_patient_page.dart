@@ -17,17 +17,17 @@ import 'package:zein_holistic/ui/widgets/widgets.dart';
 ///*********************************************
 /// © 2020 | All Right Reserved
 class ListPatientPage extends StatefulWidget {
-  ListPatientPage({Key key}) : super(key: key);
+  ListPatientPage({Key? key}) : super(key: key);
 
   @override
   _ListPatientPageState createState() => _ListPatientPageState();
 }
 
 class _ListPatientPageState extends State<ListPatientPage> {
-  ListPatientBloc _listPatientBloc;
-  DeletePatientBloc _deletePatientBloc;
+  late ListPatientBloc _listPatientBloc;
+  late DeletePatientBloc _deletePatientBloc;
   String _name = "";
-  List<PatientEntity> _listPatient = [];
+  List<PatientEntity>? _listPatient = [];
 
   @override
   void initState() {
@@ -35,6 +35,12 @@ class _ListPatientPageState extends State<ListPatientPage> {
     _listPatientBloc = BlocProvider.of(context);
     _deletePatientBloc = BlocProvider.of(context);
     _getPatient();
+  }
+  @override
+  void dispose() {
+    super.dispose();
+    _listPatientBloc.close();
+    _deletePatientBloc.close();
   }
 
   @override
@@ -107,8 +113,8 @@ class _ListPatientPageState extends State<ListPatientPage> {
                     right: context.dp16()))),
         Expanded(
             child: BlocBuilder(
-          cubit: _listPatientBloc,
-          builder: (_, state) {
+          bloc: _listPatientBloc,
+          builder: (_, dynamic state) {
             switch (state.status) {
               case Status.LOADING:
                 {
@@ -142,7 +148,7 @@ class _ListPatientPageState extends State<ListPatientPage> {
                     },
                     child: ListView.builder(
                         physics: AlwaysScrollableScrollPhysics(),
-                        itemCount: _listPatient.length,
+                        itemCount: _listPatient!.length,
                         shrinkWrap: true,
                         itemBuilder: (_, index) {
                           return _listItem(index);
@@ -170,7 +176,7 @@ class _ListPatientPageState extends State<ListPatientPage> {
 
   _listItem(int index) {
     return Dismissible(
-      key: Key(_listPatient[index].id),
+      key: Key(_listPatient![index].id!),
       background: Container(
         color: Palette.red,
         child: Row(
@@ -224,7 +230,7 @@ class _ListPatientPageState extends State<ListPatientPage> {
                       style: TextStyles.text,
                     ),
                     TextSpan(
-                        text: " ${_listPatient[index].name} ",
+                        text: " ${_listPatient![index].name} ",
                         style: TextStyles.textBold),
                     TextSpan(
                       text: Strings.questionMark,
@@ -233,7 +239,7 @@ class _ListPatientPageState extends State<ListPatientPage> {
                   ]),
                 ),
                 actions: <Widget>[
-                  FlatButton(
+                  TextButton(
                     child: Text(
                       Strings.cancel,
                       style: TextStyles.textHint,
@@ -243,13 +249,13 @@ class _ListPatientPageState extends State<ListPatientPage> {
                           dialogContext, false); // Dismiss alert dialog
                     },
                   ),
-                  FlatButton(
+                  TextButton(
                     child: Text(
                       Strings.delete,
                       style: TextStyles.text.copyWith(color: Palette.red),
                     ),
                     onPressed: () {
-                      _deletePatientBloc.deletePatient(_listPatient[index].id);
+                      _deletePatientBloc.deletePatient(_listPatient![index].id);
                       _getPatient();
                       Navigator.pop(
                           dialogContext, true); // Dismiss alert dialog
@@ -266,7 +272,7 @@ class _ListPatientPageState extends State<ListPatientPage> {
                 BlocProvider(create: (_) => DetailPatientBloc()),
               ],
               child: EditPatientPage(
-                id: _listPatient[index].id,
+                id: _listPatient![index].id,
               )));
           _getPatient();
         }
@@ -282,12 +288,12 @@ class _ListPatientPageState extends State<ListPatientPage> {
                 children: [
                   Expanded(
                     child: Text(
-                      _listPatient[index].name,
+                      _listPatient![index].name!,
                       style: TextStyles.textBold,
                     ),
                   ),
                   Text(
-                    _listPatient[index].phoneNumber,
+                    _listPatient![index].phoneNumber!,
                     style: TextStyles.textHint
                         .copyWith(fontSize: Dimens.fontSmall),
                   )
@@ -295,7 +301,7 @@ class _ListPatientPageState extends State<ListPatientPage> {
               ),
               SizedBox(height: context.dp8()),
               Text(
-                _listPatient[index].address,
+                _listPatient![index].address!,
                 style: TextStyles.textHint.copyWith(fontSize: Dimens.fontSmall),
               ),
             ],
@@ -312,7 +318,7 @@ class _ListPatientPageState extends State<ListPatientPage> {
                   )
                 ],
                 child: ListMedicalRecordPage(
-                  patientEntity: _listPatient[index],
+                  patientEntity: _listPatient![index],
                 ),
               ),
             );

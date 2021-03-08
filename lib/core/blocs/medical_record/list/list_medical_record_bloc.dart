@@ -8,10 +8,10 @@ class ListMedicalRecordBloc
     extends Cubit<Result<List<MedicalRecordEntity>>> {
   ListMedicalRecordBloc() : super(Result.isLoading());
 
-  var _userRepo = sl<MedicalRecordRepository>();
+  MedicalRecordRepository? _userRepo = sl<MedicalRecordRepository>();
 
-  getListMedicalRecord(String idPatient, String mainComplaint) async {
+  getListMedicalRecord(String? idPatient, String mainComplaint) async {
     emit(Result.isLoading());
-    emit(await _userRepo.getListMedicalRecord(idPatient, mainComplaint));
+    emit(await _userRepo!.getListMedicalRecord(idPatient, mainComplaint));
   }
 }

@@ -14,8 +14,8 @@ import 'package:zein_holistic/ui/widgets/widgets.dart';
 ///*********************************************
 /// © 2021 | All Right Reserved
 class AddMedicalRecordPage extends StatefulWidget {
-  AddMedicalRecordPage({Key key, this.idPatient}) : super(key: key);
-  final String idPatient;
+  AddMedicalRecordPage({Key? key, this.idPatient}) : super(key: key);
+  final String? idPatient;
 
   @override
   _AddMedicalRecordPageState createState() => _AddMedicalRecordPageState();
@@ -39,7 +39,7 @@ class _AddMedicalRecordPageState extends State<AddMedicalRecordPage> {
 
   var _formKey = GlobalKey<FormState>();
 
-  AddMedicalRecordBloc _addMedicalRecordBloc;
+  late AddMedicalRecordBloc _addMedicalRecordBloc;
 
   @override
   void initState() {
@@ -48,13 +48,19 @@ class _AddMedicalRecordPageState extends State<AddMedicalRecordPage> {
   }
 
   @override
+  void dispose() {
+    super.dispose();
+    _addMedicalRecordBloc.close();
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Parent(
       appBar: context.appBar(title: Strings.addMedicalRecord),
       child: SingleChildScrollView(
         child: BlocListener(
-          cubit: _addMedicalRecordBloc,
-          listener: (_, state) {
+          bloc: _addMedicalRecordBloc,
+          listener: (_, dynamic state) {
             switch (state.status) {
               case Status.LOADING:
                 {
@@ -128,7 +134,7 @@ class _AddMedicalRecordPageState extends State<AddMedicalRecordPage> {
                   title: Strings.save,
                   color: Palette.colorPrimary,
                   onPressed: () {
-                    if (_formKey.currentState.validate()) {
+                    if (_formKey.currentState!.validate()) {
                       var _params = {
                         'idPatient': widget.idPatient,
                         'mainComplaint': _conMainComplaint.text,

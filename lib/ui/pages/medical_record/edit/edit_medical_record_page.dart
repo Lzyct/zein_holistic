@@ -16,8 +16,8 @@ import 'package:zein_holistic/utils/utils.dart';
 ///*********************************************
 /// © 2021 | All Right Reserved
 class EditMedicalRecordPage extends StatefulWidget {
-  EditMedicalRecordPage({Key key, this.id}) : super(key: key);
-  final String id;
+  EditMedicalRecordPage({Key? key, this.id}) : super(key: key);
+  final String? id;
 
   @override
   _EditMedicalRecordPageState createState() => _EditMedicalRecordPageState();
@@ -42,8 +42,8 @@ class _EditMedicalRecordPageState extends State<EditMedicalRecordPage> {
   var _formKey = GlobalKey<FormState>();
   var _isFirstLoad = true;
 
-  EditMedicalRecordBloc _editMedicalRecordBloc;
-  DetailMedicalRecordBloc _detailMedicalRecordBloc;
+  late EditMedicalRecordBloc _editMedicalRecordBloc;
+  late DetailMedicalRecordBloc _detailMedicalRecordBloc;
 
   @override
   void initState() {
@@ -58,14 +58,21 @@ class _EditMedicalRecordPageState extends State<EditMedicalRecordPage> {
   }
 
   @override
+  void dispose() {
+    super.dispose();
+    _editMedicalRecordBloc.close();
+    _detailMedicalRecordBloc.close();
+  }
+
+  @override
   Widget build(BuildContext context) {
     logs("isBuild");
     return Parent(
       appBar: context.appBar(title: Strings.editMedicalRecord),
       child: SingleChildScrollView(
         child: BlocListener(
-          cubit: _editMedicalRecordBloc,
-          listener: (_, state) {
+          bloc: _editMedicalRecordBloc,
+          listener: (_, dynamic state) {
             switch (state.status) {
               case Status.LOADING:
                 {
@@ -86,14 +93,13 @@ class _EditMedicalRecordPageState extends State<EditMedicalRecordPage> {
             }
           },
           child: BlocBuilder(
-            cubit: _detailMedicalRecordBloc,
-            builder: (_, state) {
+            bloc: _detailMedicalRecordBloc,
+            builder: (_, dynamic state) {
               switch (state.status) {
                 case Status.LOADING:
                   {
                     return Center(child: Loading());
                   }
-                  break;
                 case Status.ERROR:
                   {
                     return Center(
@@ -102,24 +108,23 @@ class _EditMedicalRecordPageState extends State<EditMedicalRecordPage> {
                       ),
                     );
                   }
-                  break;
                 case Status.SUCCESS:
                   {
                     //set initial data
                     if (_isFirstLoad) {
                       MedicalRecordEntity _medicalRecordEntity = state.data;
                       _conMainComplaint.text =
-                          _medicalRecordEntity.mainComplaint;
+                          _medicalRecordEntity.mainComplaint!;
                       _conAdditionalComplaint.text =
-                          _medicalRecordEntity.additionalComplaint;
+                          _medicalRecordEntity.additionalComplaint!;
                       _conHistoryOfDisease.text =
-                          _medicalRecordEntity.historyOfDisease;
+                          _medicalRecordEntity.historyOfDisease!;
                       _conCheckUpResult.text =
-                          _medicalRecordEntity.checkUpResult;
+                          _medicalRecordEntity.checkUpResult!;
                       _conConclusionDiagnosis.text =
-                          _medicalRecordEntity.conclusionDiagnosis;
-                      _conSuggestion.text = _medicalRecordEntity.suggestion;
-                      _conExaminer.text = _medicalRecordEntity.examiner;
+                          _medicalRecordEntity.conclusionDiagnosis!;
+                      _conSuggestion.text = _medicalRecordEntity.suggestion!;
+                      _conExaminer.text = _medicalRecordEntity.examiner!;
 
                       _isFirstLoad = false;
                     }
@@ -178,7 +183,7 @@ class _EditMedicalRecordPageState extends State<EditMedicalRecordPage> {
                             title: Strings.save,
                             color: Palette.colorPrimary,
                             onPressed: () {
-                              if (_formKey.currentState.validate()) {
+                              if (_formKey.currentState!.validate()) {
                                 var _params = {
                                   'id': widget.id,
                                   'mainComplaint': _conMainComplaint.text,
@@ -200,7 +205,6 @@ class _EditMedicalRecordPageState extends State<EditMedicalRecordPage> {
                       ),
                     );
                   }
-                  break;
                 default:
                   return Container();
               }

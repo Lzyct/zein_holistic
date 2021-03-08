@@ -46,7 +46,7 @@ extension ContextExtensions on BuildContext {
         MaterialPageRoute(builder: (context) => widget), (route) => false);
   }
 
-  appBar({@required String title}) {
+  appBar({required String title}) {
     return AppBar(
       brightness: Brightness.dark,
       backgroundColor: Palette.colorPrimary,
@@ -102,7 +102,7 @@ extension ContextExtensions on BuildContext {
           brightness: Brightness.light),
       preferredSize: Size.fromHeight(0.0));
 
-  Future<DateTime> datePicker({DateTime currentDate}) async {
+  Future<DateTime?> datePicker({DateTime? currentDate}) async {
     return await showDatePicker(
       context: this,
       initialDate: currentDate ?? DateTime.now(),
@@ -131,7 +131,7 @@ extension ContextExtensions on BuildContext {
             ),
             dialogBackgroundColor: Colors.white,
           ),
-          child: child,
+          child: child!,
         );
       },
     );
@@ -172,7 +172,7 @@ extension ContextExtensions on BuildContext {
     return "${twoDigits(result.hour)}:${result.minute}";
   }*/
 
-  bottomSheet({@required String title, @required Widget child, double height}) {
+  bottomSheet({required String title, required Widget child, double? height}) {
     showModalBottomSheet(
         context: this,
         enableDrag: true,

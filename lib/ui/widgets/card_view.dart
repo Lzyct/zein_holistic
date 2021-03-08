@@ -10,18 +10,18 @@ import 'package:zein_holistic/ui/resources/resources.dart';
 /// © 2020 | All Right Reserved
 class CardView extends StatelessWidget {
   final Widget child;
-  final EdgeInsets margin;
-  final Color bgColor;
-  final double radius;
+  final EdgeInsets? margin;
+  final Color? bgColor;
+  final double? radius;
   final Function onTap;
 
   const CardView(
-      {Key key,
+      {Key? key,
       this.margin,
       this.bgColor,
       this.radius,
-      @required this.child,
-      @required this.onTap})
+      required this.child,
+      required this.onTap})
       : super(key: key);
 
   @override
@@ -38,7 +38,7 @@ class CardView extends StatelessWidget {
       child: InkWell(
         splashColor: Colors.black26,
         borderRadius: BorderRadius.all(Radius.circular(radius ?? 5)),
-        onTap: onTap,
+        onTap: onTap as void Function()?,
         child: child,
       ),
     );

@@ -16,7 +16,7 @@ import 'package:zein_holistic/utils/utils.dart';
 ///*********************************************
 /// © 2021 | All Right Reserved
 class AddPatientPage extends StatefulWidget {
-  AddPatientPage({Key key}) : super(key: key);
+  AddPatientPage({Key? key}) : super(key: key);
 
   @override
   _AddPatientPageState createState() => _AddPatientPageState();
@@ -39,7 +39,7 @@ class _AddPatientPageState extends State<AddPatientPage> {
 
   var _formKey = GlobalKey<FormState>();
 
-  AddPatientBloc _addPatientBloc;
+  late AddPatientBloc _addPatientBloc;
 
   @override
   void initState() {
@@ -47,15 +47,19 @@ class _AddPatientPageState extends State<AddPatientPage> {
     _selectedSex = _sex[0];
     _addPatientBloc = BlocProvider.of(context);
   }
-
+@override
+  void dispose() {
+    super.dispose();
+    _addPatientBloc.close();
+  }
   @override
   Widget build(BuildContext context) {
     return Parent(
       appBar: context.appBar(title: Strings.addPatient),
       child: SingleChildScrollView(
         child: BlocListener(
-          cubit: _addPatientBloc,
-          listener: (_, state) {
+          bloc: _addPatientBloc,
+          listener: (_, dynamic state) {
             switch (state.status) {
               case Status.LOADING:
                 {
@@ -173,7 +177,7 @@ class _AddPatientPageState extends State<AddPatientPage> {
                   title: Strings.save,
                   color: Palette.colorPrimary,
                   onPressed: () {
-                    if (_formKey.currentState.validate()) {
+                    if (_formKey.currentState!.validate()) {
                       var _params = {
                         'name': _conName.text.toString(),
                         'sex': _selectedSex,

@@ -17,7 +17,7 @@ import 'package:zein_holistic/utils/utils.dart';
 ///*********************************************
 /// © 2021 | All Right Reserved
 class SettingsPage extends StatefulWidget {
-  SettingsPage({Key key}) : super(key: key);
+  SettingsPage({Key? key}) : super(key: key);
 
   @override
   _SettingsPageState createState() => _SettingsPageState();
@@ -134,27 +134,30 @@ class _SettingsPageState extends State<SettingsPage> {
   }
 
   _restoreDb() async {
-    try {
-      FilePickerResult _result =
-          await FilePicker.platform.pickFiles(allowMultiple: false);
-      logs("result pick ${_result.paths[0]}");
-      File _restoreFile = File(_result.paths[0]);
+    FilePickerResult? _result =
+        await FilePicker.platform.pickFiles(allowMultiple: false);
 
-      await _restoreFile.copy(sl<PrefManager>().getDbPath());
-      logs(
-          "Copy file from ${_restoreFile.path} to ${sl<PrefManager>().getDbPath()}");
+    if (_result != null) {
+      try {
+        logs("result pick ${_result.paths[0]}");
+        File _restoreFile = File(_result.paths[0]!);
 
-      await sl<DbHelper>().initDb();
-      Strings.successRestoreData.toToastSuccess();
-    } catch (e) {
-      e.toString().toToastError();
-      logs("Error Restore : $e");
+        await _restoreFile.copy(sl<PrefManager>().getDbPath()!);
+        logs(
+            "Copy file from ${_restoreFile.path} to ${sl<PrefManager>().getDbPath()}");
+
+        await sl<DbHelper>().initDb();
+        Strings.successRestoreData.toToastSuccess();
+      } catch (e) {
+        e.toString().toToastError();
+        logs("Error Restore : $e");
+      }
     }
   }
 
   _backupDb() async {
     try {
-      File _db = File(sl<PrefManager>().getDbPath());
+      File _db = File(sl<PrefManager>().getDbPath()!);
       await _db.copy(_backupPath + Strings.dbName);
       Strings.successBackupData.toToastSuccess();
     } catch (e) {

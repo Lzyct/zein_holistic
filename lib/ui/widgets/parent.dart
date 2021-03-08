@@ -8,19 +8,19 @@ import 'package:zein_holistic/core/extensions/extensions.dart';
 ///*********************************************
 /// © 2020 | All Right Reserved
 class Parent extends StatefulWidget {
-  final Widget child;
+  final Widget? child;
   final bool isPadding;
   final bool isScroll;
   final Widget appBar;
   final bool avoidBottomInset;
-  final Widget floatingButton;
+  final Widget? floatingButton;
 
   const Parent({
-    Key key,
+    Key? key,
     this.child,
     this.isPadding = true,
     this.isScroll = true,
-    @required this.appBar,
+    required this.appBar,
     this.avoidBottomInset = false,
     this.floatingButton,
   }) : super(key: key);
@@ -39,7 +39,7 @@ class _ParentState extends State<Parent> {
   Widget build(BuildContext context) {
     return Scaffold(
       resizeToAvoidBottomInset: widget.avoidBottomInset,
-      appBar: widget.appBar ??
+      appBar: widget.appBar as PreferredSizeWidget? ??
           PreferredSize(
             preferredSize: Size.fromHeight(0),
             child: AppBar(

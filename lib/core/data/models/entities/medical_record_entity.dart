@@ -1,15 +1,15 @@
 class MedicalRecordEntity {
-  int id;
-  String idPatient;
-  String mainComplaint;
-  String additionalComplaint;
-  String historyOfDisease;
-  String checkUpResult;
-  String conclusionDiagnosis;
-  String suggestion;
-  String examiner;
-  String createAt;
-  String updateAt;
+  int? id;
+  String? idPatient;
+  String? mainComplaint;
+  String? additionalComplaint;
+  String? historyOfDisease;
+  String? checkUpResult;
+  String? conclusionDiagnosis;
+  String? suggestion;
+  String? examiner;
+  String? createAt;
+  String? updateAt;
 
   MedicalRecordEntity(
       {this.id,
