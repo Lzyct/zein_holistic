@@ -2,6 +2,7 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:zein_holistic/core/extensions/extensions.dart';
 import 'package:zein_holistic/ui/resources/resources.dart';
+import 'package:zein_holistic/utils/helper.dart';
 
 ///*********************************************
 /// Created by ukietux on 24/08/20 with ♥
@@ -41,9 +42,7 @@ class _ParentState extends State<Parent> {
   Widget build(BuildContext context) {
     return Container(
       color: Palette.colorBackgroundAlt,
-      padding: kIsWeb
-          ? EdgeInsets.symmetric(horizontal: context.widthInPercent(20))
-          : EdgeInsets.zero,
+      padding: kIsWeb || isDesktop ? EdgeInsets.symmetric(horizontal: context.widthInPercent(20)) : EdgeInsets.zero,
       child: Scaffold(
         resizeToAvoidBottomInset: widget.avoidBottomInset,
         appBar: widget.appBar as PreferredSizeWidget? ??

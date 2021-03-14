@@ -27,8 +27,8 @@ class Empty extends StatelessWidget {
         children: [
           SvgPicture.asset(
             Images.imgNoData,
-            width: context.widthInPercent(kIsWeb ? 25 : 50),
-            height: context.widthInPercent(kIsWeb ? 25 : 50),
+            width: context.widthInPercent(kIsWeb || isDesktop ? 25 : 50),
+            height: context.widthInPercent(kIsWeb || isDesktop ? 25 : 50),
           ),
           SizedBox(
             height: Dimens.space16,

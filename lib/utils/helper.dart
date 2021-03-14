@@ -1,5 +1,6 @@
 import 'dart:convert';
 import 'dart:developer';
+import 'dart:io';
 
 logs(dynamic message) {
   log("========================================================================================");
@@ -31,3 +32,5 @@ String calculateAge(DateTime _birthDate) {
   }
   return age.toString();
 }
+
+bool get isDesktop => Platform.isWindows || Platform.isLinux || Platform.isMacOS;

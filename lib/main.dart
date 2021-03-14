@@ -36,7 +36,7 @@ class _MyAppState extends State<MyApp> {
         builder: (_, constrains) {
           logs("maxwidth ${constrains.maxWidth}");
           late Size size;
-          if (constrains.maxWidth > 700) {
+          if (constrains.maxWidth > 700 || isDesktop) {
             size = Size(1024, 768);
           } else {
             size = Size(375, 667);
@@ -46,10 +46,7 @@ class _MyAppState extends State<MyApp> {
             designSize: size,
             allowFontScaling: true,
             builder: () => MaterialApp(
-              localizationsDelegates: [
-                GlobalMaterialLocalizations.delegate,
-                GlobalCupertinoLocalizations.delegate
-              ],
+              localizationsDelegates: [GlobalMaterialLocalizations.delegate, GlobalCupertinoLocalizations.delegate],
               supportedLocales: [
                 const Locale('id'),
               ],
@@ -57,8 +54,7 @@ class _MyAppState extends State<MyApp> {
               builder: (BuildContext context, Widget? child) {
                 final MediaQueryData data = MediaQuery.of(context);
                 return MediaQuery(
-                  data: data.copyWith(
-                      textScaleFactor: 1, alwaysUse24HourFormat: true),
+                  data: data.copyWith(textScaleFactor: 1, alwaysUse24HourFormat: true),
                   child: child!,
                 );
               },
