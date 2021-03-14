@@ -90,10 +90,10 @@ class _ListPatientPageState extends State<ListPatientPage> {
                       hintText: Strings.searchPatientHint,
                       hintStyle: TextStyles.textHint,
                       contentPadding:
-                          EdgeInsets.symmetric(horizontal: context.dp8()),
+                          EdgeInsets.symmetric(horizontal: Dimens.space8),
                       border: OutlineInputBorder(
                         gapPadding: 0,
-                        borderRadius: BorderRadius.circular(context.dp4()),
+                        borderRadius: BorderRadius.circular(Dimens.space4),
                         borderSide: BorderSide(
                           color: Palette.colorPrimary,
                           width: 1.0,
@@ -108,9 +108,9 @@ class _ListPatientPageState extends State<ListPatientPage> {
               ],
             ).padding(
                 edgeInsets: EdgeInsets.only(
-                    bottom: context.dp16(),
-                    left: context.dp16(),
-                    right: context.dp16()))),
+                    bottom: Dimens.space16,
+                    left: Dimens.space16,
+                    right: Dimens.space16))),
         Expanded(
             child: BlocBuilder(
           bloc: _listPatientBloc,
@@ -186,7 +186,7 @@ class _ListPatientPageState extends State<ListPatientPage> {
               Icons.delete,
               color: Colors.white,
             ),
-            SizedBox(width: context.dp16()),
+            SizedBox(width: Dimens.space16),
             Text(
               Strings.delete,
               style: TextStyles.white,
@@ -203,7 +203,7 @@ class _ListPatientPageState extends State<ListPatientPage> {
               Icons.edit,
               color: Colors.white,
             ),
-            SizedBox(width: context.dp16()),
+            SizedBox(width: Dimens.space16),
             Text(
               Strings.edit,
               style: TextStyles.white,
@@ -299,13 +299,13 @@ class _ListPatientPageState extends State<ListPatientPage> {
                   )
                 ],
               ),
-              SizedBox(height: context.dp8()),
+              SizedBox(height: Dimens.space8),
               Text(
                 _listPatient![index].address!,
                 style: TextStyles.textHint.copyWith(fontSize: Dimens.fontSmall),
               ),
             ],
-          ).padding(edgeInsets: EdgeInsets.all(context.dp16())),
+          ).padding(edgeInsets: EdgeInsets.all(Dimens.space16)),
           onTap: () {
             context.goTo(
               MultiBlocProvider(

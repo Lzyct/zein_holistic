@@ -40,7 +40,7 @@ class _SettingsPageState extends State<SettingsPage> {
       child: Column(
         children: [
           CardView(
-              margin: EdgeInsets.symmetric(vertical: context.dp8()),
+              margin: EdgeInsets.symmetric(vertical: Dimens.space8),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
@@ -50,7 +50,7 @@ class _SettingsPageState extends State<SettingsPage> {
                         Icons.backup,
                         color: Palette.colorPrimary,
                       ),
-                      SizedBox(width: context.dp8()),
+                      SizedBox(width: Dimens.space8),
                       Text(
                         Strings.backup,
                         style: TextStyles.textBold
@@ -58,18 +58,18 @@ class _SettingsPageState extends State<SettingsPage> {
                       )
                     ],
                   ),
-                  SizedBox(height: context.dp8()),
+                  SizedBox(height: Dimens.space8),
                   Text(
                     "${Strings.backupDesc} $_backupPath",
                     style: TextStyles.text.copyWith(fontSize: Dimens.fontSmall),
                   )
                 ],
-              ).padding(edgeInsets: EdgeInsets.all(context.dp16())),
+              ).padding(edgeInsets: EdgeInsets.all(Dimens.space16)),
               onTap: () {
                 _backupDb();
               }),
           CardView(
-              margin: EdgeInsets.symmetric(vertical: context.dp8()),
+              margin: EdgeInsets.symmetric(vertical: Dimens.space8),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
@@ -79,7 +79,7 @@ class _SettingsPageState extends State<SettingsPage> {
                         Icons.restore,
                         color: Palette.colorPrimary,
                       ),
-                      SizedBox(width: context.dp8()),
+                      SizedBox(width: Dimens.space8),
                       Text(
                         Strings.restore,
                         style: TextStyles.textBold
@@ -87,13 +87,13 @@ class _SettingsPageState extends State<SettingsPage> {
                       )
                     ],
                   ),
-                  SizedBox(height: context.dp8()),
+                  SizedBox(height: Dimens.space8),
                   Text(
                     Strings.restoreDesc,
                     style: TextStyles.text.copyWith(fontSize: Dimens.fontSmall),
                   )
                 ],
-              ).padding(edgeInsets: EdgeInsets.all(context.dp16())),
+              ).padding(edgeInsets: EdgeInsets.all(Dimens.space16)),
               onTap: () {
                 _restoreDb();
               })

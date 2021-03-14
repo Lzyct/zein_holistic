@@ -50,86 +50,88 @@ class _DetailMedicalRecordPageState extends State<DetailMedicalRecordPage> {
   Widget build(BuildContext context) {
     return Parent(
       appBar: context.appBar(title: Strings.detailMedicalRecord),
-      child: SingleChildScrollView(
-        child: BlocBuilder(
-          bloc: _detailMedicalRecordBloc,
-          builder: (_, dynamic state) {
-            switch (state.status) {
-              case Status.LOADING:
-                {
-                  return Center(child: Loading());
-                }
-              case Status.ERROR:
-                {
-                  return Center(
-                    child: Empty(
-                      errorMessage: state.message.toString(),
-                    ),
-                  );
-                }
-              case Status.SUCCESS:
-                {
-                  //set initial data
-                  MedicalRecordEntity _medicalRecordEntity = state.data;
-                  _conMainComplaint.text = _medicalRecordEntity.mainComplaint!;
-                  _conAdditionalComplaint.text =
-                      _medicalRecordEntity.additionalComplaint!;
-                  _conHistoryOfDisease.text =
-                      _medicalRecordEntity.historyOfDisease!;
-                  _conCheckUpResult.text = _medicalRecordEntity.checkUpResult!;
-                  _conConclusionDiagnosis.text =
-                      _medicalRecordEntity.conclusionDiagnosis!;
-                  _conSuggestion.text = _medicalRecordEntity.suggestion!;
-                  _conExaminer.text = _medicalRecordEntity.examiner!;
-                  return Form(
-                    child: Column(
-                      children: [
-                        TextF(
-                          hint: Strings.mainComplaint,
-                          textInputAction: TextInputAction.next,
-                          controller: _conMainComplaint,
-                          curFocusNode: DisableFocusNode(),
-                          validator: (value) =>
-                              value.isEmpty ? Strings.errorEmpty : null,
-                        ),
-                        TextF(
-                          hint: Strings.additionalComplaint,
-                          textInputAction: TextInputAction.next,
-                          controller: _conAdditionalComplaint,
-                          curFocusNode: DisableFocusNode(),
-                        ),
-                        TextF(
-                          hint: Strings.historyOfDisease,
-                          textInputAction: TextInputAction.next,
-                          controller: _conHistoryOfDisease,
-                          curFocusNode: DisableFocusNode(),
-                        ),
-                        TextF(
-                          hint: Strings.conclusionDiagnosis,
-                          textInputAction: TextInputAction.next,
-                          controller: _conConclusionDiagnosis,
-                          curFocusNode: DisableFocusNode(),
-                        ),
-                        TextF(
-                          hint: Strings.suggestion,
-                          textInputAction: TextInputAction.next,
-                          controller: _conSuggestion,
-                          curFocusNode: DisableFocusNode(),
-                        ),
-                        TextF(
-                          hint: Strings.examiner,
-                          textInputAction: TextInputAction.done,
-                          controller: _conExaminer,
-                          curFocusNode: DisableFocusNode(),
-                        ),
-                      ],
-                    ),
-                  );
-                }
-              default:
-                return Container();
-            }
-          },
+      child: Scrollbar(
+        child: SingleChildScrollView(
+          child: BlocBuilder(
+            bloc: _detailMedicalRecordBloc,
+            builder: (_, dynamic state) {
+              switch (state.status) {
+                case Status.LOADING:
+                  {
+                    return Center(child: Loading());
+                  }
+                case Status.ERROR:
+                  {
+                    return Center(
+                      child: Empty(
+                        errorMessage: state.message.toString(),
+                      ),
+                    );
+                  }
+                case Status.SUCCESS:
+                  {
+                    //set initial data
+                    MedicalRecordEntity _medicalRecordEntity = state.data;
+                    _conMainComplaint.text = _medicalRecordEntity.mainComplaint!;
+                    _conAdditionalComplaint.text =
+                        _medicalRecordEntity.additionalComplaint!;
+                    _conHistoryOfDisease.text =
+                        _medicalRecordEntity.historyOfDisease!;
+                    _conCheckUpResult.text = _medicalRecordEntity.checkUpResult!;
+                    _conConclusionDiagnosis.text =
+                        _medicalRecordEntity.conclusionDiagnosis!;
+                    _conSuggestion.text = _medicalRecordEntity.suggestion!;
+                    _conExaminer.text = _medicalRecordEntity.examiner!;
+                    return Form(
+                      child: Column(
+                        children: [
+                          TextF(
+                            hint: Strings.mainComplaint,
+                            textInputAction: TextInputAction.next,
+                            controller: _conMainComplaint,
+                            curFocusNode: DisableFocusNode(),
+                            validator: (value) =>
+                                value.isEmpty ? Strings.errorEmpty : null,
+                          ),
+                          TextF(
+                            hint: Strings.additionalComplaint,
+                            textInputAction: TextInputAction.next,
+                            controller: _conAdditionalComplaint,
+                            curFocusNode: DisableFocusNode(),
+                          ),
+                          TextF(
+                            hint: Strings.historyOfDisease,
+                            textInputAction: TextInputAction.next,
+                            controller: _conHistoryOfDisease,
+                            curFocusNode: DisableFocusNode(),
+                          ),
+                          TextF(
+                            hint: Strings.conclusionDiagnosis,
+                            textInputAction: TextInputAction.next,
+                            controller: _conConclusionDiagnosis,
+                            curFocusNode: DisableFocusNode(),
+                          ),
+                          TextF(
+                            hint: Strings.suggestion,
+                            textInputAction: TextInputAction.next,
+                            controller: _conSuggestion,
+                            curFocusNode: DisableFocusNode(),
+                          ),
+                          TextF(
+                            hint: Strings.examiner,
+                            textInputAction: TextInputAction.done,
+                            controller: _conExaminer,
+                            curFocusNode: DisableFocusNode(),
+                          ),
+                        ],
+                      ),
+                    );
+                  }
+                default:
+                  return Container();
+              }
+            },
+          ),
         ),
       ),
     );

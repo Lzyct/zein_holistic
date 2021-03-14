@@ -6,6 +6,7 @@ import 'package:oktoast/oktoast.dart';
 import 'package:zein_holistic/di/di.dart';
 import 'package:zein_holistic/ui/pages/splashscreen/splash_screen_page.dart';
 import 'package:zein_holistic/ui/resources/resources.dart';
+import 'package:zein_holistic/utils/utils.dart';
 
 void main() async {
   serviceLocator();
@@ -22,34 +23,51 @@ void main() async {
   runApp(MyApp());
 }
 
-class MyApp extends StatelessWidget {
+class MyApp extends StatefulWidget {
+  @override
+  _MyAppState createState() => _MyAppState();
+}
+
+class _MyAppState extends State<MyApp> {
   @override
   Widget build(BuildContext context) {
     return OKToast(
-      child: ScreenUtilInit(
-        designSize: Size(375, 667),
-        allowFontScaling: false,
-        builder: () => MaterialApp(
-          localizationsDelegates: [
-            GlobalMaterialLocalizations.delegate,
-            GlobalCupertinoLocalizations.delegate
-          ],
-          supportedLocales: [
-            const Locale('id'),
-          ],
-          debugShowCheckedModeBanner: false,
-          builder: (BuildContext context, Widget? child) {
-            final MediaQueryData data = MediaQuery.of(context);
-            return MediaQuery(
-              data: data.copyWith(
-                  textScaleFactor: 1, alwaysUse24HourFormat: true),
-              child: child!,
-            );
-          },
-          title: Strings.appName,
-          theme: themeDefault,
-          home: SplashScreenPage(),
-        ),
+      child: LayoutBuilder(
+        builder: (_, constrains) {
+          logs("maxwidth ${constrains.maxWidth}");
+          late Size size;
+          if (constrains.maxWidth > 700) {
+            size = Size(1024, 768);
+          } else {
+            size = Size(375, 667);
+          }
+          logs("size is $size");
+          return ScreenUtilInit(
+            designSize: size,
+            allowFontScaling: true,
+            builder: () => MaterialApp(
+              localizationsDelegates: [
+                GlobalMaterialLocalizations.delegate,
+                GlobalCupertinoLocalizations.delegate
+              ],
+              supportedLocales: [
+                const Locale('id'),
+              ],
+              debugShowCheckedModeBanner: false,
+              builder: (BuildContext context, Widget? child) {
+                final MediaQueryData data = MediaQuery.of(context);
+                return MediaQuery(
+                  data: data.copyWith(
+                      textScaleFactor: 1, alwaysUse24HourFormat: true),
+                  child: child!,
+                );
+              },
+              title: Strings.appName,
+              theme: themeDefault,
+              home: SplashScreenPage(),
+            ),
+          );
+        },
       ),
     );
   }

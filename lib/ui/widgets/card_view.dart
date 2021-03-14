@@ -29,7 +29,7 @@ class CardView extends StatelessWidget {
     return Card(
       margin: margin ??
           EdgeInsets.symmetric(
-              vertical: context.dp8(), horizontal: context.dp16()),
+              vertical: Dimens.space8, horizontal: Dimens.space16),
       color: bgColor ?? Colors.white,
       elevation: Dimens.elevation,
       shadowColor: Colors.black54,

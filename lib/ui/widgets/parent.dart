@@ -1,5 +1,7 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:zein_holistic/core/extensions/extensions.dart';
+import 'package:zein_holistic/ui/resources/resources.dart';
 
 ///*********************************************
 /// Created by ukietux on 24/08/20 with ♥
@@ -37,47 +39,55 @@ class _ParentState extends State<Parent> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      resizeToAvoidBottomInset: widget.avoidBottomInset,
-      appBar: widget.appBar as PreferredSizeWidget? ??
-          PreferredSize(
-            preferredSize: Size.fromHeight(0),
-            child: AppBar(
-              brightness: Brightness.light,
-              backgroundColor: Colors.white,
-              elevation: 0,
+    return Container(
+      color: Palette.colorBackgroundAlt,
+      padding: kIsWeb
+          ? EdgeInsets.symmetric(horizontal: context.widthInPercent(20))
+          : EdgeInsets.zero,
+      child: Scaffold(
+        resizeToAvoidBottomInset: widget.avoidBottomInset,
+        appBar: widget.appBar as PreferredSizeWidget? ??
+            PreferredSize(
+              preferredSize: Size.fromHeight(0),
+              child: AppBar(
+                brightness: Brightness.light,
+                backgroundColor: Colors.white,
+                elevation: 0,
+              ),
+            ),
+        body: GestureDetector(
+          onTap: () {
+            FocusScope.of(context).requestFocus(new FocusNode());
+          },
+          child: AnimatedContainer(
+            duration: Duration(milliseconds: 300),
+            child: Stack(
+              children: [
+                widget.isScroll
+                    ? Container()
+                    : widget.child.padding(
+                        edgeInsets: EdgeInsets.all(
+                          widget.isPadding ? Dimens.space16 : 0,
+                        ),
+                      ),
+                Scrollbar(
+                  child: SingleChildScrollView(
+                    physics: BouncingScrollPhysics(),
+                    child: widget.isScroll
+                        ? widget.child.padding(
+                            edgeInsets: EdgeInsets.all(
+                              widget.isPadding ? Dimens.space16 : 0,
+                            ),
+                          )
+                        : Container(),
+                  ),
+                ),
+              ],
             ),
           ),
-      body: GestureDetector(
-        onTap: () {
-          FocusScope.of(context).requestFocus(new FocusNode());
-        },
-        child: AnimatedContainer(
-          duration: Duration(milliseconds: 300),
-          child: Stack(
-            children: [
-              widget.isScroll
-                  ? Container()
-                  : widget.child.padding(
-                      edgeInsets: EdgeInsets.all(
-                        widget.isPadding ? context.dp16() : 0,
-                      ),
-                    ),
-              SingleChildScrollView(
-                physics: BouncingScrollPhysics(),
-                child: widget.isScroll
-                    ? widget.child.padding(
-                        edgeInsets: EdgeInsets.all(
-                          widget.isPadding ? context.dp16() : 0,
-                        ),
-                      )
-                    : Container(),
-              ),
-            ],
-          ),
         ),
+        floatingActionButton: widget.floatingButton ?? null,
       ),
-      floatingActionButton: widget.floatingButton ?? null,
     );
   }
 }

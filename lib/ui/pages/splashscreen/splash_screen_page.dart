@@ -46,7 +46,7 @@ class _SplashScreenPageState extends State<SplashScreenPage> {
       body: Center(
           child: SvgPicture.asset(
         Images.icLogoText,
-        width: context.widthInPercent(60),
+        width: context.widthInPercent(50),
       )),
     );
   }

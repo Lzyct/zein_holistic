@@ -78,7 +78,7 @@ class _TextFState extends State<TextF> {
   Widget build(BuildContext context) {
     return Container(
       width: double.infinity,
-      margin: EdgeInsets.symmetric(vertical: context.dp8()),
+      margin: EdgeInsets.symmetric(vertical: Dimens.space8),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -112,10 +112,10 @@ class _TextFState extends State<TextF> {
                 alignLabelWithHint: true,
                 suffixIcon: widget.suffixIcon,
                 contentPadding: EdgeInsets.symmetric(
-                    vertical: context.dp8(), horizontal: context.dp12()),
+                    vertical: Dimens.space8, horizontal: Dimens.space12),
                 enabledBorder: OutlineInputBorder(
                   gapPadding: 0,
-                  borderRadius: BorderRadius.circular(context.dp4()),
+                  borderRadius: BorderRadius.circular(Dimens.space4),
                   borderSide: BorderSide(
                     color: Palette.borderTextF,
                     width: 1.0,
@@ -123,21 +123,21 @@ class _TextFState extends State<TextF> {
                 ),
                 focusedErrorBorder: OutlineInputBorder(
                     gapPadding: 0,
-                    borderRadius: BorderRadius.circular(context.dp4()),
+                    borderRadius: BorderRadius.circular(Dimens.space4),
                     borderSide: BorderSide(
                       color: Palette.red,
                       width: 1.0,
                     )),
                 errorBorder: OutlineInputBorder(
                     gapPadding: 0,
-                    borderRadius: BorderRadius.circular(context.dp4()),
+                    borderRadius: BorderRadius.circular(Dimens.space4),
                     borderSide: BorderSide(
                       color: Palette.red,
                       width: 1.0,
                     )),
                 focusedBorder: OutlineInputBorder(
                   gapPadding: 0,
-                  borderRadius: BorderRadius.circular(context.dp4()),
+                  borderRadius: BorderRadius.circular(Dimens.space4),
                   borderSide: BorderSide(
                     color: Palette.colorPrimary,
                     width: 1.0,
@@ -152,7 +152,7 @@ class _TextFState extends State<TextF> {
                     context, widget.curFocusNode!, widget.nextFocusNode);
               });
             },
-          ).margin(edgeInsets: EdgeInsets.symmetric(vertical: context.dp8()))
+          ).margin(edgeInsets: EdgeInsets.symmetric(vertical: Dimens.space8))
         ],
       ),
     );

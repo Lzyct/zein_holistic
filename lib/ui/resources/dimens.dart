@@ -27,5 +27,10 @@ class Dimens {
   static double defaultLabel = 120.w;
   static const double elevation = 5;
 
+  static double space8 = 8.w;
+  static double space16 = 16.w;
+  static double space12 = 12.w;
   static double radius = 30.w;
+  static double space4 = 4.w;
+  static double space24 = 24.w;
 }

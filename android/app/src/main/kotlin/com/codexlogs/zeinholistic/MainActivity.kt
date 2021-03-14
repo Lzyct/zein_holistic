@@ -1,4 +1,4 @@
-package com.codexlogs.zeinholistic
+package com.codelogs.zeinholistic
 
 import io.flutter.embedding.android.FlutterActivity
 import io.flutter.plugins.GeneratedPluginRegistrant

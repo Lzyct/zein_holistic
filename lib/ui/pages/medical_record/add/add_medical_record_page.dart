@@ -57,99 +57,101 @@ class _AddMedicalRecordPageState extends State<AddMedicalRecordPage> {
   Widget build(BuildContext context) {
     return Parent(
       appBar: context.appBar(title: Strings.addMedicalRecord),
-      child: SingleChildScrollView(
-        child: BlocListener(
-          bloc: _addMedicalRecordBloc,
-          listener: (_, dynamic state) {
-            switch (state.status) {
-              case Status.LOADING:
-                {
-                  Strings.pleaseWait.toToastLoading();
-                }
-                break;
-              case Status.ERROR:
-                {
-                  state.message.toString().toToastError();
-                }
-                break;
-              case Status.SUCCESS:
-                {
-                  Strings.successSaveData.toToastSuccess();
-                  Navigator.pop(context);
-                }
-                break;
-            }
-          },
-          child: Form(
-            key: _formKey,
-            child: Column(
-              children: [
-                TextF(
-                  hint: Strings.mainComplaint,
-                  textInputAction: TextInputAction.next,
-                  controller: _conMainComplaint,
-                  curFocusNode: _fnMainComplaint,
-                  nextFocusNode: _fnAdditionalComplaint,
-                  validator: (String? value) =>
-                      value!.isEmpty ? Strings.errorEmpty : null,
-                ),
-                TextF(
-                  hint: Strings.additionalComplaint,
-                  textInputAction: TextInputAction.next,
-                  controller: _conAdditionalComplaint,
-                  curFocusNode: _fnAdditionalComplaint,
-                  nextFocusNode: _fnHistoryOfDisease,
-                ),
-                TextF(
-                  hint: Strings.historyOfDisease,
-                  textInputAction: TextInputAction.next,
-                  controller: _conHistoryOfDisease,
-                  curFocusNode: _fnHistoryOfDisease,
-                  nextFocusNode: _fnConclusionDiagnosis,
-                ),
-                TextF(
-                  hint: Strings.conclusionDiagnosis,
-                  textInputAction: TextInputAction.next,
-                  controller: _conConclusionDiagnosis,
-                  curFocusNode: _fnConclusionDiagnosis,
-                  nextFocusNode: _fnSuggestion,
-                ),
-                TextF(
-                  hint: Strings.suggestion,
-                  textInputAction: TextInputAction.next,
-                  controller: _conSuggestion,
-                  curFocusNode: _fnSuggestion,
-                  nextFocusNode: _fnExaminer,
-                ),
-                TextF(
-                  hint: Strings.examiner,
-                  textInputAction: TextInputAction.done,
-                  controller: _conExaminer,
-                  curFocusNode: _fnExaminer,
-                  validator: (String? value) =>
-                      value!.isEmpty ? Strings.errorEmpty : null,
-                ),
-                SizedBox(height: context.dp16()),
-                Button(
-                  title: Strings.save,
-                  color: Palette.colorPrimary,
-                  onPressed: () {
-                    if (_formKey.currentState!.validate()) {
-                      var _params = {
-                        'idPatient': widget.idPatient,
-                        'mainComplaint': _conMainComplaint.text,
-                        'additionalComplaint': _conAdditionalComplaint.text,
-                        'historyOfDisease': _conHistoryOfDisease.text,
-                        'checkUpResult': _conCheckUpResult.text,
-                        'conclusionDiagnosis': _conConclusionDiagnosis.text,
-                        'suggestion': _conSuggestion.text,
-                        'examiner': _conExaminer.text
-                      };
-                      _addMedicalRecordBloc.addMedicalRecord(_params);
-                    }
-                  },
-                )
-              ],
+      child: Scrollbar(
+        child: SingleChildScrollView(
+          child: BlocListener(
+            bloc: _addMedicalRecordBloc,
+            listener: (_, dynamic state) {
+              switch (state.status) {
+                case Status.LOADING:
+                  {
+                    Strings.pleaseWait.toToastLoading();
+                  }
+                  break;
+                case Status.ERROR:
+                  {
+                    state.message.toString().toToastError();
+                  }
+                  break;
+                case Status.SUCCESS:
+                  {
+                    Strings.successSaveData.toToastSuccess();
+                    Navigator.pop(context);
+                  }
+                  break;
+              }
+            },
+            child: Form(
+              key: _formKey,
+              child: Column(
+                children: [
+                  TextF(
+                    hint: Strings.mainComplaint,
+                    textInputAction: TextInputAction.next,
+                    controller: _conMainComplaint,
+                    curFocusNode: _fnMainComplaint,
+                    nextFocusNode: _fnAdditionalComplaint,
+                    validator: (String? value) =>
+                        value!.isEmpty ? Strings.errorEmpty : null,
+                  ),
+                  TextF(
+                    hint: Strings.additionalComplaint,
+                    textInputAction: TextInputAction.next,
+                    controller: _conAdditionalComplaint,
+                    curFocusNode: _fnAdditionalComplaint,
+                    nextFocusNode: _fnHistoryOfDisease,
+                  ),
+                  TextF(
+                    hint: Strings.historyOfDisease,
+                    textInputAction: TextInputAction.next,
+                    controller: _conHistoryOfDisease,
+                    curFocusNode: _fnHistoryOfDisease,
+                    nextFocusNode: _fnConclusionDiagnosis,
+                  ),
+                  TextF(
+                    hint: Strings.conclusionDiagnosis,
+                    textInputAction: TextInputAction.next,
+                    controller: _conConclusionDiagnosis,
+                    curFocusNode: _fnConclusionDiagnosis,
+                    nextFocusNode: _fnSuggestion,
+                  ),
+                  TextF(
+                    hint: Strings.suggestion,
+                    textInputAction: TextInputAction.next,
+                    controller: _conSuggestion,
+                    curFocusNode: _fnSuggestion,
+                    nextFocusNode: _fnExaminer,
+                  ),
+                  TextF(
+                    hint: Strings.examiner,
+                    textInputAction: TextInputAction.done,
+                    controller: _conExaminer,
+                    curFocusNode: _fnExaminer,
+                    validator: (String? value) =>
+                        value!.isEmpty ? Strings.errorEmpty : null,
+                  ),
+                  SizedBox(height: Dimens.space16),
+                  Button(
+                    title: Strings.save,
+                    color: Palette.colorPrimary,
+                    onPressed: () {
+                      if (_formKey.currentState!.validate()) {
+                        var _params = {
+                          'idPatient': widget.idPatient,
+                          'mainComplaint': _conMainComplaint.text,
+                          'additionalComplaint': _conAdditionalComplaint.text,
+                          'historyOfDisease': _conHistoryOfDisease.text,
+                          'checkUpResult': _conCheckUpResult.text,
+                          'conclusionDiagnosis': _conConclusionDiagnosis.text,
+                          'suggestion': _conSuggestion.text,
+                          'examiner': _conExaminer.text
+                        };
+                        _addMedicalRecordBloc.addMedicalRecord(_params);
+                      }
+                    },
+                  )
+                ],
+              ),
             ),
           ),
         ),

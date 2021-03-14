@@ -36,7 +36,7 @@ class Button extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       width: width ?? context.widthInPercent(100),
-      margin: EdgeInsets.symmetric(vertical: context.dp8()),
+      margin: EdgeInsets.symmetric(vertical: Dimens.space8),
       height: height ?? 40.w,
       decoration: BoxDecorations.button.copyWith(color: color ?? Palette.blue),
       child: TextButton(
@@ -44,7 +44,7 @@ class Button extends StatelessWidget {
           style: TextButton.styleFrom(
             backgroundColor: splashColor,
             shape: new RoundedRectangleBorder(
-                borderRadius: new BorderRadius.circular(context.dp4())),
+                borderRadius: new BorderRadius.circular(Dimens.space4)),
             padding: EdgeInsets.all(0.0),
           ),
           child: Text(

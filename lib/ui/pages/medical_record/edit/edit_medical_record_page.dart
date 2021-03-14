@@ -69,146 +69,148 @@ class _EditMedicalRecordPageState extends State<EditMedicalRecordPage> {
     logs("isBuild");
     return Parent(
       appBar: context.appBar(title: Strings.editMedicalRecord),
-      child: SingleChildScrollView(
-        child: BlocListener(
-          bloc: _editMedicalRecordBloc,
-          listener: (_, dynamic state) {
-            switch (state.status) {
-              case Status.LOADING:
-                {
-                  Strings.pleaseWait.toToastLoading();
-                }
-                break;
-              case Status.ERROR:
-                {
-                  state.message.toString().toToastError();
-                }
-                break;
-              case Status.SUCCESS:
-                {
-                  Strings.successSaveData.toToastSuccess();
-                  Navigator.pop(context);
-                }
-                break;
-            }
-          },
-          child: BlocBuilder(
-            bloc: _detailMedicalRecordBloc,
-            builder: (_, dynamic state) {
+      child: Scrollbar(
+        child: SingleChildScrollView(
+          child: BlocListener(
+            bloc: _editMedicalRecordBloc,
+            listener: (_, dynamic state) {
               switch (state.status) {
                 case Status.LOADING:
                   {
-                    return Center(child: Loading());
+                    Strings.pleaseWait.toToastLoading();
                   }
+                  break;
                 case Status.ERROR:
                   {
-                    return Center(
-                      child: Empty(
-                        errorMessage: state.message.toString(),
-                      ),
-                    );
+                    state.message.toString().toToastError();
                   }
+                  break;
                 case Status.SUCCESS:
                   {
-                    //set initial data
-                    if (_isFirstLoad) {
-                      MedicalRecordEntity _medicalRecordEntity = state.data;
-                      _conMainComplaint.text =
-                          _medicalRecordEntity.mainComplaint!;
-                      _conAdditionalComplaint.text =
-                          _medicalRecordEntity.additionalComplaint!;
-                      _conHistoryOfDisease.text =
-                          _medicalRecordEntity.historyOfDisease!;
-                      _conCheckUpResult.text =
-                          _medicalRecordEntity.checkUpResult!;
-                      _conConclusionDiagnosis.text =
-                          _medicalRecordEntity.conclusionDiagnosis!;
-                      _conSuggestion.text = _medicalRecordEntity.suggestion!;
-                      _conExaminer.text = _medicalRecordEntity.examiner!;
-
-                      _isFirstLoad = false;
-                    }
-                    return Form(
-                      key: _formKey,
-                      child: Column(
-                        children: [
-                          TextF(
-                            hint: Strings.mainComplaint,
-                            textInputAction: TextInputAction.next,
-                            controller: _conMainComplaint,
-                            curFocusNode: _fnMainComplaint,
-                            nextFocusNode: _fnAdditionalComplaint,
-                            validator: (value) =>
-                                value.isEmpty ? Strings.errorEmpty : null,
-                          ),
-                          TextF(
-                            hint: Strings.additionalComplaint,
-                            textInputAction: TextInputAction.next,
-                            controller: _conAdditionalComplaint,
-                            curFocusNode: _fnAdditionalComplaint,
-                            nextFocusNode: _fnHistoryOfDisease,
-                          ),
-                          TextF(
-                            hint: Strings.historyOfDisease,
-                            textInputAction: TextInputAction.next,
-                            controller: _conHistoryOfDisease,
-                            curFocusNode: _fnHistoryOfDisease,
-                            nextFocusNode: _fnConclusionDiagnosis,
-                          ),
-                          TextF(
-                            hint: Strings.conclusionDiagnosis,
-                            textInputAction: TextInputAction.next,
-                            controller: _conConclusionDiagnosis,
-                            curFocusNode: _fnConclusionDiagnosis,
-                            nextFocusNode: _fnSuggestion,
-                          ),
-                          TextF(
-                            hint: Strings.suggestion,
-                            textInputAction: TextInputAction.next,
-                            controller: _conSuggestion,
-                            curFocusNode: _fnSuggestion,
-                            nextFocusNode: _fnExaminer,
-                          ),
-                          TextF(
-                            hint: Strings.examiner,
-                            textInputAction: TextInputAction.next,
-                            controller: _conExaminer,
-                            curFocusNode: _fnExaminer,
-                            nextFocusNode: null,
-                            validator: (value) =>
-                                value.isEmpty ? Strings.errorEmpty : null,
-                          ),
-                          SizedBox(height: context.dp16()),
-                          Button(
-                            title: Strings.save,
-                            color: Palette.colorPrimary,
-                            onPressed: () {
-                              if (_formKey.currentState!.validate()) {
-                                var _params = {
-                                  'id': widget.id,
-                                  'mainComplaint': _conMainComplaint.text,
-                                  'additionalComplaint':
-                                      _conAdditionalComplaint.text,
-                                  'historyOfDisease': _conHistoryOfDisease.text,
-                                  'checkUpResult': _conCheckUpResult.text,
-                                  'conclusionDiagnosis':
-                                      _conConclusionDiagnosis.text,
-                                  'suggestion': _conSuggestion.text,
-                                  'examiner': _conExaminer.text
-                                };
-                                _editMedicalRecordBloc
-                                    .editMedicalRecord(_params);
-                              }
-                            },
-                          )
-                        ],
-                      ),
-                    );
+                    Strings.successSaveData.toToastSuccess();
+                    Navigator.pop(context);
                   }
-                default:
-                  return Container();
+                  break;
               }
             },
+            child: BlocBuilder(
+              bloc: _detailMedicalRecordBloc,
+              builder: (_, dynamic state) {
+                switch (state.status) {
+                  case Status.LOADING:
+                    {
+                      return Center(child: Loading());
+                    }
+                  case Status.ERROR:
+                    {
+                      return Center(
+                        child: Empty(
+                          errorMessage: state.message.toString(),
+                        ),
+                      );
+                    }
+                  case Status.SUCCESS:
+                    {
+                      //set initial data
+                      if (_isFirstLoad) {
+                        MedicalRecordEntity _medicalRecordEntity = state.data;
+                        _conMainComplaint.text =
+                            _medicalRecordEntity.mainComplaint!;
+                        _conAdditionalComplaint.text =
+                            _medicalRecordEntity.additionalComplaint!;
+                        _conHistoryOfDisease.text =
+                            _medicalRecordEntity.historyOfDisease!;
+                        _conCheckUpResult.text =
+                            _medicalRecordEntity.checkUpResult!;
+                        _conConclusionDiagnosis.text =
+                            _medicalRecordEntity.conclusionDiagnosis!;
+                        _conSuggestion.text = _medicalRecordEntity.suggestion!;
+                        _conExaminer.text = _medicalRecordEntity.examiner!;
+
+                        _isFirstLoad = false;
+                      }
+                      return Form(
+                        key: _formKey,
+                        child: Column(
+                          children: [
+                            TextF(
+                              hint: Strings.mainComplaint,
+                              textInputAction: TextInputAction.next,
+                              controller: _conMainComplaint,
+                              curFocusNode: _fnMainComplaint,
+                              nextFocusNode: _fnAdditionalComplaint,
+                              validator: (value) =>
+                                  value.isEmpty ? Strings.errorEmpty : null,
+                            ),
+                            TextF(
+                              hint: Strings.additionalComplaint,
+                              textInputAction: TextInputAction.next,
+                              controller: _conAdditionalComplaint,
+                              curFocusNode: _fnAdditionalComplaint,
+                              nextFocusNode: _fnHistoryOfDisease,
+                            ),
+                            TextF(
+                              hint: Strings.historyOfDisease,
+                              textInputAction: TextInputAction.next,
+                              controller: _conHistoryOfDisease,
+                              curFocusNode: _fnHistoryOfDisease,
+                              nextFocusNode: _fnConclusionDiagnosis,
+                            ),
+                            TextF(
+                              hint: Strings.conclusionDiagnosis,
+                              textInputAction: TextInputAction.next,
+                              controller: _conConclusionDiagnosis,
+                              curFocusNode: _fnConclusionDiagnosis,
+                              nextFocusNode: _fnSuggestion,
+                            ),
+                            TextF(
+                              hint: Strings.suggestion,
+                              textInputAction: TextInputAction.next,
+                              controller: _conSuggestion,
+                              curFocusNode: _fnSuggestion,
+                              nextFocusNode: _fnExaminer,
+                            ),
+                            TextF(
+                              hint: Strings.examiner,
+                              textInputAction: TextInputAction.next,
+                              controller: _conExaminer,
+                              curFocusNode: _fnExaminer,
+                              nextFocusNode: null,
+                              validator: (value) =>
+                                  value.isEmpty ? Strings.errorEmpty : null,
+                            ),
+                            SizedBox(height: Dimens.space16),
+                            Button(
+                              title: Strings.save,
+                              color: Palette.colorPrimary,
+                              onPressed: () {
+                                if (_formKey.currentState!.validate()) {
+                                  var _params = {
+                                    'id': widget.id,
+                                    'mainComplaint': _conMainComplaint.text,
+                                    'additionalComplaint':
+                                        _conAdditionalComplaint.text,
+                                    'historyOfDisease': _conHistoryOfDisease.text,
+                                    'checkUpResult': _conCheckUpResult.text,
+                                    'conclusionDiagnosis':
+                                        _conConclusionDiagnosis.text,
+                                    'suggestion': _conSuggestion.text,
+                                    'examiner': _conExaminer.text
+                                  };
+                                  _editMedicalRecordBloc
+                                      .editMedicalRecord(_params);
+                                }
+                              },
+                            )
+                          ],
+                        ),
+                      );
+                    }
+                  default:
+                    return Container();
+                }
+              },
+            ),
           ),
         ),
       ),

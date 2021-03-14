@@ -1,7 +1,9 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:zein_holistic/core/extensions/extensions.dart';
 import 'package:zein_holistic/ui/resources/resources.dart';
+import 'package:zein_holistic/utils/utils.dart';
 
 ///*********************************************
 /// Created by ukietux on 25/06/20 with ♥
@@ -16,6 +18,7 @@ class Empty extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    logs("normal font size ${Dimens.fontNormal}");
     return Center(
       child: Column(
         mainAxisSize: MainAxisSize.max,
@@ -24,13 +27,14 @@ class Empty extends StatelessWidget {
         children: [
           SvgPicture.asset(
             Images.imgNoData,
-            width: context.widthInPercent(50),
+            width: context.widthInPercent(kIsWeb ? 25 : 50),
+            height: context.widthInPercent(kIsWeb ? 25 : 50),
           ),
           SizedBox(
-            height: context.dp16(),
+            height: Dimens.space16,
           ),
           Text(
-            errorMessage!,
+            errorMessage ?? Strings.dataNotFound,
             textAlign: TextAlign.center,
             style: TextStyles.textHint,
           )

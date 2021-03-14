@@ -88,14 +88,14 @@ class _ListMedicalRecordPageState extends State<ListMedicalRecordPage> {
                     ),
                     CircleAvatar(
                         backgroundColor: Colors.white,
-                        maxRadius: context.dp16(),
+                        maxRadius: Dimens.space16,
                         child: SvgPicture.asset(
                           widget.patientEntity!.sex == Strings.man
                               ? Images.icMan
                               : Images.icWoman,
                           color: Palette.colorPrimary,
                         )),
-                    SizedBox(width: context.dp4()),
+                    SizedBox(width: Dimens.space4),
                     Text(
                       calculateAge(
                           widget.patientEntity!.dateBirth!.toDateTime()),
@@ -109,10 +109,10 @@ class _ListMedicalRecordPageState extends State<ListMedicalRecordPage> {
                   Icon(
                     Icons.calendar_today,
                     color: Colors.white,
-                    size: context.dp16(),
+                    size: Dimens.space16,
                   ),
                   SizedBox(
-                    width: context.dp8(),
+                    width: Dimens.space8,
                   ),
                   Text(
                     widget.patientEntity!.dateBirth!,
@@ -121,15 +121,15 @@ class _ListMedicalRecordPageState extends State<ListMedicalRecordPage> {
                         TextStyles.white.copyWith(fontSize: Dimens.fontSmall),
                   )
                 ]),
-                SizedBox(height: context.dp4()),
+                SizedBox(height: Dimens.space4),
                 Row(children: [
                   Icon(
                     Icons.location_city_outlined,
                     color: Colors.white,
-                    size: context.dp16(),
+                    size: Dimens.space16,
                   ),
                   SizedBox(
-                    width: context.dp8(),
+                    width: Dimens.space8,
                   ),
                   Text(
                     widget.patientEntity!.address!,
@@ -141,11 +141,11 @@ class _ListMedicalRecordPageState extends State<ListMedicalRecordPage> {
               ],
             ).padding(
                 edgeInsets: EdgeInsets.only(
-                    bottom: context.dp24(),
-                    left: context.dp16(),
-                    right: context.dp16())),
+                    bottom: Dimens.space24,
+                    left: Dimens.space16,
+                    right: Dimens.space16)),
           ),
-          SizedBox(height: context.dp4()),
+          SizedBox(height: Dimens.space4),
           AnimatedSearchBar(
             label: Strings.searchMedicalRecord,
             labelStyle: TextStyles.textBold,
@@ -154,10 +154,10 @@ class _ListMedicalRecordPageState extends State<ListMedicalRecordPage> {
                 alignLabelWithHint: true,
                 hintText: Strings.searchMedicalRecordHint,
                 hintStyle: TextStyles.textHint,
-                contentPadding: EdgeInsets.symmetric(horizontal: context.dp8()),
+                contentPadding: EdgeInsets.symmetric(horizontal: Dimens.space8),
                 border: OutlineInputBorder(
                   gapPadding: 0,
-                  borderRadius: BorderRadius.circular(context.dp4()),
+                  borderRadius: BorderRadius.circular(Dimens.space4),
                   borderSide: BorderSide(
                     color: Palette.colorPrimary,
                     width: 1.0,
@@ -169,7 +169,7 @@ class _ListMedicalRecordPageState extends State<ListMedicalRecordPage> {
               _getMedicalRecord();
             },
           ).margin(
-              edgeInsets: EdgeInsets.symmetric(horizontal: context.dp16())),
+              edgeInsets: EdgeInsets.symmetric(horizontal: Dimens.space16)),
           Expanded(
             child: BlocBuilder(
               bloc: _listMedicalRecordBloc,
@@ -234,7 +234,7 @@ class _ListMedicalRecordPageState extends State<ListMedicalRecordPage> {
               Icons.delete,
               color: Colors.white,
             ),
-            SizedBox(width: context.dp16()),
+            SizedBox(width: Dimens.space16),
             Text(
               Strings.delete,
               style: TextStyles.white,
@@ -251,7 +251,7 @@ class _ListMedicalRecordPageState extends State<ListMedicalRecordPage> {
               Icons.edit,
               color: Colors.white,
             ),
-            SizedBox(width: context.dp16()),
+            SizedBox(width: Dimens.space16),
             Text(
               Strings.edit,
               style: TextStyles.white,
@@ -349,15 +349,15 @@ class _ListMedicalRecordPageState extends State<ListMedicalRecordPage> {
                   )
                 ],
               ),
-              SizedBox(height: context.dp8()),
+              SizedBox(height: Dimens.space8),
               Row(
                 children: [
                   Icon(
                     Icons.alarm,
-                    size: context.dp16(),
+                    size: Dimens.space16,
                     color: Palette.colorHint,
                   ),
-                  SizedBox(width: context.dp4()),
+                  SizedBox(width: Dimens.space4),
                   Text(
                     _listMedicalRecord![index].createAt!.toStringDateTime(),
                     style: TextStyles.textHint
@@ -366,7 +366,7 @@ class _ListMedicalRecordPageState extends State<ListMedicalRecordPage> {
                 ],
               )
             ],
-          ).padding(edgeInsets: EdgeInsets.all(context.dp16())),
+          ).padding(edgeInsets: EdgeInsets.all(Dimens.space16)),
           onTap: () {
             context.goTo(BlocProvider(
               create: (_) => DetailMedicalRecordBloc(),

@@ -179,26 +179,27 @@ extension ContextExtensions on BuildContext {
         isScrollControlled: true,
         shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.only(
-          topLeft: Radius.circular(dp16()),
-          topRight: Radius.circular(dp16()),
+          topLeft: Radius.circular(Dimens.space16),
+          topRight: Radius.circular(Dimens.space16),
         )),
         backgroundColor: Colors.white,
-        elevation: dp16(),
+        elevation: Dimens.space16,
         builder: (context) {
           return Container(
-            padding: EdgeInsets.symmetric(vertical: dp16(), horizontal: dp24()),
+            padding: EdgeInsets.symmetric(
+                vertical: Dimens.space16, horizontal: Dimens.space24),
             height: height ?? heightInPercent(80),
             decoration: BoxDecoration(
                 borderRadius: BorderRadius.only(
-              topLeft: Radius.circular(dp16()),
-              topRight: Radius.circular(dp16()),
+              topLeft: Radius.circular(Dimens.space16),
+              topRight: Radius.circular(Dimens.space16),
             )),
             child: Column(
               children: [
                 Container(
                   width: Dimens.bottomButton,
                   height: Dimens.elevation,
-                  margin: EdgeInsets.only(bottom: dp16()),
+                  margin: EdgeInsets.only(bottom: Dimens.space16),
                   decoration: BoxDecoration(
                       color: Palette.bottomIndicator,
                       borderRadius: BorderRadius.all(Radius.circular(30))),
@@ -208,7 +209,7 @@ extension ContextExtensions on BuildContext {
                   style: TextStyles.text.copyWith(
                       fontSize: Dimens.fontLarge2, fontWeight: FontWeight.w600),
                 ),
-                SizedBox(height: dp16()),
+                SizedBox(height: Dimens.space16),
                 Expanded(
                   child: child,
                 )
@@ -231,7 +232,7 @@ extension ContextExtensions on BuildContext {
     return MediaQuery.of(this).size.height * toDouble;
   }
 
-  dp2() {
+/*  dp2() {
     return MediaQuery.of(this).size.width / 120;
   }
 
@@ -297,7 +298,7 @@ extension ContextExtensions on BuildContext {
 
   dp36() {
     return MediaQuery.of(this).size.width / 6;
-  }
+  }*/
 
   logout() {
     //clear shared Preferences
