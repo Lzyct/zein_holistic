@@ -9,6 +9,7 @@ import 'package:zein_holistic/core/extensions/extensions.dart';
 import 'package:zein_holistic/ui/pages/pages.dart';
 import 'package:zein_holistic/ui/resources/resources.dart';
 import 'package:zein_holistic/ui/widgets/widgets.dart';
+import 'package:zein_holistic/utils/utils.dart';
 
 ///*********************************************
 /// Created by ukietux on 25/08/20 with ♥
@@ -36,6 +37,7 @@ class _ListPatientPageState extends State<ListPatientPage> {
     _deletePatientBloc = BlocProvider.of(context);
     _getPatient();
   }
+
   @override
   void dispose() {
     super.dispose();
@@ -77,8 +79,7 @@ class _ListPatientPageState extends State<ListPatientPage> {
             decoration: BoxDecoration(
                 color: Colors.white,
                 borderRadius: BorderRadius.only(
-                    bottomLeft: Radius.circular(Dimens.radius),
-                    bottomRight: Radius.circular(Dimens.radius)),
+                    bottomLeft: Radius.circular(Dimens.radius), bottomRight: Radius.circular(Dimens.radius)),
                 boxShadow: [BoxShadows.primary]),
             child: Column(
               children: [
@@ -89,8 +90,7 @@ class _ListPatientPageState extends State<ListPatientPage> {
                       alignLabelWithHint: true,
                       hintText: Strings.searchPatientHint,
                       hintStyle: TextStyles.textHint,
-                      contentPadding:
-                          EdgeInsets.symmetric(horizontal: Dimens.space8),
+                      contentPadding: EdgeInsets.symmetric(horizontal: Dimens.space8),
                       border: OutlineInputBorder(
                         gapPadding: 0,
                         borderRadius: BorderRadius.circular(Dimens.space4),
@@ -107,10 +107,7 @@ class _ListPatientPageState extends State<ListPatientPage> {
                 )
               ],
             ).padding(
-                edgeInsets: EdgeInsets.only(
-                    bottom: Dimens.space16,
-                    left: Dimens.space16,
-                    right: Dimens.space16))),
+                edgeInsets: EdgeInsets.only(bottom: Dimens.space16, left: Dimens.space16, right: Dimens.space16))),
         Expanded(
             child: BlocBuilder(
           bloc: _listPatientBloc,
@@ -132,6 +129,7 @@ class _ListPatientPageState extends State<ListPatientPage> {
                 break;
               case Status.ERROR:
                 {
+                  logs(state.message.toString());
                   return Center(
                     child: Empty(
                       errorMessage: state.message.toString(),
@@ -165,8 +163,7 @@ class _ListPatientPageState extends State<ListPatientPage> {
       floatingButton: FloatingActionButton(
           backgroundColor: Palette.colorPrimary,
           onPressed: () async {
-            await context.goTo(BlocProvider(
-                create: (_) => AddPatientBloc(), child: AddPatientPage()));
+            await context.goTo(BlocProvider(create: (_) => AddPatientBloc(), child: AddPatientPage()));
             _getPatient();
           },
           tooltip: Strings.addPatient,
@@ -229,9 +226,7 @@ class _ListPatientPageState extends State<ListPatientPage> {
                       text: Strings.askDeletePatient,
                       style: TextStyles.text,
                     ),
-                    TextSpan(
-                        text: " ${_listPatient![index].name} ",
-                        style: TextStyles.textBold),
+                    TextSpan(text: " ${_listPatient![index].name} ", style: TextStyles.textBold),
                     TextSpan(
                       text: Strings.questionMark,
                       style: TextStyles.text,
@@ -245,8 +240,7 @@ class _ListPatientPageState extends State<ListPatientPage> {
                       style: TextStyles.textHint,
                     ),
                     onPressed: () {
-                      Navigator.pop(
-                          dialogContext, false); // Dismiss alert dialog
+                      Navigator.pop(dialogContext, false); // Dismiss alert dialog
                     },
                   ),
                   TextButton(
@@ -257,8 +251,7 @@ class _ListPatientPageState extends State<ListPatientPage> {
                     onPressed: () {
                       _deletePatientBloc.deletePatient(_listPatient![index].id);
                       _getPatient();
-                      Navigator.pop(
-                          dialogContext, true); // Dismiss alert dialog
+                      Navigator.pop(dialogContext, true); // Dismiss alert dialog
                     },
                   ),
                 ],
@@ -294,8 +287,7 @@ class _ListPatientPageState extends State<ListPatientPage> {
                   ),
                   Text(
                     _listPatient![index].phoneNumber!,
-                    style: TextStyles.textHint
-                        .copyWith(fontSize: Dimens.fontSmall),
+                    style: TextStyles.textHint.copyWith(fontSize: Dimens.fontSmall),
                   )
                 ],
               ),

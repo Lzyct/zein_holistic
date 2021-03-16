@@ -19,8 +19,7 @@ class DetailMedicalRecordPage extends StatefulWidget {
   final String? id;
 
   @override
-  _DetailMedicalRecordPageState createState() =>
-      _DetailMedicalRecordPageState();
+  _DetailMedicalRecordPageState createState() => _DetailMedicalRecordPageState();
 }
 
 class _DetailMedicalRecordPageState extends State<DetailMedicalRecordPage> {
@@ -40,6 +39,7 @@ class _DetailMedicalRecordPageState extends State<DetailMedicalRecordPage> {
     _detailMedicalRecordBloc = BlocProvider.of(context);
     _detailMedicalRecordBloc.getDetailMedicalRecord(widget.id);
   }
+
   @override
   void dispose() {
     super.dispose();
@@ -73,13 +73,10 @@ class _DetailMedicalRecordPageState extends State<DetailMedicalRecordPage> {
                     //set initial data
                     MedicalRecordEntity _medicalRecordEntity = state.data;
                     _conMainComplaint.text = _medicalRecordEntity.mainComplaint!;
-                    _conAdditionalComplaint.text =
-                        _medicalRecordEntity.additionalComplaint!;
-                    _conHistoryOfDisease.text =
-                        _medicalRecordEntity.historyOfDisease!;
+                    _conAdditionalComplaint.text = _medicalRecordEntity.additionalComplaint!;
+                    _conHistoryOfDisease.text = _medicalRecordEntity.historyOfDisease!;
                     _conCheckUpResult.text = _medicalRecordEntity.checkUpResult!;
-                    _conConclusionDiagnosis.text =
-                        _medicalRecordEntity.conclusionDiagnosis!;
+                    _conConclusionDiagnosis.text = _medicalRecordEntity.conclusionDiagnosis!;
                     _conSuggestion.text = _medicalRecordEntity.suggestion!;
                     _conExaminer.text = _medicalRecordEntity.examiner!;
                     return Form(
@@ -90,8 +87,7 @@ class _DetailMedicalRecordPageState extends State<DetailMedicalRecordPage> {
                             textInputAction: TextInputAction.next,
                             controller: _conMainComplaint,
                             curFocusNode: DisableFocusNode(),
-                            validator: (value) =>
-                                value.isEmpty ? Strings.errorEmpty : null,
+                            validator: (String? value) => value!.isEmpty ? Strings.errorEmpty : null,
                           ),
                           TextF(
                             hint: Strings.additionalComplaint,

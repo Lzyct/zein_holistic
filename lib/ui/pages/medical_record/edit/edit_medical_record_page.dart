@@ -114,16 +114,11 @@ class _EditMedicalRecordPageState extends State<EditMedicalRecordPage> {
                       //set initial data
                       if (_isFirstLoad) {
                         MedicalRecordEntity _medicalRecordEntity = state.data;
-                        _conMainComplaint.text =
-                            _medicalRecordEntity.mainComplaint!;
-                        _conAdditionalComplaint.text =
-                            _medicalRecordEntity.additionalComplaint!;
-                        _conHistoryOfDisease.text =
-                            _medicalRecordEntity.historyOfDisease!;
-                        _conCheckUpResult.text =
-                            _medicalRecordEntity.checkUpResult!;
-                        _conConclusionDiagnosis.text =
-                            _medicalRecordEntity.conclusionDiagnosis!;
+                        _conMainComplaint.text = _medicalRecordEntity.mainComplaint!;
+                        _conAdditionalComplaint.text = _medicalRecordEntity.additionalComplaint!;
+                        _conHistoryOfDisease.text = _medicalRecordEntity.historyOfDisease!;
+                        _conCheckUpResult.text = _medicalRecordEntity.checkUpResult!;
+                        _conConclusionDiagnosis.text = _medicalRecordEntity.conclusionDiagnosis!;
                         _conSuggestion.text = _medicalRecordEntity.suggestion!;
                         _conExaminer.text = _medicalRecordEntity.examiner!;
 
@@ -139,8 +134,7 @@ class _EditMedicalRecordPageState extends State<EditMedicalRecordPage> {
                               controller: _conMainComplaint,
                               curFocusNode: _fnMainComplaint,
                               nextFocusNode: _fnAdditionalComplaint,
-                              validator: (value) =>
-                                  value.isEmpty ? Strings.errorEmpty : null,
+                              validator: (String? value) => value!.isEmpty ? Strings.errorEmpty : null,
                             ),
                             TextF(
                               hint: Strings.additionalComplaint,
@@ -176,8 +170,7 @@ class _EditMedicalRecordPageState extends State<EditMedicalRecordPage> {
                               controller: _conExaminer,
                               curFocusNode: _fnExaminer,
                               nextFocusNode: null,
-                              validator: (value) =>
-                                  value.isEmpty ? Strings.errorEmpty : null,
+                              validator: (String? value) => value!.isEmpty ? Strings.errorEmpty : null,
                             ),
                             SizedBox(height: Dimens.space16),
                             Button(
@@ -188,17 +181,14 @@ class _EditMedicalRecordPageState extends State<EditMedicalRecordPage> {
                                   var _params = {
                                     'id': widget.id,
                                     'mainComplaint': _conMainComplaint.text,
-                                    'additionalComplaint':
-                                        _conAdditionalComplaint.text,
+                                    'additionalComplaint': _conAdditionalComplaint.text,
                                     'historyOfDisease': _conHistoryOfDisease.text,
                                     'checkUpResult': _conCheckUpResult.text,
-                                    'conclusionDiagnosis':
-                                        _conConclusionDiagnosis.text,
+                                    'conclusionDiagnosis': _conConclusionDiagnosis.text,
                                     'suggestion': _conSuggestion.text,
                                     'examiner': _conExaminer.text
                                   };
-                                  _editMedicalRecordBloc
-                                      .editMedicalRecord(_params);
+                                  _editMedicalRecordBloc.editMedicalRecord(_params);
                                 }
                               },
                             )
