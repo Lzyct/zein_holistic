@@ -3,12 +3,14 @@ import 'package:flutter/services.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter_screenutil/screenutil_init.dart';
 import 'package:oktoast/oktoast.dart';
+import 'package:sqflite_common_ffi/sqflite_ffi.dart';
 import 'package:zein_holistic/di/di.dart';
 import 'package:zein_holistic/ui/pages/splashscreen/splash_screen_page.dart';
 import 'package:zein_holistic/ui/resources/resources.dart';
 import 'package:zein_holistic/utils/utils.dart';
 
 void main() async {
+  sqfliteFfiInit();
   serviceLocator();
 
 /*  Crashlytics.instance.enableInDevMode = true;
