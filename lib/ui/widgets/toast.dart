@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_screenutil/size_extension.dart';
+import 'package:zein_holistic/core/extensions/extensions.dart';
 import 'package:zein_holistic/ui/resources/resources.dart';
 
 ///*********************************************
@@ -29,7 +29,10 @@ class Toast extends StatelessWidget {
             color: bgColor,
             borderRadius: BorderRadius.circular(15),
           ),
-          padding: EdgeInsets.symmetric(vertical: 8.h, horizontal: 16),
+          padding: EdgeInsets.symmetric(
+            vertical: context.dp8(),
+            horizontal: 16,
+          ),
           child: Row(
             crossAxisAlignment: CrossAxisAlignment.center,
             mainAxisAlignment: MainAxisAlignment.center,
@@ -39,10 +42,11 @@ class Toast extends StatelessWidget {
                 color: textColor,
               ),
               SizedBox(
-                width: 4.w,
+                width: context.dp4(),
               ),
               Container(
-                constraints: BoxConstraints(maxWidth: 250.w),
+                constraints:
+                    BoxConstraints(maxWidth: context.widthInPercent(50)),
                 child: Text(
                   message!,
                   style: TextStyles.text.copyWith(color: textColor),

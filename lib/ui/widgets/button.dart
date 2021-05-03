@@ -1,6 +1,5 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:zein_holistic/core/extensions/extensions.dart';
 import 'package:zein_holistic/ui/resources/resources.dart';
 
@@ -37,7 +36,7 @@ class Button extends StatelessWidget {
     return Container(
       width: width ?? context.widthInPercent(100),
       margin: EdgeInsets.symmetric(vertical: Dimens.space8),
-      height: height ?? 40.w,
+      height: height ?? 40,
       decoration: BoxDecorations.button.copyWith(color: color ?? Palette.blue),
       child: TextButton(
           onPressed: onPressed as void Function()?,
