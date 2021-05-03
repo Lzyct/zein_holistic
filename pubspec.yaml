@@ -32,16 +32,16 @@ dependencies:
   cupertino_icons: ^1.0.2
 
   # Use as default SVG image loader, prefer use SVG as image asset
-  flutter_svg: ^0.21.0-nullsafety.0
+  flutter_svg: ^0.22.0
 
   # Use as sharedPreferences to save local data
-  shared_preferences: ^2.0.3
+  shared_preferences: ^2.0.5
 
   # Use for Dependencies Injection
-  get_it: ^6.0.0
+  get_it: ^6.1.1
 
   # Use for State Management with BLoC patter
-  flutter_bloc: ^7.0.0-nullsafety.4
+  flutter_bloc: ^7.0.0
 
   # Use for Time/Date Format
   intl: ^0.17.0
@@ -50,23 +50,30 @@ dependencies:
   oktoast: ^3.0.0
 
   # Use for responsive UI, set default size base on Mock Up
-  flutter_screenutil: ^5.0.0-nullsafety.7
+  # flutter_screenutil: ^5.0.0 #disable not support layout builder changes
 
   # Use as path reader for Android and iOS
   path_provider: ^2.0.1
 
   # Use for request permission
-  permission_handler: ^6.0.1
+  permission_handler: ^7.0.0
 
   # search
   animated_search_bar: ^2.0.0
 
-  flutter_toggle_tab: ^1.0.0
+  flutter_toggle_tab: ^1.1.0
 
-  sqflite: ^2.0.0+2
-  sqflite_common_ffi: ^2.0.0
+  # Hive no SQL
+  #  hive: ^2.0.4
+  #  hive_flutter: ^1.0.0
+  #  hive_generator: ^1.1.0
+  #  build_runner: ^2.0.1
 
-  file_picker: ^3.0.0
+  # replace sqflite with hive
+  sqflite: ^2.0.0+3
+  #  sqflite_common_ffi: ^2.0.0
+
+  file_picker: ^3.0.1
 
   # Some good library, eneble it if you need
   #flutter_html: ^1.0.2
