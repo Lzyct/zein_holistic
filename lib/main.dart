@@ -55,7 +55,7 @@ class _MyAppState extends State<MyApp> {
           return MaterialPageRoute(
               builder: (context) => builder!(context), settings: settings);
         },
-        initialRoute: AppRoute.splashScreen,
+        initialRoute: AppRoute.listPatient,
       ),
     );
   }

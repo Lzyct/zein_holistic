@@ -10,6 +10,7 @@ class AppRoute {
   //define page route name
   static const String splashScreen = "splashscreen";
   static const String mainScreen = "main";
+
   // patient
   static const String listPatient = "patient/list";
   static const String addPatient = "patient/add";
@@ -23,7 +24,6 @@ class AppRoute {
 
   //define page route
   static Map<String, WidgetBuilder> getRoutes({RouteSettings? settings}) => {
-        splashScreen: (_) => SplashScreenPage(),
         addPatient: (_) => BlocProvider(
             create: (_) => AddPatientBloc(), child: AddPatientPage()),
         editPatient: (_) {
