@@ -17,33 +17,22 @@ extension ContextExtensions on BuildContext {
         "========================================================================================");
   }
 
-  goTo(Widget widget) async {
-    await Navigator.push(
-        this,
-        MaterialPageRoute(
-          builder: (context) => widget,
-        ));
+  goTo(String routeName, {Object? args}) async {
+    await Navigator.pushNamed(this, routeName, arguments: args);
   }
 
-  goToReplacePageRoute(Widget widget) async {
-    await Navigator.pushReplacement(
-        this,
-        PageRouteBuilder(
-            transitionDuration: Duration(milliseconds: 1000),
-            pageBuilder: (_, __, ___) => widget));
+  goToReplacePageRoute(String routeName, {Object? args}) async {
+    await Navigator.pushReplacementNamed(this, routeName, arguments: args);
   }
 
-  goToReplace(Widget widget) async {
-    await Navigator.pushReplacement(
-        this,
-        MaterialPageRoute(
-          builder: (context) => widget,
-        ));
+  goToReplace(String routeName, {Object? args}) async {
+    await Navigator.pushReplacementNamed(this, routeName, arguments: args);
   }
 
-  goToClearStack(Widget widget) {
-    Navigator.pushAndRemoveUntil(this,
-        MaterialPageRoute(builder: (context) => widget), (route) => false);
+  goToClearStack(String routeName, {Object? args}) {
+    Navigator.pushNamedAndRemoveUntil(
+        this, routeName, (Route<dynamic> route) => false,
+        arguments: args);
   }
 
   appBar({required String title}) {
@@ -232,7 +221,7 @@ extension ContextExtensions on BuildContext {
     return MediaQuery.of(this).size.height * toDouble;
   }
 
-/*  dp2() {
+  dp2() {
     return MediaQuery.of(this).size.width / 120;
   }
 
@@ -298,7 +287,7 @@ extension ContextExtensions on BuildContext {
 
   dp36() {
     return MediaQuery.of(this).size.width / 6;
-  }*/
+  }
 
   logout() {
     //clear shared Preferences
