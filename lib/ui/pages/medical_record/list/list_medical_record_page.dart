@@ -55,11 +55,8 @@ class _ListMedicalRecordPageState extends State<ListMedicalRecordPage> {
       floatingButton: FloatingActionButton(
           backgroundColor: Palette.colorPrimary,
           onPressed: () async {
-            await context.goTo(BlocProvider(
-                create: (_) => AddMedicalRecordBloc(),
-                child: AddMedicalRecordPage(
-                  idPatient: widget.patientEntity!.id,
-                )));
+            await context.goTo(AppRoute.addMedicalRecord,
+                args: {"idPatient": widget.patientEntity?.id.toString()});
             _getMedicalRecord();
           },
           tooltip: Strings.addMedicalRecord,
@@ -315,14 +312,8 @@ class _ListMedicalRecordPageState extends State<ListMedicalRecordPage> {
             },
           );
         } else {
-          await context.goTo(MultiBlocProvider(
-              providers: [
-                BlocProvider(create: (_) => EditMedicalRecordBloc()),
-                BlocProvider(create: (_) => DetailMedicalRecordBloc()),
-              ],
-              child: EditMedicalRecordPage(
-                id: _listMedicalRecord![index].id.toString(),
-              )));
+          await context.goTo(AppRoute.editMedicalRecord,
+              args: {"id": _listMedicalRecord![index].id});
           _getMedicalRecord();
         }
         return false;
@@ -368,12 +359,8 @@ class _ListMedicalRecordPageState extends State<ListMedicalRecordPage> {
             ],
           ).padding(edgeInsets: EdgeInsets.all(Dimens.space16)),
           onTap: () {
-            context.goTo(BlocProvider(
-              create: (_) => DetailMedicalRecordBloc(),
-              child: DetailMedicalRecordPage(
-                id: _listMedicalRecord![index].id.toString(),
-              ),
-            ));
+            context.goTo(AppRoute.detailMedicalRecord,
+                args: {"id": _listMedicalRecord![index].id.toString()});
           }),
     );
   }

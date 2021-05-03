@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:intl/date_symbol_data_local.dart';
-import 'package:zein_holistic/core/blocs/blocs.dart';
 import 'package:zein_holistic/core/extensions/extensions.dart';
 import 'package:zein_holistic/di/di.dart';
 import 'package:zein_holistic/ui/pages/pages.dart';
@@ -31,10 +29,7 @@ class _SplashScreenPageState extends State<SplashScreenPage> {
     await initializeDateFormatting('id', null);
 
     Future.delayed(Duration(seconds: 1), () {
-      context.goToReplace(MultiBlocProvider(providers: [
-        BlocProvider(create: (_) => ListPatientBloc()),
-        BlocProvider(create: (_) => DeletePatientBloc())
-      ], child: ListPatientPage()));
+      context.goToReplace(AppRoute.listPatient);
     });
   }
 
