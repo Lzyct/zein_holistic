@@ -59,17 +59,6 @@ class _ListPatientPageState extends State<ListPatientPage> {
         backgroundColor: Colors.white,
         elevation: 0,
         automaticallyImplyLeading: false,
-        actions: [
-          IconButton(
-              icon: Icon(
-                Icons.settings,
-                color: Palette.colorPrimary,
-              ),
-              onPressed: () async {
-                await context.goTo(SettingsPage());
-                _getPatient();
-              })
-        ],
       ),
       isPadding: false,
       isScroll: false,
@@ -79,7 +68,8 @@ class _ListPatientPageState extends State<ListPatientPage> {
             decoration: BoxDecoration(
                 color: Colors.white,
                 borderRadius: BorderRadius.only(
-                    bottomLeft: Radius.circular(Dimens.radius), bottomRight: Radius.circular(Dimens.radius)),
+                    bottomLeft: Radius.circular(Dimens.radius),
+                    bottomRight: Radius.circular(Dimens.radius)),
                 boxShadow: [BoxShadows.primary]),
             child: Column(
               children: [
@@ -90,7 +80,8 @@ class _ListPatientPageState extends State<ListPatientPage> {
                       alignLabelWithHint: true,
                       hintText: Strings.searchPatientHint,
                       hintStyle: TextStyles.textHint,
-                      contentPadding: EdgeInsets.symmetric(horizontal: Dimens.space8),
+                      contentPadding:
+                          EdgeInsets.symmetric(horizontal: Dimens.space8),
                       border: OutlineInputBorder(
                         gapPadding: 0,
                         borderRadius: BorderRadius.circular(Dimens.space4),
@@ -107,7 +98,10 @@ class _ListPatientPageState extends State<ListPatientPage> {
                 )
               ],
             ).padding(
-                edgeInsets: EdgeInsets.only(bottom: Dimens.space16, left: Dimens.space16, right: Dimens.space16))),
+                edgeInsets: EdgeInsets.only(
+                    bottom: Dimens.space16,
+                    left: Dimens.space16,
+                    right: Dimens.space16))),
         Expanded(
             child: BlocBuilder(
           bloc: _listPatientBloc,
@@ -117,7 +111,6 @@ class _ListPatientPageState extends State<ListPatientPage> {
                 {
                   return Center(child: Loading());
                 }
-                break;
               case Status.EMPTY:
                 {
                   return Center(
@@ -126,7 +119,6 @@ class _ListPatientPageState extends State<ListPatientPage> {
                     ),
                   );
                 }
-                break;
               case Status.ERROR:
                 {
                   logs(state.message.toString());
@@ -136,7 +128,6 @@ class _ListPatientPageState extends State<ListPatientPage> {
                     ),
                   );
                 }
-                break;
               case Status.SUCCESS:
                 {
                   _listPatient = state.data;
@@ -153,7 +144,6 @@ class _ListPatientPageState extends State<ListPatientPage> {
                         }),
                   );
                 }
-                break;
               default:
                 return Container();
             }
@@ -163,7 +153,7 @@ class _ListPatientPageState extends State<ListPatientPage> {
       floatingButton: FloatingActionButton(
           backgroundColor: Palette.colorPrimary,
           onPressed: () async {
-            await context.goTo(BlocProvider(create: (_) => AddPatientBloc(), child: AddPatientPage()));
+            await context.goTo(AppRoute.addPatient);
             _getPatient();
           },
           tooltip: Strings.addPatient,
@@ -226,7 +216,9 @@ class _ListPatientPageState extends State<ListPatientPage> {
                       text: Strings.askDeletePatient,
                       style: TextStyles.text,
                     ),
-                    TextSpan(text: " ${_listPatient![index].name} ", style: TextStyles.textBold),
+                    TextSpan(
+                        text: " ${_listPatient![index].name} ",
+                        style: TextStyles.textBold),
                     TextSpan(
                       text: Strings.questionMark,
                       style: TextStyles.text,
@@ -240,7 +232,8 @@ class _ListPatientPageState extends State<ListPatientPage> {
                       style: TextStyles.textHint,
                     ),
                     onPressed: () {
-                      Navigator.pop(dialogContext, false); // Dismiss alert dialog
+                      Navigator.pop(
+                          dialogContext, false); // Dismiss alert dialog
                     },
                   ),
                   TextButton(
@@ -251,7 +244,8 @@ class _ListPatientPageState extends State<ListPatientPage> {
                     onPressed: () {
                       _deletePatientBloc.deletePatient(_listPatient![index].id);
                       _getPatient();
-                      Navigator.pop(dialogContext, true); // Dismiss alert dialog
+                      Navigator.pop(
+                          dialogContext, true); // Dismiss alert dialog
                     },
                   ),
                 ],
@@ -259,14 +253,7 @@ class _ListPatientPageState extends State<ListPatientPage> {
             },
           );
         } else {
-          await context.goTo(MultiBlocProvider(
-              providers: [
-                BlocProvider(create: (_) => EditPatientBloc()),
-                BlocProvider(create: (_) => DetailPatientBloc()),
-              ],
-              child: EditPatientPage(
-                id: _listPatient![index].id,
-              )));
+          await context.goTo(AppRoute.editPatient);
           _getPatient();
         }
         return false;
@@ -287,7 +274,8 @@ class _ListPatientPageState extends State<ListPatientPage> {
                   ),
                   Text(
                     _listPatient![index].phoneNumber!,
-                    style: TextStyles.textHint.copyWith(fontSize: Dimens.fontSmall),
+                    style: TextStyles.textHint
+                        .copyWith(fontSize: Dimens.fontSmall),
                   )
                 ],
               ),
@@ -299,21 +287,8 @@ class _ListPatientPageState extends State<ListPatientPage> {
             ],
           ).padding(edgeInsets: EdgeInsets.all(Dimens.space16)),
           onTap: () {
-            context.goTo(
-              MultiBlocProvider(
-                providers: [
-                  BlocProvider(
-                    create: (_) => ListMedicalRecordBloc(),
-                  ),
-                  BlocProvider(
-                    create: (_) => DeleteMedicalRecordBloc(),
-                  )
-                ],
-                child: ListMedicalRecordPage(
-                  patientEntity: _listPatient![index],
-                ),
-              ),
-            );
+            context.goTo(AppRoute.listMedicalRecord,
+                args: {"patient": _listPatient![index]});
           }),
     );
   }
