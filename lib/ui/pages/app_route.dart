@@ -7,20 +7,18 @@ import 'package:zein_holistic/ui/pages/pages.dart';
 class AppRoute {
   AppRoute._();
 
-  //define page route name
-  static const String splashScreen = "splashscreen";
-  static const String mainScreen = "main";
-
   // patient
-  static const String listPatient = "patient/list";
-  static const String addPatient = "patient/add";
-  static const String editPatient = "patient/edit";
+  static const String patient = "patient";
+  static const String listPatient = "$patient/list";
+  static const String addPatient = "$patient/add";
+  static const String editPatient = "$patient/edit";
 
   // medical record
-  static const String listMedicalRecord = "medical-record/list";
-  static const String addMedicalRecord = "medical-record/add";
-  static const String editMedicalRecord = "medical-record/edit";
-  static const String detailMedicalRecord = "medical-record/detail";
+  static const String medicalRecord = "medical-record";
+  static const String listMedicalRecord = "$medicalRecord/list";
+  static const String addMedicalRecord = "$medicalRecord/add";
+  static const String editMedicalRecord = "$medicalRecord/edit";
+  static const String detailMedicalRecord = "$medicalRecord/detail";
 
   //define page route
   static Map<String, WidgetBuilder> getRoutes({RouteSettings? settings}) => {
