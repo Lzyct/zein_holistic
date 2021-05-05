@@ -34,9 +34,10 @@ class Button extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      width: width ?? context.widthInPercent(100),
+      width: width,
       margin: EdgeInsets.symmetric(vertical: Dimens.space8),
-      height: height ?? 40,
+      height: height ?? 45,
+      padding: EdgeInsets.symmetric(horizontal: context.dp4()),
       decoration: BoxDecorations.button.copyWith(color: color ?? Palette.blue),
       child: TextButton(
           onPressed: onPressed as void Function()?,
@@ -47,11 +48,11 @@ class Button extends StatelessWidget {
             padding: EdgeInsets.all(0.0),
           ),
           child: Text(
-            title!,
+            title!.toUpperCase(),
             style: TextStyle(
                 color: titleColor ?? Colors.white,
                 fontSize: fontSize ?? Dimens.fontNormal,
-                fontWeight: FontWeight.w600),
+                fontWeight: FontWeight.bold),
             textAlign: TextAlign.center,
           )),
     );
