@@ -78,7 +78,7 @@ class Palette {
 }
 
 ThemeData themeDefault = ThemeData(
-  fontFamily: 'Poppins',
+  fontFamily: 'Nunito',
   backgroundColor: Palette.colorBackgroundAlt,
   primaryColor: Palette.colorPrimary,
   accentColor: Palette.colorAccent,
