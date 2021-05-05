@@ -49,7 +49,7 @@ class _ListMedicalRecordPageState extends State<ListMedicalRecordPage> {
   @override
   Widget build(BuildContext context) {
     return Parent(
-      appBar: context.appBar(title: Strings.medicalRecord),
+      appBar: context.appBar(),
       isPadding: false,
       isScroll: false,
       floatingButton: FloatingActionButton(

@@ -66,7 +66,7 @@ class _EditPatientPageState extends State<EditPatientPage> {
   @override
   Widget build(BuildContext context) {
     return Parent(
-        appBar: context.appBar(title: Strings.editPatient),
+        appBar: context.appBar(),
         child: Scrollbar(
           child: SingleChildScrollView(
             child: BlocListener(
@@ -116,7 +116,8 @@ class _EditPatientPageState extends State<EditPatientPage> {
                           _conDateBirth.text = _patientEntity.dateBirth!;
                           _conAddress.text = _patientEntity.address!;
                           _conPhoneNumber.text = _patientEntity.phoneNumber!;
-                          _conAge.text = calculateAge(_patientEntity.dateBirth!.toDateTime());
+                          _conAge.text = calculateAge(
+                              _patientEntity.dateBirth!.toDateTime());
                           _selectedSex = _patientEntity.sex;
                           _id = _patientEntity.id;
 
@@ -134,7 +135,8 @@ class _EditPatientPageState extends State<EditPatientPage> {
                                 controller: _conName,
                                 curFocusNode: _fnName,
                                 nextFocusNode: _fnDateBirth,
-                                validator: (String? value) => value!.isEmpty ? Strings.errorEmpty : null,
+                                validator: (String? value) =>
+                                    value!.isEmpty ? Strings.errorEmpty : null,
                               ),
                               Row(
                                 children: [
@@ -155,7 +157,9 @@ class _EditPatientPageState extends State<EditPatientPage> {
                                       borderRadius: Dimens.space16,
                                       unSelectedTextStyle: TextStyles.primary),
                                 ],
-                              ).margin(edgeInsets: EdgeInsets.symmetric(vertical: Dimens.space8)),
+                              ).margin(
+                                  edgeInsets: EdgeInsets.symmetric(
+                                      vertical: Dimens.space8)),
                               Row(
                                 children: [
                                   Expanded(
@@ -166,12 +170,17 @@ class _EditPatientPageState extends State<EditPatientPage> {
                                       controller: _conDateBirth,
                                       curFocusNode: DisableFocusNode(),
                                       nextFocusNode: _fnAddress,
-                                      validator: (String? value) => value!.isEmpty ? Strings.errorEmpty : null,
+                                      validator: (String? value) =>
+                                          value!.isEmpty
+                                              ? Strings.errorEmpty
+                                              : null,
                                       onTap: () async {
-                                        var _result =
-                                            await context.datePicker(currentDate: _conDateBirth.text.toDate());
+                                        var _result = await context.datePicker(
+                                            currentDate:
+                                                _conDateBirth.text.toDate());
                                         if (_result != null) {
-                                          _conDateBirth.text = _result.toString().toStringDate();
+                                          _conDateBirth.text =
+                                              _result.toString().toStringDate();
                                           _conAge.text = calculateAge(_result);
                                         }
                                       },
@@ -185,7 +194,10 @@ class _EditPatientPageState extends State<EditPatientPage> {
                                       curFocusNode: DisableFocusNode(),
                                       controller: _conAge,
                                       hint: Strings.age,
-                                      validator: (String? value) => value!.isEmpty ? Strings.errorEmpty : null,
+                                      validator: (String? value) =>
+                                          value!.isEmpty
+                                              ? Strings.errorEmpty
+                                              : null,
                                     ),
                                   ),
                                 ],
@@ -196,16 +208,20 @@ class _EditPatientPageState extends State<EditPatientPage> {
                                 controller: _conAddress,
                                 curFocusNode: _fnAddress,
                                 nextFocusNode: _fnPhoneNumber,
-                                validator: (String? value) => value!.isEmpty ? Strings.errorEmpty : null,
+                                validator: (String? value) =>
+                                    value!.isEmpty ? Strings.errorEmpty : null,
                               ),
                               TextF(
                                 hint: Strings.phoneNumber,
                                 textInputAction: TextInputAction.done,
                                 keyboardType: TextInputType.phone,
                                 controller: _conPhoneNumber,
-                                inputFormatter: [FilteringTextInputFormatter.digitsOnly],
+                                inputFormatter: [
+                                  FilteringTextInputFormatter.digitsOnly
+                                ],
                                 curFocusNode: _fnPhoneNumber,
-                                validator: (String? value) => value!.isEmpty ? Strings.errorEmpty : null,
+                                validator: (String? value) =>
+                                    value!.isEmpty ? Strings.errorEmpty : null,
                               ),
                               SizedBox(height: Dimens.space16),
                               Button(
@@ -217,9 +233,11 @@ class _EditPatientPageState extends State<EditPatientPage> {
                                       'id': _id,
                                       'name': _conName.text.toString(),
                                       'sex': _selectedSex,
-                                      'dateBirth': _conDateBirth.text.toString(),
+                                      'dateBirth':
+                                          _conDateBirth.text.toString(),
                                       'address': _conAddress.text.toString(),
-                                      'phoneNumber': _conPhoneNumber.text.toString()
+                                      'phoneNumber':
+                                          _conPhoneNumber.text.toString()
                                     };
                                     _editPatientBloc.editPatient(_params);
                                   }

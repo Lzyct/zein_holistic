@@ -49,7 +49,7 @@ class _DetailMedicalRecordPageState extends State<DetailMedicalRecordPage> {
   @override
   Widget build(BuildContext context) {
     return Parent(
-      appBar: context.appBar(title: Strings.detailMedicalRecord),
+      appBar: context.appBar(),
       child: Scrollbar(
         child: SingleChildScrollView(
           child: BlocBuilder(

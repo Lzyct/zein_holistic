@@ -68,7 +68,7 @@ class _EditMedicalRecordPageState extends State<EditMedicalRecordPage> {
   Widget build(BuildContext context) {
     logs("isBuild");
     return Parent(
-      appBar: context.appBar(title: Strings.editMedicalRecord),
+      appBar: context.appBar(),
       child: Scrollbar(
         child: SingleChildScrollView(
           child: BlocListener(

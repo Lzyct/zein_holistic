@@ -56,7 +56,7 @@ class _AddMedicalRecordPageState extends State<AddMedicalRecordPage> {
   @override
   Widget build(BuildContext context) {
     return Parent(
-      appBar: context.appBar(title: Strings.addMedicalRecord),
+      appBar: context.appBar(),
       child: Scrollbar(
         child: SingleChildScrollView(
           child: BlocListener(
