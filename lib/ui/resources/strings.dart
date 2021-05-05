@@ -9,7 +9,7 @@ class Strings {
   static String cancel = "Batal";
   static String searchPatient = "Cari Pasien";
   static String searchMedicalRecord = "Cari Rekam Medis";
-  static String addPatient = "Tambah pasien";
+  static String addPatient = "Tambah Pasien";
   static String name = "Nama";
   static String dateBirth = "Tanggal Lahir";
   static String address = "Alamat";
@@ -59,4 +59,8 @@ class Strings {
 
   static String backupDesc = "Backup database ke folder ";
   static String restoreDesc = "Pilih database untuk di restore";
+
+  static String addressContent = "Jl. BTP Blok M ";
+
+  static String listPatient = "Daftar Pasien";
 }
