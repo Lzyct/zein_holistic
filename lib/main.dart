@@ -52,8 +52,11 @@ class _MyAppState extends State<MyApp> {
         onGenerateRoute: (RouteSettings settings) {
           var routes = AppRoute.getRoutes(settings: settings);
           WidgetBuilder? builder = routes[settings.name];
-          return MaterialPageRoute(
-              builder: (context) => builder!(context), settings: settings);
+          return PageRouteBuilder(
+              pageBuilder: (context, animation1, animation2) =>
+                  builder!(context),
+              settings: settings,
+              transitionDuration: Duration(seconds: 0));
         },
         initialRoute: AppRoute.listPatient,
       ),
