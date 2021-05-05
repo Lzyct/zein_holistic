@@ -7,8 +7,12 @@ class Dimens {
   static const double fontLarge2 = 20.0;
   static const double fontLarge3 = 26.0;
   static const double fontLarge4 = 32.0;
-
+  static const double maxWidth = 1232.0;
+  static const double maxWidthSearch = 300;
   static const double height55 = 55;
+  static const double logoHeight = 60;
+  static const double headerHeight = 120;
+
 
   // static double height380 = 380.h;
   // static double height274 = 274.h;
@@ -35,4 +39,6 @@ class Dimens {
   static const double radius = 30;
   static const double space4 = 4;
   static const double space24 = 24;
+
+  static const double padding = 25;
 }
