@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:zein_holistic/di/di.dart';
 import 'package:zein_holistic/ui/resources/resources.dart';
+import 'package:zein_holistic/utils/utils.dart';
 
 extension ContextExtensions on BuildContext {
   bool isMobile() {
@@ -35,45 +37,44 @@ extension ContextExtensions on BuildContext {
         arguments: args);
   }
 
-  appBar({required String title}) {
+  appBar() {
     return AppBar(
-      brightness: Brightness.dark,
-      backgroundColor: Palette.colorPrimary,
-      elevation: 0,
-      bottomOpacity: 0,
-      centerTitle: true,
-      leading: IconButton(
-        icon: Icon(
-          Icons.arrow_back_outlined,
-          color: Colors.white,
-        ),
-        onPressed: () {
-          Navigator.pop(this);
-        },
-      ),
-      automaticallyImplyLeading: true,
-      title: Text(
-        title,
-        style: TextStyles.white.copyWith(
-          fontSize: Dimens.fontLarge,
-        ),
-      ),
-      /* actions: [
-        IconButton(
-          icon: SvgPicture.network(
-            "ic_home".toIconDictionary(),
-            color: Palette.colorPrimary,
-          ),
-          onPressed: () {
-            goToClearStack(MultiBlocProvider(
-              providers: [
-                BlocProvider(create: (context) => NavDrawerBloc()),
+      toolbarHeight: Dimens.headerHeight,
+      brightness: Brightness.light,
+      title: Center(
+        child: Container(
+            constraints: BoxConstraints(maxWidth: Dimens.maxWidth),
+            padding: const EdgeInsets.all(20),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                SvgPicture.asset(
+                  Images.icLogoTextAlt,
+                  height: Dimens.logoHeight,
+                ),
+                if (Responsive.isDesktop(this)) Spacer(),
+                if (Responsive.isDesktop(this))
+                  Column(
+                    crossAxisAlignment: CrossAxisAlignment.end,
+                    children: [
+                      Text(
+                        Strings.address,
+                        style: TextStyles.textBold,
+                      ),
+                      Text(
+                        Strings.addressContent,
+                        style: TextStyles.textBold,
+                      ),
+                    ],
+                  )
               ],
-              child: MainPage(),
-            ));
-          },
-        )
-      ],*/
+            )),
+      ),
+      centerTitle: false,
+      backgroundColor: Colors.white,
+      elevation: Dimens.elevation,
+      automaticallyImplyLeading: false,
     );
   }
 
@@ -233,7 +234,7 @@ extension ContextExtensions on BuildContext {
     return MediaQuery.of(this).size.width / 70;
   }
 
-  dp8() {
+  double dp8() {
     return MediaQuery.of(this).size.width / 54;
   }
 
