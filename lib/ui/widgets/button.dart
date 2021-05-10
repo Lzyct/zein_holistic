@@ -1,6 +1,5 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:zein_holistic/core/extensions/extensions.dart';
 import 'package:zein_holistic/ui/resources/resources.dart';
 
 ///*********************************************
@@ -37,7 +36,7 @@ class Button extends StatelessWidget {
       width: width,
       margin: EdgeInsets.symmetric(vertical: Dimens.space8),
       height: height ?? 45,
-      padding: EdgeInsets.symmetric(horizontal: context.dp4()),
+      padding: EdgeInsets.symmetric(horizontal: Dimens.space8),
       decoration: BoxDecorations.button.copyWith(color: color ?? Palette.blue),
       child: TextButton(
           onPressed: onPressed as void Function()?,
@@ -51,7 +50,7 @@ class Button extends StatelessWidget {
             title!.toUpperCase(),
             style: TextStyle(
                 color: titleColor ?? Colors.white,
-                fontSize: fontSize ?? Dimens.fontNormal,
+                fontSize: fontSize ?? Dimens.fontSmall,
                 fontWeight: FontWeight.bold),
             textAlign: TextAlign.center,
           )),

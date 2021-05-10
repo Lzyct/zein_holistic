@@ -10,7 +10,7 @@ class Dimens {
   static const double maxWidth = 1232.0;
   static const double maxWidthSearch = 300;
   static const double height55 = 55;
-  static const double logoHeight = 60;
+  static const double logoHeight = 50;
   static const double headerHeight = 120;
 
 
