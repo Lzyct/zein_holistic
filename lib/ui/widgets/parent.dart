@@ -40,8 +40,8 @@ class _ParentState extends State<Parent> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      constraints: BoxConstraints(maxWidth: Dimens.maxWidth),
       color: Palette.colorBackgroundAlt,
+      alignment: Alignment.center,
       child: Scaffold(
         resizeToAvoidBottomInset: widget.avoidBottomInset,
         appBar: widget.appBar as PreferredSizeWidget? ??
@@ -57,30 +57,35 @@ class _ParentState extends State<Parent> {
           onTap: () {
             FocusScope.of(context).requestFocus(new FocusNode());
           },
-          child: AnimatedContainer(
-            duration: Duration(milliseconds: 300),
-            child: Stack(
-              children: [
-                widget.isScroll
-                    ? Container()
-                    : widget.child.padding(
-                        edgeInsets: EdgeInsets.all(
-                          widget.isPadding ? Dimens.space16 : 0,
+          child: Align(
+            alignment: Alignment.center,
+            child: AnimatedContainer(
+              duration: Duration(milliseconds: 300),
+              constraints: BoxConstraints(maxWidth: Dimens.maxWidth),
+              child: Stack(
+                alignment: Alignment.center,
+                children: [
+                  widget.isScroll
+                      ? Container()
+                      : widget.child.padding(
+                          edgeInsets: EdgeInsets.all(
+                            widget.isPadding ? Dimens.space16 : 0,
+                          ),
                         ),
-                      ),
-                Scrollbar(
-                  child: SingleChildScrollView(
-                    physics: BouncingScrollPhysics(),
-                    child: widget.isScroll
-                        ? widget.child.padding(
-                            edgeInsets: EdgeInsets.all(
-                              widget.isPadding ? Dimens.space16 : 0,
-                            ),
-                          )
-                        : Container(),
+                  Scrollbar(
+                    child: SingleChildScrollView(
+                      physics: BouncingScrollPhysics(),
+                      child: widget.isScroll
+                          ? widget.child.padding(
+                              edgeInsets: EdgeInsets.all(
+                                widget.isPadding ? Dimens.space16 : 0,
+                              ),
+                            )
+                          : Container(),
+                    ),
                   ),
-                ),
-              ],
+                ],
+              ),
             ),
           ),
         ),
