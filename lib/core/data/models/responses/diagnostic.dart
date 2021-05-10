@@ -1,18 +1,18 @@
 class Diagnostic {
-  bool? status;
-  String? message;
+  int? code;
+  String? status;
 
-  Diagnostic({this.status, this.message});
+  Diagnostic({this.status, this.code});
 
   Diagnostic.fromJson(Map<String, dynamic> json) {
     status = json['status'];
-    message = json['message'];
+    code = json['code'];
   }
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = new Map<String, dynamic>();
     data['status'] = this.status;
-    data['message'] = this.message;
+    data['code'] = this.code;
     return data;
   }
 }
