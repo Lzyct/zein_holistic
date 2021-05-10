@@ -29,7 +29,7 @@ dependencies:
 
   # The following adds the Cupertino Icons font to your application.
   # Use with the CupertinoIcons class for iOS style icons.
-  cupertino_icons: ^1.0.2
+  cupertino_icons: ^1.0.3
 
   # Use as default SVG image loader, prefer use SVG as image asset
   flutter_svg: ^0.22.0
@@ -38,7 +38,7 @@ dependencies:
   shared_preferences: ^2.0.5
 
   # Use for Dependencies Injection
-  get_it: ^6.1.1
+  get_it: ^7.1.3
 
   # Use for State Management with BLoC patter
   flutter_bloc: ^7.0.0
@@ -50,24 +50,21 @@ dependencies:
   oktoast: ^3.0.0
 
   # Use for responsive UI, set default size base on Mock Up
-  # flutter_screenutil: ^5.0.0 #disable not support layout builder changes
+  #  flutter_screenutil: ^5.0.0+2 #disable not support layout builder changes
 
   # Use as path reader for Android and iOS
   path_provider: ^2.0.1
 
   # Use for request permission
-  permission_handler: ^7.0.0
+  permission_handler: ^7.1.0
 
   # search
   animated_search_bar: ^2.0.0
 
   flutter_toggle_tab: ^1.1.0
 
-  # Hive no SQL
-  #  hive: ^2.0.4
-  #  hive_flutter: ^1.0.0
-  #  hive_generator: ^1.1.0
-  #  build_runner: ^2.0.1
+  # Network client
+  dio: ^4.0.0
 
   # replace sqflite with hive
   sqflite: ^2.0.0+3
