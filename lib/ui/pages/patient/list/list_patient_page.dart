@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:zein_holistic/core/blocs/blocs.dart';
 import 'package:zein_holistic/core/data/models/models.dart';
+import 'package:zein_holistic/core/data/models/responses/list_patient_response.dart';
 import 'package:zein_holistic/core/enums/enums.dart';
 import 'package:zein_holistic/core/extensions/extensions.dart';
 import 'package:zein_holistic/ui/pages/pages.dart';
@@ -27,7 +28,7 @@ class _ListPatientPageState extends State<ListPatientPage> {
   late ListPatientBloc _listPatientBloc;
   late DeletePatientBloc _deletePatientBloc;
   String _name = "";
-  List<PatientEntity>? _listPatient = [];
+  List<Data> _listPatient = [];
 
   @override
   void initState() {
@@ -51,125 +52,128 @@ class _ListPatientPageState extends State<ListPatientPage> {
       isPadding: false,
       isScroll: false,
       child: Container(
-        constraints: BoxConstraints(maxWidth: Dimens.maxWidth),
-        child: Column(children: [
-          Align(
-            alignment: Alignment.topRight,
-            child: Container(
-              height: Dimens.height55,
-              constraints: BoxConstraints(maxWidth: Dimens.maxWidthSearch),
-              decoration: BoxDecoration(
-                  color: Colors.white,
-                  borderRadius: BorderRadius.only(
-                      bottomLeft: Radius.circular(Dimens.radius),
-                      bottomRight: Radius.circular(Dimens.radius)),
-                  boxShadow: [BoxShadows.primary]),
-              alignment: Alignment.center,
-              padding: const EdgeInsets.symmetric(horizontal: Dimens.padding),
-              margin: EdgeInsets.only(right: 16),
-              child: SizedBox(
-                height: Dimens.height35,
-                child: AnimatedSearchBar(
-                  label: Strings.searchPatient,
-                  labelStyle: TextStyles.textBold,
-                  searchDecoration: InputDecoration(
-                      alignLabelWithHint: true,
-                      hintText: Strings.searchPatientHint,
-                      hintStyle: TextStyles.textHint,
-                      contentPadding: EdgeInsets.symmetric(
-                          horizontal: Dimens.space8, vertical: 0),
-                      border: OutlineInputBorder(
-                        gapPadding: 0,
-                        borderRadius: BorderRadius.circular(Dimens.space4),
-                        borderSide: BorderSide(
-                          color: Palette.colorPrimary,
-                          width: 1.0,
-                        ),
-                      )),
-                  cursorColor: Palette.colorPrimary,
-                  onChanged: (value) {
-                    _name = value;
-                    _getPatient();
-                  },
-                ),
-              ),
-            ),
-          ),
-          Padding(
-            padding: EdgeInsets.all(Dimens.padding),
-            child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Text(
-                    Strings.listPatient,
-                    style: TextStyles.textHint
-                        .copyWith(fontSize: Dimens.fontLarge4),
-                  ),
-                  Button(
-                    title: Strings.addPatient,
-                    color: Palette.colorPrimary,
-                    onPressed: () async {
-                      await context.goTo(AppRoute.addPatient);
-                      _getPatient();
-                    },
-                  )
-                ]),
-          ),
-          Expanded(
-              child: BlocBuilder(
-            bloc: _listPatientBloc,
-            builder: (_, dynamic state) {
-              switch (state.status) {
-                case Status.LOADING:
-                  {
-                    return Center(child: Loading());
-                  }
-                case Status.EMPTY:
-                  {
-                    return Center(
-                      child: Empty(
-                        errorMessage: state.message.toString(),
-                      ),
-                    );
-                  }
-                case Status.ERROR:
-                  {
-                    logs(state.message.toString());
-                    return Center(
-                      child: Empty(
-                        errorMessage: state.message.toString(),
-                      ),
-                    );
-                  }
-                case Status.SUCCESS:
-                  {
-                    _listPatient = state.data;
-                    return RefreshIndicator(
-                      onRefresh: () async {
+        child: Column(
+            crossAxisAlignment: CrossAxisAlignment.center,
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Align(
+                alignment: Alignment.topRight,
+                child: Container(
+                  height: Dimens.height55,
+                  constraints: BoxConstraints(maxWidth: Dimens.maxWidthSearch),
+                  decoration: BoxDecoration(
+                      color: Colors.white,
+                      borderRadius: BorderRadius.only(
+                          bottomLeft: Radius.circular(Dimens.radius),
+                          bottomRight: Radius.circular(Dimens.radius)),
+                      boxShadow: [BoxShadows.primary]),
+                  alignment: Alignment.center,
+                  padding:
+                      const EdgeInsets.symmetric(horizontal: Dimens.padding),
+                  margin: EdgeInsets.only(right: 16),
+                  child: SizedBox(
+                    height: Dimens.height35,
+                    child: AnimatedSearchBar(
+                      label: Strings.searchPatient,
+                      labelStyle: TextStyles.textBold,
+                      searchDecoration: InputDecoration(
+                          alignLabelWithHint: true,
+                          hintText: Strings.searchPatientHint,
+                          hintStyle: TextStyles.textHint,
+                          contentPadding: EdgeInsets.symmetric(
+                              horizontal: Dimens.space8, vertical: 0),
+                          border: OutlineInputBorder(
+                            gapPadding: 0,
+                            borderRadius: BorderRadius.circular(Dimens.space4),
+                            borderSide: BorderSide(
+                              color: Palette.colorPrimary,
+                              width: 1.0,
+                            ),
+                          )),
+                      cursorColor: Palette.colorPrimary,
+                      onChanged: (value) {
+                        _name = value;
                         _getPatient();
                       },
-                      child: ListView.builder(
-                          physics: AlwaysScrollableScrollPhysics(),
-                          itemCount: _listPatient!.length,
-                          shrinkWrap: true,
-                          itemBuilder: (_, index) {
-                            return _listItem(index);
-                          }),
-                    );
+                    ),
+                  ),
+                ),
+              ),
+              Padding(
+                padding: EdgeInsets.all(Dimens.padding),
+                child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Text(
+                        Strings.listPatient,
+                        style: TextStyles.textHint
+                            .copyWith(fontSize: Dimens.fontLarge3),
+                      ),
+                      Button(
+                        title: Strings.addPatient,
+                        color: Palette.colorPrimary,
+                        onPressed: () async {
+                          await context.goTo(AppRoute.addPatient);
+                          _getPatient();
+                        },
+                      )
+                    ]),
+              ),
+              Expanded(
+                  child: BlocBuilder(
+                bloc: _listPatientBloc,
+                builder: (_, dynamic state) {
+                  switch (state.status) {
+                    case Status.LOADING:
+                      {
+                        return Center(child: Loading());
+                      }
+                    case Status.EMPTY:
+                      {
+                        return Center(
+                          child: Empty(
+                            errorMessage: state.message.toString(),
+                          ),
+                        );
+                      }
+                    case Status.ERROR:
+                      {
+                        logs(state.message.toString());
+                        return Center(
+                          child: Empty(
+                            errorMessage: state.message.toString(),
+                          ),
+                        );
+                      }
+                    case Status.SUCCESS:
+                      {
+                        _listPatient = state.data.data;
+                        return RefreshIndicator(
+                          onRefresh: () async {
+                            _getPatient();
+                          },
+                          child: ListView.builder(
+                              physics: AlwaysScrollableScrollPhysics(),
+                              itemCount: _listPatient.length,
+                              shrinkWrap: true,
+                              itemBuilder: (_, index) {
+                                return _listItem(index);
+                              }),
+                        );
+                      }
+                    default:
+                      return Container();
                   }
-                default:
-                  return Container();
-              }
-            },
-          ))
-        ]),
+                },
+              ))
+            ]),
       ),
     );
   }
 
   _listItem(int index) {
     return Dismissible(
-      key: Key(_listPatient![index].id!),
+      key: Key(_listPatient[index].id!),
       background: Container(
         color: Palette.red,
         child: Row(
@@ -223,7 +227,7 @@ class _ListPatientPageState extends State<ListPatientPage> {
                       style: TextStyles.text,
                     ),
                     TextSpan(
-                        text: " ${_listPatient![index].name} ",
+                        text: " ${_listPatient[index].name} ",
                         style: TextStyles.textBold),
                     TextSpan(
                       text: Strings.questionMark,
@@ -248,7 +252,7 @@ class _ListPatientPageState extends State<ListPatientPage> {
                       style: TextStyles.text.copyWith(color: Palette.red),
                     ),
                     onPressed: () {
-                      _deletePatientBloc.deletePatient(_listPatient![index].id);
+                      _deletePatientBloc.deletePatient(_listPatient[index].id);
                       _getPatient();
                       Navigator.pop(
                           dialogContext, true); // Dismiss alert dialog
@@ -274,12 +278,12 @@ class _ListPatientPageState extends State<ListPatientPage> {
                 children: [
                   Expanded(
                     child: Text(
-                      _listPatient![index].name!,
+                      _listPatient[index].name!,
                       style: TextStyles.textBold,
                     ),
                   ),
                   Text(
-                    _listPatient![index].phoneNumber!,
+                    _listPatient[index].phoneNumber!,
                     style: TextStyles.textHint
                         .copyWith(fontSize: Dimens.fontSmall),
                   )
@@ -287,19 +291,19 @@ class _ListPatientPageState extends State<ListPatientPage> {
               ),
               SizedBox(height: Dimens.space8),
               Text(
-                _listPatient![index].address!,
+                _listPatient[index].address!,
                 style: TextStyles.textHint.copyWith(fontSize: Dimens.fontSmall),
               ),
             ],
           ).padding(edgeInsets: EdgeInsets.all(Dimens.space16)),
           onTap: () {
             context.goTo(AppRoute.listMedicalRecord,
-                args: {"patient": _listPatient![index]});
+                args: {"patient": _listPatient[index]});
           }),
     );
   }
 
   _getPatient() {
-    _listPatientBloc.getListPatient(_name);
+    _listPatientBloc.listPatient(ListPatientRequest(page: 0, q: _name));
   }
 }
