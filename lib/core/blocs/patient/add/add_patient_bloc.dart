@@ -1,15 +1,16 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:zein_holistic/core/blocs/blocs.dart';
+import 'package:zein_holistic/core/data/models/models.dart';
+import 'package:zein_holistic/core/data/models/responses/create_patient_response.dart';
 import 'package:zein_holistic/core/data/repositories/repositories.dart';
 import 'package:zein_holistic/di/di.dart';
 
-class AddPatientBloc extends Cubit<Result<dynamic>> {
+class AddPatientBloc extends Cubit<Result<CreatePatientResponse>> {
   AddPatientBloc() : super(Result.isLoading());
 
-  PatientRepository? _patientRepo = sl<PatientRepository>();
+  var _patientRepo = sl<PatientRepository>();
 
-  addPatient(Map<String, String> _params) async {
-    emit(Result.isLoading());
-    emit(await _patientRepo!.addPatient(_params));
+  createPatient(CreatePatientRequest request) async {
+    emit(await _patientRepo.createPatient(request));
   }
 }
