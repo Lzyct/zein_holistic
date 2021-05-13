@@ -13,7 +13,6 @@ class Dimens {
   static const double logoHeight = 50;
   static const double headerHeight = 120;
 
-
   // static double height380 = 380.h;
   // static double height274 = 274.h;
   // static double height320 = 320.h;
@@ -41,4 +40,7 @@ class Dimens {
   static const double space24 = 24;
 
   static const double padding = 25;
+
+  static const double minWidthButtonDesktop = 100;
+  static const double minWidthButtonMobile = 50;
 }
