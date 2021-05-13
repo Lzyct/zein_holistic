@@ -49,7 +49,8 @@ class Toast extends StatelessWidget {
                     BoxConstraints(maxWidth: context.widthInPercent(50)),
                 child: Text(
                   message!,
-                  style: TextStyles.text.copyWith(color: textColor),
+                  style: TextStyles.text.copyWith(
+                      color: textColor, decoration: TextDecoration.none),
                   textAlign: TextAlign.start,
                   maxLines: 5,
                   softWrap: true,
