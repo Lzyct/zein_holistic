@@ -172,134 +172,146 @@ class _ListPatientPageState extends State<ListPatientPage> {
   }
 
   _listItem(int index) {
-    return Dismissible(
-      key: Key(_listPatient[index].id!),
-      background: Container(
-        color: Palette.red,
+    return CardView(
         child: Row(
-          mainAxisAlignment: MainAxisAlignment.center,
+          crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Icon(
-              Icons.delete,
-              color: Colors.white,
-            ),
-            SizedBox(width: Dimens.space16),
-            Text(
-              Strings.delete,
-              style: TextStyles.white,
-            )
-          ],
-        ),
-      ),
-      secondaryBackground: Container(
-        color: Palette.blue,
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Icon(
-              Icons.edit,
-              color: Colors.white,
-            ),
-            SizedBox(width: Dimens.space16),
-            Text(
-              Strings.edit,
-              style: TextStyles.white,
-            )
-          ],
-        ),
-      ),
-      confirmDismiss: (direction) async {
-        if (direction == DismissDirection.startToEnd) {
-          return await showDialog<bool>(
-            context: context,
-            barrierDismissible: false,
-            // false = user must tap button, true = tap outside dialog
-            builder: (BuildContext dialogContext) {
-              return AlertDialog(
-                title: Text(
-                  Strings.delete,
-                  style: TextStyles.textBold,
-                ),
-                content: RichText(
-                  text: TextSpan(children: [
-                    TextSpan(
-                      text: Strings.askDeletePatient,
-                      style: TextStyles.text,
-                    ),
-                    TextSpan(
-                        text: " ${_listPatient[index].name} ",
-                        style: TextStyles.textBold),
-                    TextSpan(
-                      text: Strings.questionMark,
-                      style: TextStyles.text,
-                    )
-                  ]),
-                ),
-                actions: <Widget>[
-                  TextButton(
-                    child: Text(
-                      Strings.cancel,
-                      style: TextStyles.textHint,
-                    ),
-                    onPressed: () {
-                      Navigator.pop(
-                          dialogContext, false); // Dismiss alert dialog
-                    },
-                  ),
-                  TextButton(
-                    child: Text(
-                      Strings.delete,
-                      style: TextStyles.text.copyWith(color: Palette.red),
-                    ),
-                    onPressed: () {
-                      _deletePatientBloc.deletePatient(_listPatient[index].id);
-                      _getPatient();
-                      Navigator.pop(
-                          dialogContext, true); // Dismiss alert dialog
-                    },
-                  ),
-                ],
-              );
-            },
-          );
-        } else {
-          await context.goTo(AppRoute.editPatient);
-          _getPatient();
-        }
-        return false;
-      },
-      child: CardView(
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Row(
+            Expanded(
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.start,
                 crossAxisAlignment: CrossAxisAlignment.start,
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  Expanded(
-                    child: Text(
-                      _listPatient[index].name!,
-                      style: TextStyles.textBold,
-                    ),
+                  Text(
+                    _listPatient[index].name!,
+                    style: TextStyles.textBold,
+                  ),
+                  SizedBox(height: Dimens.space8),
+                  Text(
+                    _listPatient[index].address!,
+                    style: TextStyles.textHint
+                        .copyWith(fontSize: Dimens.fontSmall),
                   ),
                   Text(
                     _listPatient[index].phoneNumber!,
                     style: TextStyles.textHint
                         .copyWith(fontSize: Dimens.fontSmall),
-                  )
+                  ),
                 ],
               ),
-              SizedBox(height: Dimens.space8),
-              Text(
-                _listPatient[index].address!,
-                style: TextStyles.textHint.copyWith(fontSize: Dimens.fontSmall),
+            ),
+            Responsive.isDesktop(context)
+                ? _buttonWeb(index)
+                : _buttonMobile(index)
+          ],
+        ).padding(edgeInsets: EdgeInsets.all(Dimens.space16)),
+        onTap: () {
+          context.goTo(AppRoute.listMedicalRecord,
+              args: {"patient": _listPatient[index]});
+        });
+  }
+
+  _buttonWeb(int index) {
+    return Column(
+      mainAxisAlignment: MainAxisAlignment.start,
+      children: [
+        ButtonIcon(
+          icon: Icons.edit,
+          title: Strings.edit,
+          titleColor: Colors.white,
+          onPressed: () async {
+            await context.goTo(AppRoute.editPatient,
+                args: {"id": _listPatient[index].id});
+            _getPatient();
+          },
+        ),
+        ButtonIcon(
+          color: Palette.red,
+          titleColor: Colors.white,
+          onPressed: () async {
+            await _dialogDelete(index);
+          },
+          icon: Icons.delete_outline,
+          title: Strings.delete,
+        )
+      ],
+    );
+  }
+
+  _buttonMobile(int index) {
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.start,
+      children: [
+        ButtonIcon(
+          icon: Icons.edit,
+          titleColor: Colors.white,
+          onPressed: () async {
+            await context.goTo(AppRoute.editPatient,
+                args: {"id": _listPatient[index].id});
+            _getPatient();
+          },
+        ),
+        SizedBox(width: Dimens.space8),
+        ButtonIcon(
+            color: Palette.red,
+            titleColor: Colors.white,
+            onPressed: () async {
+              await _dialogDelete(index);
+            },
+            icon: Icons.delete_outline)
+      ],
+    );
+  }
+
+  _dialogDelete(int index) async {
+    return await showDialog<bool>(
+      context: context,
+      barrierDismissible: false,
+      // false = user must tap button, true = tap outside dialog
+      builder: (BuildContext dialogContext) {
+        return AlertDialog(
+          title: Text(
+            Strings.delete,
+            style: TextStyles.textBold,
+          ),
+          content: RichText(
+            text: TextSpan(children: [
+              TextSpan(
+                text: Strings.askDeletePatient,
+                style: TextStyles.text,
               ),
-            ],
-          ).padding(edgeInsets: EdgeInsets.all(Dimens.space16)),
-          onTap: () {
-            context.goTo(AppRoute.listMedicalRecord,
-                args: {"patient": _listPatient[index]});
-          }),
+              TextSpan(
+                  text: " ${_listPatient[index].name} ",
+                  style: TextStyles.textBold),
+              TextSpan(
+                text: Strings.questionMark,
+                style: TextStyles.text,
+              )
+            ]),
+          ),
+          actions: <Widget>[
+            TextButton(
+              child: Text(
+                Strings.cancel,
+                style: TextStyles.textHint,
+              ),
+              onPressed: () {
+                Navigator.pop(dialogContext, false); // Dismiss alert dialog
+              },
+            ),
+            TextButton(
+              child: Text(
+                Strings.delete,
+                style: TextStyles.text.copyWith(color: Palette.red),
+              ),
+              onPressed: () {
+                _deletePatientBloc.deletePatient(_listPatient[index].id);
+                _getPatient();
+                Navigator.pop(dialogContext, true); // Dismiss alert dialog
+              },
+            ),
+          ],
+        );
+      },
     );
   }
 
