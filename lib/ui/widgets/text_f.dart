@@ -26,7 +26,7 @@ class TextF extends StatefulWidget {
       this.controller,
       this.onTap,
       this.textAlign,
-      this.enable,
+      this.enable = true,
       this.inputFormatter,
       this.minLine,
       this.maxLine,
@@ -47,7 +47,7 @@ class TextF extends StatefulWidget {
   final int? maxLine;
   final Widget? suffixIcon;
   final TextAlign? textAlign;
-  final bool? enable;
+  final bool enable;
   final List<TextInputFormatter>? inputFormatter;
   final bool isHintVisible;
 
@@ -109,10 +109,20 @@ class _TextFState extends State<TextF> {
             ),
             cursorColor: Palette.colorText,
             decoration: InputDecoration(
+                filled: !widget.enable,
+                fillColor: Palette.colorHintSoft,
                 alignLabelWithHint: true,
                 suffixIcon: widget.suffixIcon,
                 contentPadding: EdgeInsets.symmetric(
                     vertical: Dimens.space8, horizontal: Dimens.space12),
+                disabledBorder: OutlineInputBorder(
+                  gapPadding: 0,
+                  borderRadius: BorderRadius.circular(Dimens.space4),
+                  borderSide: BorderSide(
+                    color: Palette.borderTextF,
+                    width: 1.0,
+                  ),
+                ),
                 enabledBorder: OutlineInputBorder(
                   gapPadding: 0,
                   borderRadius: BorderRadius.circular(Dimens.space4),
