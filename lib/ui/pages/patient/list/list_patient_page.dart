@@ -76,6 +76,7 @@ class _ListPatientPageState extends State<ListPatientPage> {
                     child: AnimatedSearchBar(
                       label: Strings.searchPatient,
                       labelStyle: TextStyles.textBold,
+                      searchStyle: TextStyles.text,
                       searchDecoration: InputDecoration(
                           alignLabelWithHint: true,
                           hintText: Strings.searchPatientHint,
