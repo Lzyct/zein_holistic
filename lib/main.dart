@@ -5,6 +5,7 @@ import 'package:oktoast/oktoast.dart';
 import 'package:zein_holistic/di/di.dart';
 import 'package:zein_holistic/ui/pages/pages.dart';
 import 'package:zein_holistic/ui/resources/resources.dart';
+import 'package:zein_holistic/utils/utils.dart';
 
 void main() async {
   serviceLocator();
@@ -42,8 +43,9 @@ class _MyAppState extends State<MyApp> {
         builder: (BuildContext context, Widget? child) {
           final MediaQueryData data = MediaQuery.of(context);
           return MediaQuery(
-            data:
-                data.copyWith(textScaleFactor: 1, alwaysUse24HourFormat: true),
+            data: data.copyWith(
+                textScaleFactor: Responsive.isDesktop(context) ? 1.1 : 1.0,
+                alwaysUse24HourFormat: true),
             child: child!,
           );
         },
