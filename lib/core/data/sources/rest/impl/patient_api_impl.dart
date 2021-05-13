@@ -10,7 +10,7 @@ class PatientApiImpl extends PatientApi {
   @override
   Future<Response> createPatient(CreatePatientRequest request) async =>
       await _dio.post("/patient",
-          data: request,
+          data: request.toMap(),
           options: Options(contentType: Headers.formUrlEncodedContentType));
 
   @override

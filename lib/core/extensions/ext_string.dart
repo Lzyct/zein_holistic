@@ -36,7 +36,7 @@ extension StringExtension on String {
 
   toToastError() {
     try {
-      var message = this == null || this.isEmpty ? "error" : this;
+      var message = this.isEmpty ? "error" : this;
 
       //dismiss before show toast
       dismissAllToast(showAnim: false);
@@ -58,7 +58,7 @@ extension StringExtension on String {
 
   toToastSuccess() {
     try {
-      var message = (this == null || this.isEmpty) ? "success" : this;
+      var message = (this.isEmpty) ? "success" : this;
 
       //dismiss before show toast
       dismissAllToast(showAnim: false);
@@ -81,7 +81,7 @@ extension StringExtension on String {
 
   toToastLoading() {
     try {
-      var message = this == null || this.isEmpty ? "loading" : this;
+      var message = this.isEmpty ? "loading" : this;
       //dismiss before show toast
       dismissAllToast(showAnim: true);
 

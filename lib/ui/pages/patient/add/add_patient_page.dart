@@ -3,6 +3,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_toggle_tab/flutter_toggle_tab.dart';
 import 'package:zein_holistic/core/blocs/blocs.dart';
+import 'package:zein_holistic/core/data/models/models.dart';
 import 'package:zein_holistic/core/enums/enums.dart';
 import 'package:zein_holistic/core/extensions/extensions.dart';
 import 'package:zein_holistic/ui/resources/resources.dart';
@@ -165,6 +166,7 @@ class _AddPatientPageState extends State<AddPatientPage> {
                                   curFocusNode: DisableFocusNode(),
                                   controller: _conAge,
                                   hint: Strings.age,
+                                  enable: false,
                                   validator: (String? value) => value!.isEmpty
                                       ? Strings.errorEmpty
                                       : null,
@@ -200,14 +202,16 @@ class _AddPatientPageState extends State<AddPatientPage> {
                             color: Palette.colorPrimary,
                             onPressed: () {
                               if (_formKey.currentState!.validate()) {
-                                var _params = {
-                                  'name': _conName.text.toString(),
-                                  'sex': _selectedSex,
-                                  'dateBirth': _conDateBirth.text.toString(),
-                                  'address': _conAddress.text.toString(),
-                                  'phoneNumber': _conPhoneNumber.text.toString()
-                                };
-                                _addPatientBloc.addPatient(_params);
+                                var _createPatientRequest =
+                                    CreatePatientRequest(
+                                        name: _conName.text.toString(),
+                                        sex: _selectedSex,
+                                        birthday: _conDateBirth.text.toString(),
+                                        address: _conAddress.text.toString(),
+                                        phoneNumber:
+                                            _conPhoneNumber.text.toString());
+                                _addPatientBloc
+                                    .createPatient(_createPatientRequest);
                               }
                             },
                           )

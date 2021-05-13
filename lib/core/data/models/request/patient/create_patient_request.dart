@@ -11,4 +11,14 @@ class CreatePatientRequest {
       required this.birthday,
       required this.address,
       required this.phoneNumber});
+
+  toMap() {
+    return {
+      "name": name,
+      "sex": sex,
+      "birthday": birthday,
+      "address": address,
+      "phoneNumber": phoneNumber
+    };
+  }
 }
