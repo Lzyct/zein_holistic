@@ -63,7 +63,7 @@ class _ParentState extends State<Parent> {
               duration: Duration(milliseconds: 300),
               constraints: BoxConstraints(maxWidth: Dimens.maxWidth),
               child: Stack(
-                alignment: Alignment.center,
+                alignment: Alignment.topCenter,
                 children: [
                   widget.isScroll
                       ? Container()
