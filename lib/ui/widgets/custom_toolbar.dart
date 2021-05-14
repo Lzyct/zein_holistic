@@ -26,7 +26,7 @@ class CustomToolbar extends StatelessWidget {
         children: [
           BackButtons(),
           Text(
-            Strings.addPatient,
+            title,
             style: TextStyles.textHint.copyWith(fontSize: Dimens.fontLarge4),
           )
         ],
