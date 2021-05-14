@@ -203,7 +203,7 @@ class _AddPatientPageState extends State<AddPatientPage> {
                             onPressed: () {
                               if (_formKey.currentState!.validate()) {
                                 var _createPatientRequest =
-                                    CreatePatientRequest(
+                                    PatientRequest(
                                         name: _conName.text.toString(),
                                         sex: _selectedSex,
                                         birthday: _conDateBirth.text.toString(),

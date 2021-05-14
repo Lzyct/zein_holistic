@@ -51,123 +51,148 @@ class _ListPatientPageState extends State<ListPatientPage> {
       appBar: context.appBar(),
       isPadding: false,
       isScroll: false,
-      child: Container(
-        child: Column(
-            crossAxisAlignment: CrossAxisAlignment.center,
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Align(
-                alignment: Alignment.topRight,
-                child: Container(
-                  height: Dimens.height55,
-                  constraints: BoxConstraints(maxWidth: Dimens.maxWidthSearch),
-                  decoration: BoxDecoration(
-                      color: Colors.white,
-                      borderRadius: BorderRadius.only(
-                          bottomLeft: Radius.circular(Dimens.radius),
-                          bottomRight: Radius.circular(Dimens.radius)),
-                      boxShadow: [BoxShadows.primary]),
-                  alignment: Alignment.center,
-                  padding:
-                      const EdgeInsets.symmetric(horizontal: Dimens.padding),
-                  margin: EdgeInsets.only(right: 16),
-                  child: SizedBox(
-                    height: Dimens.height35,
-                    child: AnimatedSearchBar(
-                      label: Strings.searchPatient,
-                      labelStyle: TextStyles.textBold,
-                      searchStyle: TextStyles.text,
-                      searchDecoration: InputDecoration(
-                          alignLabelWithHint: true,
-                          hintText: Strings.searchPatientHint,
-                          hintStyle: TextStyles.textHint,
-                          contentPadding: EdgeInsets.symmetric(
-                              horizontal: Dimens.space8, vertical: 0),
-                          border: OutlineInputBorder(
-                            gapPadding: 0,
-                            borderRadius: BorderRadius.circular(Dimens.space4),
-                            borderSide: BorderSide(
-                              color: Palette.colorPrimary,
-                              width: 1.0,
-                            ),
-                          )),
-                      cursorColor: Palette.colorPrimary,
-                      onChanged: (value) {
-                        _name = value;
-                        _getPatient();
-                      },
+      child: BlocListener(
+        bloc: _deletePatientBloc,
+        listener: (_, dynamic state) {
+          switch (state.status) {
+            case Status.LOADING:
+              {
+                Strings.pleaseWait.toToastLoading();
+              }
+              break;
+            case Status.ERROR:
+              {
+                state.status.toString().toToastError();
+              }
+              break;
+            case Status.SUCCESS:
+              {
+                Strings.successDelete.toString().toToastSuccess();
+                Navigator.pop(context);
+              }
+              break;
+          }
+        },
+        child: Container(
+          child: Column(
+              crossAxisAlignment: CrossAxisAlignment.center,
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Align(
+                  alignment: Alignment.topRight,
+                  child: Container(
+                    height: Dimens.height55,
+                    constraints:
+                        BoxConstraints(maxWidth: Dimens.maxWidthSearch),
+                    decoration: BoxDecoration(
+                        color: Colors.white,
+                        borderRadius: BorderRadius.only(
+                            bottomLeft: Radius.circular(Dimens.radius),
+                            bottomRight: Radius.circular(Dimens.radius)),
+                        boxShadow: [BoxShadows.primary]),
+                    alignment: Alignment.center,
+                    padding:
+                        const EdgeInsets.symmetric(horizontal: Dimens.padding),
+                    margin: EdgeInsets.only(right: 16),
+                    child: SizedBox(
+                      height: Dimens.height35,
+                      child: AnimatedSearchBar(
+                        label: Strings.searchPatient,
+                        labelStyle: TextStyles.textBold,
+                        searchStyle: TextStyles.text,
+                        searchDecoration: InputDecoration(
+                            alignLabelWithHint: true,
+                            hintText: Strings.searchPatientHint,
+                            hintStyle: TextStyles.textHint,
+                            contentPadding: EdgeInsets.symmetric(
+                                horizontal: Dimens.space8, vertical: 0),
+                            border: OutlineInputBorder(
+                              gapPadding: 0,
+                              borderRadius:
+                                  BorderRadius.circular(Dimens.space4),
+                              borderSide: BorderSide(
+                                color: Palette.colorPrimary,
+                                width: 1.0,
+                              ),
+                            )),
+                        cursorColor: Palette.colorPrimary,
+                        onChanged: (value) {
+                          _name = value;
+                          _getPatient();
+                        },
+                      ),
                     ),
                   ),
                 ),
-              ),
-              Padding(
-                padding: EdgeInsets.all(Dimens.padding),
-                child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Text(
-                        Strings.listPatient,
-                        style: TextStyles.textHint
-                            .copyWith(fontSize: Dimens.fontLarge3),
-                      ),
-                      Button(
-                        title: Strings.addPatient,
-                        color: Palette.colorPrimary,
-                        onPressed: () async {
-                          await context.goTo(AppRoute.addPatient);
-                          _getPatient();
-                        },
-                      )
-                    ]),
-              ),
-              Expanded(
-                  child: BlocBuilder(
-                bloc: _listPatientBloc,
-                builder: (_, dynamic state) {
-                  switch (state.status) {
-                    case Status.LOADING:
-                      {
-                        return Center(child: Loading());
-                      }
-                    case Status.EMPTY:
-                      {
-                        return Center(
-                          child: Empty(
-                            errorMessage: state.message.toString(),
-                          ),
-                        );
-                      }
-                    case Status.ERROR:
-                      {
-                        logs(state.message.toString());
-                        return Center(
-                          child: Empty(
-                            errorMessage: state.message.toString(),
-                          ),
-                        );
-                      }
-                    case Status.SUCCESS:
-                      {
-                        _listPatient = state.data.data;
-                        return RefreshIndicator(
-                          onRefresh: () async {
+                Padding(
+                  padding: EdgeInsets.all(Dimens.padding),
+                  child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Text(
+                          Strings.listPatient,
+                          style: TextStyles.textHint
+                              .copyWith(fontSize: Dimens.fontLarge3),
+                        ),
+                        Button(
+                          title: Strings.addPatient,
+                          color: Palette.colorPrimary,
+                          onPressed: () async {
+                            await context.goTo(AppRoute.addPatient);
                             _getPatient();
                           },
-                          child: ListView.builder(
-                              physics: AlwaysScrollableScrollPhysics(),
-                              itemCount: _listPatient.length,
-                              shrinkWrap: true,
-                              itemBuilder: (_, index) {
-                                return _listItem(index);
-                              }),
-                        );
-                      }
-                    default:
-                      return Container();
-                  }
-                },
-              ))
-            ]),
+                        )
+                      ]),
+                ),
+                Expanded(
+                    child: BlocBuilder(
+                  bloc: _listPatientBloc,
+                  builder: (_, dynamic state) {
+                    switch (state.status) {
+                      case Status.LOADING:
+                        {
+                          return Center(child: Loading());
+                        }
+                      case Status.EMPTY:
+                        {
+                          return Center(
+                            child: Empty(
+                              errorMessage: state.message.toString(),
+                            ),
+                          );
+                        }
+                      case Status.ERROR:
+                        {
+                          logs(state.message.toString());
+                          return Center(
+                            child: Empty(
+                              errorMessage: state.message.toString(),
+                            ),
+                          );
+                        }
+                      case Status.SUCCESS:
+                        {
+                          _listPatient = state.data.data;
+                          return RefreshIndicator(
+                            onRefresh: () async {
+                              _getPatient();
+                            },
+                            child: ListView.builder(
+                                physics: AlwaysScrollableScrollPhysics(),
+                                itemCount: _listPatient.length,
+                                shrinkWrap: true,
+                                itemBuilder: (_, index) {
+                                  return _listItem(index);
+                                }),
+                          );
+                        }
+                      default:
+                        return Container();
+                    }
+                  },
+                ))
+              ]),
+        ),
       ),
     );
   }
@@ -304,9 +329,10 @@ class _ListPatientPageState extends State<ListPatientPage> {
                 Strings.delete,
                 style: TextStyles.text.copyWith(color: Palette.red),
               ),
-              onPressed: () {
-                _deletePatientBloc.deletePatient(_listPatient[index].id);
-                _getPatient();
+              onPressed: () async {
+                await _deletePatientBloc
+                    .deletePatient(_listPatient[index].id.toString());
+                await _getPatient();
                 Navigator.pop(dialogContext, true); // Dismiss alert dialog
               },
             ),
