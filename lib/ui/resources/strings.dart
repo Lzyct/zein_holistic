@@ -63,4 +63,6 @@ class Strings {
   static String addressContent = "Jl. BTP Blok M ";
 
   static String listPatient = "Daftar Pasien";
+
+  static String successDelete = "Berhasil mengapus data";
 }
