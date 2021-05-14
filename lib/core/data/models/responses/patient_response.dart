@@ -1,12 +1,12 @@
 import 'package:zein_holistic/core/data/models/responses/diagnostic.dart';
 
-class CreatePatientResponse {
+class PatientResponse {
   Diagnostic? diagnostic;
   Data? data;
 
-  CreatePatientResponse({this.data});
+  PatientResponse({this.data});
 
-  CreatePatientResponse.fromJson(Map<String, dynamic> json) {
+  PatientResponse.fromJson(Map<String, dynamic> json) {
     diagnostic = json['diagnostic'] != null
         ? new Diagnostic.fromJson(json['diagnostic'])
         : null;
