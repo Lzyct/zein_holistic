@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:zein_holistic/core/blocs/blocs.dart';
-import 'package:zein_holistic/core/data/models/entities/patient_entity.dart';
+import 'package:zein_holistic/core/data/models/responses/list_patient_response.dart';
 import 'package:zein_holistic/ui/pages/pages.dart';
 
 class AppRoute {
@@ -52,7 +52,7 @@ class AppRoute {
               )
             ],
             child: ListMedicalRecordPage(
-              patientEntity: _args["patient"] as PatientEntity,
+              patientData: _args["patient"] as Data,
             ),
           );
         },
