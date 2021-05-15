@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:zein_holistic/ui/resources/resources.dart';
 import 'package:zein_holistic/ui/widgets/widgets.dart';
+import 'package:zein_holistic/utils/responsive.dart';
 
 ///*********************************************
 ///  zein_holistic
@@ -27,8 +28,11 @@ class CustomToolbar extends StatelessWidget {
           BackButtons(),
           Text(
             title,
-            style: TextStyles.textHint.copyWith(fontSize: Dimens.fontLarge4),
-          )
+            style: TextStyles.textHint.copyWith(
+                fontSize: Responsive.isDesktop(context)
+                    ? Dimens.fontLarge4
+                    : Dimens.fontLarge2),
+          ),
         ],
       ),
     );
