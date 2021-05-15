@@ -1,74 +1,103 @@
 import 'package:zein_holistic/core/blocs/blocs.dart';
-import 'package:zein_holistic/core/data/models/models.dart';
-import 'package:zein_holistic/core/data/sources/sources.dart';
+import 'package:zein_holistic/core/data/models/request/patient/list_medical_record_request.dart';
+import 'package:zein_holistic/core/data/models/request/patient/medical_record_request.dart';
+import 'package:zein_holistic/core/data/models/responses/diagnostic.dart';
+import 'package:zein_holistic/core/data/models/responses/list_medical_record_response.dart';
+import 'package:zein_holistic/core/data/models/responses/medical_record_response.dart';
+import 'package:zein_holistic/core/data/sources/rest/medical_record_api.dart';
 import 'package:zein_holistic/di/di.dart';
 import 'package:zein_holistic/ui/resources/resources.dart';
-import 'package:zein_holistic/utils/utils.dart';
 
 class MedicalRecordRepository {
-  MedicalRecord? _medicalRecordDb = sl<MedicalRecord>();
+  var _restMedicalRecord = sl<MedicalRecordApi>();
 
-  Future<Result<dynamic>> addMedicalRecord(
-      Map<String, String?> _params) async {
+  Future<Result<MedicalRecordResponse>> createMedicalRecord(
+      MedicalRecordRequest request) async {
     try {
-      var _response = await _medicalRecordDb!.addMedicalRecord(_params);
+      Result.isLoading();
 
-      logs("is bool ${_response is bool}");
-      if (_response is bool) {
-        return Result.isSuccess(data: true);
+      var _response = await _restMedicalRecord.createMedicalRecord(request);
+      var _createMedicalRecordResponse =
+          MedicalRecordResponse.fromJson(_response.data);
+      if (_response.statusCode == 200) {
+        return Result.isSuccess(data: _createMedicalRecordResponse);
       } else {
-        return Result.isError(_response);
+        return Result.isError(_createMedicalRecordResponse.diagnostic?.status);
       }
     } catch (e) {
       return Result.isError(e.toString());
     }
   }
 
-  Future<Result<dynamic>> deleteMedicalRecord(String id) async {
+  Future<Result<MedicalRecordResponse>> updateMedicalRecord(
+      MedicalRecordRequest request, String idMedicalRecord) async {
     try {
-      var _response = await _medicalRecordDb!.deleteMedicalRecord(id);
-      logs("is bool ${_response is bool}");
-      if (_response is bool) {
-        return Result.isSuccess(data: true);
+      Result.isLoading();
+
+      var _response = await _restMedicalRecord.updateMedicalRecord(
+          request, idMedicalRecord);
+      var _createMedicalRecordResponse =
+          MedicalRecordResponse.fromJson(_response.data);
+      if (_response.statusCode == 200) {
+        return Result.isSuccess(data: _createMedicalRecordResponse);
       } else {
-        return Result.isError(_response);
+        return Result.isError(_createMedicalRecordResponse.diagnostic?.status);
       }
     } catch (e) {
       return Result.isError(e.toString());
     }
   }
 
-  Future<Result<dynamic>> editMedicalRecord(
-      Map<String, String?> _params) async {
+  Future<Result<Diagnostic>> deleteMedicalRecord(String idMedicalRecord) async {
     try {
-      await _medicalRecordDb!.editMedicalRecord(_params);
-      return Result.isSuccess(data: true);
-    } catch (e) {
-      return Result.isError(e.toString());
-    }
-  }
+      Result.isLoading();
 
-  Future<Result<MedicalRecordEntity>> getDetailMedicalRecord(
-      String? id) async {
-    try {
-      var _response = await _medicalRecordDb!.getDetailMedicalRecord(id);
-      return Result.isSuccess(data: _response);
-    } catch (e) {
-      return Result.isError(e.toString());
-    }
-  }
-
-  Future<Result<List<MedicalRecordEntity>>> getListMedicalRecord(
-      String? idPatient, String mainComplaint) async {
-    try {
       var _response =
-          await _medicalRecordDb!.getListMedicalRecord(idPatient, mainComplaint);
-
-      logs("is bool ${_response is bool}");
-      if (_response.isEmpty) {
-        return Result.isEmpty(Strings.errorNoMedicalRecord);
+          await _restMedicalRecord.deleteMedicalRecord(idMedicalRecord);
+      var _diagnosticResponse = Diagnostic.fromJson(_response.data);
+      if (_response.statusCode == 200) {
+        return Result.isSuccess(data: _diagnosticResponse);
       } else {
-        return Result.isSuccess(data: _response);
+        return Result.isError(_diagnosticResponse.status);
+      }
+    } catch (e) {
+      return Result.isError(e.toString());
+    }
+  }
+
+  Future<Result<MedicalRecordResponse>> detailMedicalRecord(
+      String idMedicalRecord) async {
+    try {
+      Result.isLoading();
+
+      var _response =
+          await _restMedicalRecord.detailMedicalRecord(idMedicalRecord);
+      var _patientResponse = MedicalRecordResponse.fromJson(_response.data);
+      if (_response.statusCode == 200) {
+        return Result.isSuccess(data: _patientResponse);
+      } else {
+        return Result.isError(_patientResponse.diagnostic?.status);
+      }
+    } catch (e) {
+      return Result.isError(e.toString());
+    }
+  }
+
+  Future<Result<ListMedicalRecordResponse>> listMedicalRecord(
+      ListMedicalRecordRequest request) async {
+    try {
+      Result.isLoading();
+
+      var _response = await _restMedicalRecord.listMedicalRecord(request);
+      var _listMedicalRecordResponse =
+          ListMedicalRecordResponse.fromJson(_response.data);
+      if (_response.statusCode == 200) {
+        if (_listMedicalRecordResponse.data!.isNotEmpty)
+          return Result.isSuccess(data: _listMedicalRecordResponse);
+        else
+          return Result.isEmpty(Strings.dataNotFound);
+      } else {
+        return Result.isError(_listMedicalRecordResponse.diagnostic?.status);
       }
     } catch (e) {
       return Result.isError(e.toString());
