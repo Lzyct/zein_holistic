@@ -12,12 +12,12 @@ extension StringExtension on String {
   }
 
   String toStringDate() {
-    var object = new DateFormat("yyyy-MM-dd HH:mm:ss").parse(this);
+    var object = new DateFormat("yyyy-MM-ddTHH:mm:ss").parse(this);
     return DateFormat("dd MMMM yyyy", "id").format(object);
   }
 
   String toStringDateTime() {
-    var object = new DateFormat("yyyy-MM-dd HH:mm:ss").parse(this);
+    var object = new DateFormat("yyyy-MM-ddTHH:mm:ss").parse(this);
     return DateFormat("dd MMMM yyyy HH:mm", "id").format(object);
   }
 
