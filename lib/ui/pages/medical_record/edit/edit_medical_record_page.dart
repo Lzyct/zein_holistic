@@ -2,7 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:zein_holistic/core/blocs/blocs.dart';
-import 'package:zein_holistic/core/data/models/models.dart';
+import 'package:zein_holistic/core/data/models/request/patient/medical_record_request.dart';
+import 'package:zein_holistic/core/data/models/responses/medical_record_response.dart';
 import 'package:zein_holistic/core/enums/enums.dart';
 import 'package:zein_holistic/core/extensions/extensions.dart';
 import 'package:zein_holistic/ui/resources/resources.dart';
@@ -44,13 +45,14 @@ class _EditMedicalRecordPageState extends State<EditMedicalRecordPage> {
 
   late EditMedicalRecordBloc _editMedicalRecordBloc;
   late DetailMedicalRecordBloc _detailMedicalRecordBloc;
+  var _idPatient = "";
 
   @override
   void initState() {
     super.initState();
     _editMedicalRecordBloc = BlocProvider.of(context);
     _detailMedicalRecordBloc = BlocProvider.of(context);
-    _detailMedicalRecordBloc.getDetailMedicalRecord(widget.id);
+    _detailMedicalRecordBloc.getDetailMedicalRecord(widget.id.toString());
 
     _conMainComplaint.addListener(() {
       logs("listener : ${_conMainComplaint.text}");
@@ -69,139 +71,179 @@ class _EditMedicalRecordPageState extends State<EditMedicalRecordPage> {
     logs("isBuild");
     return Parent(
       appBar: context.appBar(),
-      child: Scrollbar(
-        child: SingleChildScrollView(
-          child: BlocListener(
-            bloc: _editMedicalRecordBloc,
-            listener: (_, dynamic state) {
-              switch (state.status) {
-                case Status.LOADING:
-                  {
-                    Strings.pleaseWait.toToastLoading();
-                  }
-                  break;
-                case Status.ERROR:
-                  {
-                    state.message.toString().toToastError();
-                  }
-                  break;
-                case Status.SUCCESS:
-                  {
-                    Strings.successSaveData.toToastSuccess();
-                    Navigator.pop(context);
-                  }
-                  break;
-              }
-            },
-            child: BlocBuilder(
-              bloc: _detailMedicalRecordBloc,
-              builder: (_, dynamic state) {
-                switch (state.status) {
-                  case Status.LOADING:
-                    {
-                      return Center(child: Loading());
+      child: Container(
+        constraints: BoxConstraints(maxWidth: Dimens.maxWidth),
+        alignment: Alignment.topCenter,
+        child: Column(
+          children: [
+            CustomToolbar(title: Strings.editMedicalRecord),
+            Scrollbar(
+              child: SingleChildScrollView(
+                child: BlocListener(
+                  bloc: _editMedicalRecordBloc,
+                  listener: (_, dynamic state) {
+                    switch (state.status) {
+                      case Status.LOADING:
+                        {
+                          Strings.pleaseWait.toToastLoading();
+                        }
+                        break;
+                      case Status.ERROR:
+                        {
+                          state.message.toString().toToastError();
+                        }
+                        break;
+                      case Status.SUCCESS:
+                        {
+                          Strings.successSaveData.toToastSuccess();
+                          Navigator.pop(context);
+                        }
+                        break;
                     }
-                  case Status.ERROR:
-                    {
-                      return Center(
-                        child: Empty(
-                          errorMessage: state.message.toString(),
-                        ),
-                      );
-                    }
-                  case Status.SUCCESS:
-                    {
-                      //set initial data
-                      if (_isFirstLoad) {
-                        MedicalRecordEntity _medicalRecordEntity = state.data;
-                        _conMainComplaint.text = _medicalRecordEntity.mainComplaint!;
-                        _conAdditionalComplaint.text = _medicalRecordEntity.additionalComplaint!;
-                        _conHistoryOfDisease.text = _medicalRecordEntity.historyOfDisease!;
-                        _conCheckUpResult.text = _medicalRecordEntity.checkUpResult!;
-                        _conConclusionDiagnosis.text = _medicalRecordEntity.conclusionDiagnosis!;
-                        _conSuggestion.text = _medicalRecordEntity.suggestion!;
-                        _conExaminer.text = _medicalRecordEntity.examiner!;
+                  },
+                  child: BlocBuilder(
+                    bloc: _detailMedicalRecordBloc,
+                    builder: (_, dynamic state) {
+                      switch (state.status) {
+                        case Status.LOADING:
+                          {
+                            return Center(child: Loading());
+                          }
+                        case Status.ERROR:
+                          {
+                            return Center(
+                              child: Empty(
+                                errorMessage: state.message.toString(),
+                              ),
+                            );
+                          }
+                        case Status.SUCCESS:
+                          {
+                            //set initial data
+                            if (_isFirstLoad) {
+                              MedicalRecordResponse _medicalRecordResponse =
+                                  state.data;
+                              _conMainComplaint.text =
+                                  _medicalRecordResponse.data!.mainComplaint!;
+                              _conAdditionalComplaint.text =
+                                  _medicalRecordResponse
+                                      .data!.additionalComplaint!;
+                              _conHistoryOfDisease.text = _medicalRecordResponse
+                                  .data!.historyOfDisease!;
+                              _conCheckUpResult.text =
+                                  _medicalRecordResponse.data!.checkUpResult!;
+                              _conConclusionDiagnosis.text =
+                                  _medicalRecordResponse
+                                      .data!.conclusionDiagnosis!;
+                              _conSuggestion.text =
+                                  _medicalRecordResponse.data!.suggestion!;
+                              _conExaminer.text =
+                                  _medicalRecordResponse.data!.examiner!;
+                              _idPatient =
+                                  _medicalRecordResponse.data!.idPatient!;
 
-                        _isFirstLoad = false;
+                              _isFirstLoad = false;
+                            }
+                            return Padding(
+                              padding: EdgeInsets.symmetric(
+                                  horizontal: Responsive.isDesktop(context)
+                                      ? context.dp36()
+                                      : context.dp4()),
+                              child: Form(
+                                key: _formKey,
+                                child: Column(
+                                  children: [
+                                    TextF(
+                                      hint: Strings.mainComplaint,
+                                      textInputAction: TextInputAction.next,
+                                      controller: _conMainComplaint,
+                                      curFocusNode: _fnMainComplaint,
+                                      nextFocusNode: _fnAdditionalComplaint,
+                                      validator: (String? value) =>
+                                          value!.isEmpty
+                                              ? Strings.errorEmpty
+                                              : null,
+                                    ),
+                                    TextF(
+                                      hint: Strings.additionalComplaint,
+                                      textInputAction: TextInputAction.next,
+                                      controller: _conAdditionalComplaint,
+                                      curFocusNode: _fnAdditionalComplaint,
+                                      nextFocusNode: _fnHistoryOfDisease,
+                                    ),
+                                    TextF(
+                                      hint: Strings.historyOfDisease,
+                                      textInputAction: TextInputAction.next,
+                                      controller: _conHistoryOfDisease,
+                                      curFocusNode: _fnHistoryOfDisease,
+                                      nextFocusNode: _fnConclusionDiagnosis,
+                                    ),
+                                    TextF(
+                                      hint: Strings.conclusionDiagnosis,
+                                      textInputAction: TextInputAction.next,
+                                      controller: _conConclusionDiagnosis,
+                                      curFocusNode: _fnConclusionDiagnosis,
+                                      nextFocusNode: _fnSuggestion,
+                                    ),
+                                    TextF(
+                                      hint: Strings.suggestion,
+                                      textInputAction: TextInputAction.next,
+                                      controller: _conSuggestion,
+                                      curFocusNode: _fnSuggestion,
+                                      nextFocusNode: _fnExaminer,
+                                    ),
+                                    TextF(
+                                      hint: Strings.examiner,
+                                      textInputAction: TextInputAction.next,
+                                      controller: _conExaminer,
+                                      curFocusNode: _fnExaminer,
+                                      nextFocusNode: null,
+                                      validator: (String? value) =>
+                                          value!.isEmpty
+                                              ? Strings.errorEmpty
+                                              : null,
+                                    ),
+                                    SizedBox(height: Dimens.space16),
+                                    Button(
+                                      title: Strings.save,
+                                      color: Palette.colorPrimary,
+                                      width: double.infinity,
+                                      onPressed: () {
+                                        if (_formKey.currentState!.validate()) {
+                                          var _request = MedicalRecordRequest(
+                                              idPatient: _idPatient.toString(),
+                                              mainComplaint:
+                                                  _conMainComplaint.text,
+                                              additionalComplaint:
+                                                  _conAdditionalComplaint.text,
+                                              historyOfDisease:
+                                                  _conHistoryOfDisease.text,
+                                              checkUpResult:
+                                                  _conCheckUpResult.text,
+                                              conclusionDiagnosis:
+                                                  _conConclusionDiagnosis.text,
+                                              suggestion: _conSuggestion.text,
+                                              examiner: _conExaminer.text);
+                                          _editMedicalRecordBloc
+                                              .editMedicalRecord(_request,
+                                                  widget.id.toString());
+                                        }
+                                      },
+                                    )
+                                  ],
+                                ),
+                              ),
+                            );
+                          }
+                        default:
+                          return Container();
                       }
-                      return Form(
-                        key: _formKey,
-                        child: Column(
-                          children: [
-                            TextF(
-                              hint: Strings.mainComplaint,
-                              textInputAction: TextInputAction.next,
-                              controller: _conMainComplaint,
-                              curFocusNode: _fnMainComplaint,
-                              nextFocusNode: _fnAdditionalComplaint,
-                              validator: (String? value) => value!.isEmpty ? Strings.errorEmpty : null,
-                            ),
-                            TextF(
-                              hint: Strings.additionalComplaint,
-                              textInputAction: TextInputAction.next,
-                              controller: _conAdditionalComplaint,
-                              curFocusNode: _fnAdditionalComplaint,
-                              nextFocusNode: _fnHistoryOfDisease,
-                            ),
-                            TextF(
-                              hint: Strings.historyOfDisease,
-                              textInputAction: TextInputAction.next,
-                              controller: _conHistoryOfDisease,
-                              curFocusNode: _fnHistoryOfDisease,
-                              nextFocusNode: _fnConclusionDiagnosis,
-                            ),
-                            TextF(
-                              hint: Strings.conclusionDiagnosis,
-                              textInputAction: TextInputAction.next,
-                              controller: _conConclusionDiagnosis,
-                              curFocusNode: _fnConclusionDiagnosis,
-                              nextFocusNode: _fnSuggestion,
-                            ),
-                            TextF(
-                              hint: Strings.suggestion,
-                              textInputAction: TextInputAction.next,
-                              controller: _conSuggestion,
-                              curFocusNode: _fnSuggestion,
-                              nextFocusNode: _fnExaminer,
-                            ),
-                            TextF(
-                              hint: Strings.examiner,
-                              textInputAction: TextInputAction.next,
-                              controller: _conExaminer,
-                              curFocusNode: _fnExaminer,
-                              nextFocusNode: null,
-                              validator: (String? value) => value!.isEmpty ? Strings.errorEmpty : null,
-                            ),
-                            SizedBox(height: Dimens.space16),
-                            Button(
-                              title: Strings.save,
-                              color: Palette.colorPrimary,
-                              onPressed: () {
-                                if (_formKey.currentState!.validate()) {
-                                  var _params = {
-                                    'id': widget.id,
-                                    'mainComplaint': _conMainComplaint.text,
-                                    'additionalComplaint': _conAdditionalComplaint.text,
-                                    'historyOfDisease': _conHistoryOfDisease.text,
-                                    'checkUpResult': _conCheckUpResult.text,
-                                    'conclusionDiagnosis': _conConclusionDiagnosis.text,
-                                    'suggestion': _conSuggestion.text,
-                                    'examiner': _conExaminer.text
-                                  };
-                                  _editMedicalRecordBloc.editMedicalRecord(_params);
-                                }
-                              },
-                            )
-                          ],
-                        ),
-                      );
-                    }
-                  default:
-                    return Container();
-                }
-              },
+                    },
+                  ),
+                ),
+              ),
             ),
-          ),
+          ],
         ),
       ),
     );
