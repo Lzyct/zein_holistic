@@ -1,7 +1,6 @@
 import 'package:get_it/get_it.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:zein_holistic/core/data/repositories/repositories.dart';
-import 'package:zein_holistic/core/data/sources/local/patient.dart';
 import 'package:zein_holistic/core/data/sources/rest/impl/medical_record_api_impl.dart';
 import 'package:zein_holistic/core/data/sources/rest/impl/patient_api_impl.dart';
 import 'package:zein_holistic/core/data/sources/rest/medical_record_api.dart';
@@ -16,10 +15,6 @@ Future<void> serviceLocator() async {
   sl.registerFactory<API>(() => API());
   sl.registerFactory<PatientApi>(() => PatientApiImpl());
   sl.registerFactory<MedicalRecordApi>(() => MedicalRecordImpl());
-
-  sl.registerFactory<DbHelper>(() => DbHelper());
-  sl.registerFactory<Patient>(() => Patient());
-  sl.registerFactory<MedicalRecord>(() => MedicalRecord());
 
   //register  Repositories
   sl.registerLazySingleton(() => PatientRepository());

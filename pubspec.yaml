@@ -66,10 +66,6 @@ dependencies:
   # Network client
   dio: ^4.0.0
 
-  # replace sqflite with hive
-  sqflite: ^2.0.0+3
-  #  sqflite_common_ffi: ^2.0.0
-
   file_picker: ^3.0.1
 
   # Some good library, eneble it if you need
