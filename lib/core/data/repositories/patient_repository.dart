@@ -95,14 +95,4 @@ class PatientRepository {
     }
   }
 
-  Patient? _patientDb = sl<Patient>();
-
-  Future<Result<PatientEntity>> getDetailPatient(String? id) async {
-    try {
-      var _response = await _patientDb!.getDetailPatient(id);
-      return Result.isSuccess(data: _response);
-    } catch (e) {
-      return Result.isError(e.toString());
-    }
-  }
 }
