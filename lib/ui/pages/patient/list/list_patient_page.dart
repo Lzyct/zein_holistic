@@ -51,6 +51,18 @@ class _ListPatientPageState extends State<ListPatientPage> {
       appBar: context.appBar(),
       isPadding: false,
       isScroll: false,
+      floatingButton:
+          Responsive.isMobile(context) || Responsive.isTablet(context)
+              ? FloatingActionButton(
+                  backgroundColor: Palette.colorPrimary,
+                  onPressed: () async {
+                    await context.goTo(AppRoute.addPatient);
+                    _getPatient();
+                  },
+                  child: Icon(Icons.note_add),
+                  tooltip: Strings.addMedicalRecord,
+                )
+              : null,
       child: BlocListener(
         bloc: _deletePatientBloc,
         listener: (_, dynamic state) {
@@ -131,17 +143,20 @@ class _ListPatientPageState extends State<ListPatientPage> {
                       children: [
                         Text(
                           Strings.listPatient,
-                          style: TextStyles.textHint
-                              .copyWith(fontSize: Dimens.fontLarge3),
+                          style: TextStyles.textHint.copyWith(
+                              fontSize: Responsive.isDesktop(context)
+                                  ? Dimens.fontLarge4
+                                  : Dimens.fontLarge2),
                         ),
-                        Button(
-                          title: Strings.addPatient,
-                          color: Palette.colorPrimary,
-                          onPressed: () async {
-                            await context.goTo(AppRoute.addPatient);
-                            _getPatient();
-                          },
-                        )
+                        if (Responsive.isDesktop(context))
+                          Button(
+                            title: Strings.addPatient,
+                            color: Palette.colorPrimary,
+                            onPressed: () async {
+                              await context.goTo(AppRoute.addPatient);
+                              _getPatient();
+                            },
+                          )
                       ]),
                 ),
                 Expanded(
@@ -209,18 +224,40 @@ class _ListPatientPageState extends State<ListPatientPage> {
                 children: [
                   Text(
                     _listPatient[index].name!,
-                    style: TextStyles.textBold,
+                    style: TextStyles.textBold
+                        .copyWith(fontSize: Dimens.fontLarge),
                   ),
                   SizedBox(height: Dimens.space8),
-                  Text(
-                    _listPatient[index].address!,
-                    style: TextStyles.textHint
-                        .copyWith(fontSize: Dimens.fontSmall),
+                  Row(
+                    children: [
+                      Icon(
+                        Icons.location_city_outlined,
+                        color: Palette.colorHint,
+                      ),
+                      SizedBox(
+                        width: Dimens.space8,
+                      ),
+                      Text(
+                        _listPatient[index].address!,
+                        style: TextStyles.textHint,
+                      ),
+                    ],
                   ),
-                  Text(
-                    _listPatient[index].phoneNumber!,
-                    style: TextStyles.textHint
-                        .copyWith(fontSize: Dimens.fontSmall),
+                  SizedBox(height: Dimens.space8),
+                  Row(
+                    children: [
+                      Icon(
+                        Icons.phone,
+                        color: Palette.colorHint,
+                      ),
+                      SizedBox(
+                        width: Dimens.space8,
+                      ),
+                      Text(
+                        _listPatient[index].phoneNumber!,
+                        style: TextStyles.textHint,
+                      ),
+                    ],
                   ),
                 ],
               ),
