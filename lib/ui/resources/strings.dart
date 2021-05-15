@@ -65,4 +65,6 @@ class Strings {
   static String listPatient = "Daftar Pasien";
 
   static String successDelete = "Berhasil mengapus data";
+
+  static String year = "Tahun";
 }

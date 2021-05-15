@@ -42,5 +42,6 @@ class Dimens {
   static const double padding = 25;
 
   static const double minWidthButtonDesktop = 100;
+  static const double minWidthButtonDesktopAlt = 180;
   static const double minWidthButtonMobile = 50;
 }
