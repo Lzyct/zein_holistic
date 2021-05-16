@@ -71,6 +71,7 @@ class _ListPatientPageState extends State<ListPatientPage> {
                   backgroundColor: Palette.colorPrimary,
                   onPressed: () async {
                     await context.goTo(AppRoute.addPatient);
+                    _resetPage();
                     _getPatient();
                   },
                   child: Icon(Icons.note_add),
@@ -144,6 +145,7 @@ class _ListPatientPageState extends State<ListPatientPage> {
                         cursorColor: Palette.colorPrimary,
                         onChanged: (value) {
                           _name = value;
+                          _resetPage();
                           _getPatient();
                         },
                       ),
@@ -168,6 +170,7 @@ class _ListPatientPageState extends State<ListPatientPage> {
                             color: Palette.colorPrimary,
                             onPressed: () async {
                               await context.goTo(AppRoute.addPatient);
+                              _resetPage();
                               _getPatient();
                             },
                           )
@@ -205,6 +208,7 @@ class _ListPatientPageState extends State<ListPatientPage> {
 
                           _listPatient.addAll(state.data.data);
                           _lastPage = state.data.page.lastPage;
+
                           return RefreshIndicator(
                             onRefresh: () async {
                               _resetPage();
@@ -313,6 +317,7 @@ class _ListPatientPageState extends State<ListPatientPage> {
           onPressed: () async {
             await context.goTo(AppRoute.editPatient,
                 args: {"id": _listPatient[index].id});
+            _resetPage();
             _getPatient();
           },
         ),
@@ -339,6 +344,7 @@ class _ListPatientPageState extends State<ListPatientPage> {
           onPressed: () async {
             await context.goTo(AppRoute.editPatient,
                 args: {"id": _listPatient[index].id});
+            _resetPage();
             _getPatient();
           },
         ),
@@ -398,6 +404,7 @@ class _ListPatientPageState extends State<ListPatientPage> {
               onPressed: () async {
                 await _deletePatientBloc
                     .deletePatient(_listPatient[index].id.toString());
+                _resetPage();
                 await _getPatient();
                 Navigator.pop(dialogContext, true); // Dismiss alert dialog
               },
