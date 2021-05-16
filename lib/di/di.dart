@@ -1,4 +1,3 @@
-export 'db_helper.dart';
+export 'api.dart';
 export 'pref_manager.dart';
 export 'services_locator.dart';
-export 'api.dart';
