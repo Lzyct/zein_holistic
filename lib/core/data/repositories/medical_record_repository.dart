@@ -86,7 +86,7 @@ class MedicalRecordRepository {
   Future<Result<ListMedicalRecordResponse>> listMedicalRecord(
       ListMedicalRecordRequest request) async {
     try {
-      Result.isLoading();
+      if (request.isFirstPage) Result.isLoading();
 
       var _response = await _restMedicalRecord.listMedicalRecord(request);
       var _listMedicalRecordResponse =

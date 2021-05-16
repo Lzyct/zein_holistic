@@ -32,8 +32,12 @@ class ListMedicalRecordPage extends StatefulWidget {
 class _ListMedicalRecordPageState extends State<ListMedicalRecordPage> {
   late ListMedicalRecordBloc _listMedicalRecordBloc;
   late DeleteMedicalRecordBloc _deleteMedicalRecordBloc;
-  List<medical_record.Data>? _listMedicalRecord = [];
+  List<medical_record.Data> _listMedicalRecord = [];
   var _mainComplaint = "";
+
+  var _lastPage = 0;
+  var _currentPage = 0;
+  var _scrollController = new ScrollController();
 
   @override
   void initState() {
@@ -41,6 +45,17 @@ class _ListMedicalRecordPageState extends State<ListMedicalRecordPage> {
     _listMedicalRecordBloc = BlocProvider.of(context);
     _deleteMedicalRecordBloc = BlocProvider.of(context);
     _getMedicalRecord();
+
+    // detect last data
+    _scrollController.addListener(() {
+      if (_scrollController.position.pixels ==
+          _scrollController.position.maxScrollExtent) {
+        if (_currentPage < _lastPage) {
+          _currentPage++;
+          _getMedicalRecord();
+        }
+      }
+    });
   }
 
   @override
@@ -63,6 +78,7 @@ class _ListMedicalRecordPageState extends State<ListMedicalRecordPage> {
                   onPressed: () async {
                     await context.goTo(AppRoute.addMedicalRecord,
                         args: {"idPatient": widget.patientData?.id.toString()});
+                    _resetPage();
                     _getMedicalRecord();
                   },
                   child: Icon(Icons.note_add),
@@ -169,6 +185,7 @@ class _ListMedicalRecordPageState extends State<ListMedicalRecordPage> {
                   onPressed: () async {
                     await context.goTo(AppRoute.addMedicalRecord,
                         args: {"idPatient": widget.patientData?.id.toString()});
+                    _resetPage();
                     _getMedicalRecord();
                   },
                 ),
@@ -195,12 +212,14 @@ class _ListMedicalRecordPageState extends State<ListMedicalRecordPage> {
                   cursorColor: Palette.colorPrimary,
                   onChanged: (value) {
                     _mainComplaint = value;
+                    _resetPage();
                     _getMedicalRecord();
                   },
                 ),
               ),
             ],
-          ),
+          ).padding(
+              edgeInsets: EdgeInsets.symmetric(horizontal: Dimens.space16)),
           SizedBox(height: Dimens.space16),
           Expanded(
             child: BlocBuilder(
@@ -229,17 +248,32 @@ class _ListMedicalRecordPageState extends State<ListMedicalRecordPage> {
                     }
                   case Status.SUCCESS:
                     {
-                      _listMedicalRecord = state.data.data;
+                      if (_currentPage == 0) _listMedicalRecord.clear();
+
+                      _listMedicalRecord.addAll(state.data.data);
+                      _lastPage = state.data.page.lastPage;
+
                       return RefreshIndicator(
                         onRefresh: () async {
+                          _resetPage();
                           _getMedicalRecord();
                         },
                         child: ListView.builder(
+                            controller: _scrollController,
                             physics: AlwaysScrollableScrollPhysics(),
-                            itemCount: _listMedicalRecord!.length,
+                            itemCount: _currentPage == _lastPage
+                                ? _listMedicalRecord.length
+                                : _listMedicalRecord.length + 1,
                             shrinkWrap: true,
                             itemBuilder: (_, index) {
-                              return _listItem(index);
+                              return index < _listMedicalRecord.length
+                                  ? _listItem(index)
+                                  : Container(
+                                      height: 50,
+                                      child: Center(
+                                        child: new CircularProgressIndicator(),
+                                      ),
+                                    );
                             }),
                       );
                     }
@@ -265,7 +299,7 @@ class _ListMedicalRecordPageState extends State<ListMedicalRecordPage> {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
-                    _listMedicalRecord![index].mainComplaint!,
+                    _listMedicalRecord[index].mainComplaint!,
                     style: TextStyles.textBold,
                     textAlign: TextAlign.left,
                   ),
@@ -279,9 +313,7 @@ class _ListMedicalRecordPageState extends State<ListMedicalRecordPage> {
                       ),
                       SizedBox(width: Dimens.space4),
                       Text(
-                        _listMedicalRecord![index]
-                            .createdAt!
-                            .toStringDateTime(),
+                        _listMedicalRecord[index].createdAt!.toStringDateTime(),
                         style: TextStyles.textHint
                             .copyWith(fontSize: Dimens.fontSmall),
                       ),
@@ -289,7 +321,7 @@ class _ListMedicalRecordPageState extends State<ListMedicalRecordPage> {
                   ),
                   SizedBox(height: Dimens.space16),
                   Text(
-                    "${Strings.examiner} : ${_listMedicalRecord![index].examiner!}",
+                    "${Strings.examiner} : ${_listMedicalRecord[index].examiner!}",
                     style: TextStyles.textHint,
                   ),
                 ],
@@ -302,7 +334,7 @@ class _ListMedicalRecordPageState extends State<ListMedicalRecordPage> {
         ).padding(edgeInsets: EdgeInsets.all(Dimens.space16)),
         onTap: () {
           context.goTo(AppRoute.detailMedicalRecord,
-              args: {"id": _listMedicalRecord![index].id.toString()});
+              args: {"id": _listMedicalRecord[index].id.toString()});
         });
   }
 
@@ -316,7 +348,8 @@ class _ListMedicalRecordPageState extends State<ListMedicalRecordPage> {
           titleColor: Colors.white,
           onPressed: () async {
             await context.goTo(AppRoute.editMedicalRecord,
-                args: {"id": _listMedicalRecord![index].id.toString()});
+                args: {"id": _listMedicalRecord[index].id.toString()});
+            _resetPage();
             _getMedicalRecord();
           },
         ),
@@ -342,7 +375,8 @@ class _ListMedicalRecordPageState extends State<ListMedicalRecordPage> {
           titleColor: Colors.white,
           onPressed: () async {
             await context.goTo(AppRoute.editMedicalRecord,
-                args: {"id": _listMedicalRecord![index].id.toString()});
+                args: {"id": _listMedicalRecord[index].id.toString()});
+            _resetPage();
             _getMedicalRecord();
           },
         ),
@@ -376,7 +410,7 @@ class _ListMedicalRecordPageState extends State<ListMedicalRecordPage> {
                 style: TextStyles.text,
               ),
               TextSpan(
-                  text: " ${_listMedicalRecord![index].mainComplaint} ",
+                  text: " ${_listMedicalRecord[index].mainComplaint} ",
                   style: TextStyles.textBold),
               TextSpan(
                 text: Strings.questionMark,
@@ -401,7 +435,8 @@ class _ListMedicalRecordPageState extends State<ListMedicalRecordPage> {
               ),
               onPressed: () {
                 _deleteMedicalRecordBloc.deleteMedicalRecord(
-                    _listMedicalRecord![index].id.toString());
+                    _listMedicalRecord[index].id.toString());
+                _resetPage();
                 _getMedicalRecord();
                 Navigator.pop(dialogContext, true); // Dismiss alert dialog
               },
@@ -414,6 +449,14 @@ class _ListMedicalRecordPageState extends State<ListMedicalRecordPage> {
 
   _getMedicalRecord() {
     _listMedicalRecordBloc.getListMedicalRecord(ListMedicalRecordRequest(
-        page: 0, idPatient: widget.patientData!.id!, q: _mainComplaint));
+        page: _currentPage,
+        idPatient: widget.patientData!.id!,
+        q: _mainComplaint,
+        isFirstPage: _currentPage == 0));
+  }
+
+  _resetPage() {
+    _currentPage = 0;
+    _lastPage = 0;
   }
 }
