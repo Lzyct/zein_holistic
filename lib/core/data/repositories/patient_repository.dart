@@ -78,7 +78,7 @@ class PatientRepository {
   Future<Result<ListPatientResponse>> listPatient(
       ListPatientRequest request) async {
     try {
-      Result.isLoading();
+      if (request.isFirstPage) Result.isLoading();
 
       var _response = await _restPatient.listPatient(request);
       var _listPatientResponse = ListPatientResponse.fromJson(_response.data);
@@ -94,5 +94,4 @@ class PatientRepository {
       return Result.isError(e.toString());
     }
   }
-
 }

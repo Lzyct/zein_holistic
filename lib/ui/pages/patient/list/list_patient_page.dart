@@ -30,12 +30,26 @@ class _ListPatientPageState extends State<ListPatientPage> {
   String _name = "";
   List<Data> _listPatient = [];
 
+  var _lastPage = 0;
+  var _currentPage = 0;
+  var _scrollController = new ScrollController();
+
   @override
   void initState() {
     super.initState();
     _listPatientBloc = BlocProvider.of(context);
     _deletePatientBloc = BlocProvider.of(context);
     _getPatient();
+
+    _scrollController.addListener(() {
+      if (_scrollController.position.pixels ==
+          _scrollController.position.maxScrollExtent) {
+        if (_currentPage < _lastPage) {
+          _currentPage++;
+          _getPatient();
+        }
+      }
+    });
   }
 
   @override
@@ -187,17 +201,32 @@ class _ListPatientPageState extends State<ListPatientPage> {
                         }
                       case Status.SUCCESS:
                         {
-                          _listPatient = state.data.data;
+                          if (_currentPage == 0) _listPatient.clear();
+
+                          _listPatient.addAll(state.data.data);
+                          _lastPage = state.data.page.lastPage;
                           return RefreshIndicator(
                             onRefresh: () async {
+                              _resetPage();
                               _getPatient();
                             },
                             child: ListView.builder(
                                 physics: AlwaysScrollableScrollPhysics(),
-                                itemCount: _listPatient.length,
+                                controller: _scrollController,
+                                itemCount: _currentPage == _lastPage
+                                    ? _listPatient.length
+                                    : _listPatient.length + 1,
                                 shrinkWrap: true,
                                 itemBuilder: (_, index) {
-                                  return _listItem(index);
+                                  return index < _listPatient.length
+                                      ? _listItem(index)
+                                      : Container(
+                                          height: 50,
+                                          child: Center(
+                                            child:
+                                                new CircularProgressIndicator(),
+                                          ),
+                                        );
                                 }),
                           );
                         }
@@ -380,6 +409,12 @@ class _ListPatientPageState extends State<ListPatientPage> {
   }
 
   _getPatient() {
-    _listPatientBloc.listPatient(ListPatientRequest(page: 0, q: _name));
+    _listPatientBloc.listPatient(ListPatientRequest(
+        page: _currentPage, q: _name, isFirstPage: _currentPage == 0));
+  }
+
+  _resetPage() {
+    _currentPage = 0;
+    _lastPage = 0;
   }
 }
