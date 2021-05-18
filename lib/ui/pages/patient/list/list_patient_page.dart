@@ -259,20 +259,19 @@ class _ListPatientPageState extends State<ListPatientPage> {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
-                    _listPatient[index].name!,
+                    "${index + 1}. ${_listPatient[index].name!}",
                     style: TextStyles.textBold
                         .copyWith(fontSize: Dimens.fontLarge),
                   ),
                   SizedBox(height: Dimens.space8),
                   Row(
                     children: [
+                      SizedBox(width: Dimens.space16),
                       Icon(
                         Icons.location_city_outlined,
                         color: Palette.colorHint,
                       ),
-                      SizedBox(
-                        width: Dimens.space8,
-                      ),
+                      SizedBox(width: Dimens.space8),
                       Text(
                         _listPatient[index].address!,
                         style: TextStyles.textHint,
@@ -282,15 +281,30 @@ class _ListPatientPageState extends State<ListPatientPage> {
                   SizedBox(height: Dimens.space8),
                   Row(
                     children: [
+                      SizedBox(width: Dimens.space16),
                       Icon(
                         Icons.phone,
                         color: Palette.colorHint,
                       ),
-                      SizedBox(
-                        width: Dimens.space8,
-                      ),
+                      SizedBox(width: Dimens.space8),
                       Text(
                         _listPatient[index].phoneNumber!,
+                        style: TextStyles.textHint,
+                      ),
+                    ],
+                  ),
+                  SizedBox(height: Dimens.space8),
+                  Row(
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: [
+                      SizedBox(width: Dimens.space16),
+                      Icon(
+                        Icons.lock_clock,
+                        color: Palette.colorHint,
+                      ),
+                      SizedBox(width: Dimens.space8),
+                      Text(
+                        _listPatient[index].createdAt!.toStringDateTime(),
                         style: TextStyles.textHint,
                       ),
                     ],

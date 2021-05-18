@@ -144,101 +144,114 @@ class _ListMedicalRecordPageState extends State<ListMedicalRecordPage> {
                             widget.patientData!.sex == Strings.man
                                 ? Images.icMan
                                 : Images.icWoman,
-                          color: Palette.colorPrimary,
-                        )),
-                    SizedBox(width: Dimens.space8),
-                    Text(
-                      "${calculateAge(widget.patientData!.birthday!.toDateTime())} ${Strings.year}",
-                      style: TextStyles.whiteBold.copyWith(
-                        fontSize: Dimens.fontSmall,
+                            color: Palette.colorPrimary,
+                          )),
+                      SizedBox(width: Dimens.space8),
+                      Text(
+                        "${calculateAge(widget.patientData!.birthday!.toDateTime())} ${Strings.year}",
+                        style: TextStyles.whiteBold,
+                      )
+                    ],
+                  ),
+                  Row(
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: [
+                      Icon(Icons.cake, color: Colors.white),
+                      SizedBox(
+                        width: Dimens.space8,
                       ),
-                    )
-                  ],
-                ),
-                Row(children: [
-                  Icon(
-                    Icons.calendar_today,
-                    color: Colors.white,
-                    size: Dimens.space16,
+                      Text(
+                        widget.patientData!.birthday!,
+                        textAlign: TextAlign.start,
+                        style: TextStyles.white,
+                      )
+                    ],
                   ),
-                  SizedBox(
-                    width: Dimens.space8,
+                  SizedBox(height: Dimens.space4),
+                  Row(
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: [
+                      Icon(
+                        Icons.location_city_outlined,
+                        color: Colors.white,
+                      ),
+                      SizedBox(
+                        width: Dimens.space8,
+                      ),
+                      Text(
+                        widget.patientData!.address!,
+                        textAlign: TextAlign.start,
+                        style: TextStyles.white,
+                      ),
+                    ],
                   ),
-                  Text(
-                    widget.patientData!.birthday!,
-                    textAlign: TextAlign.start,
-                    style:
-                        TextStyles.white.copyWith(fontSize: Dimens.fontSmall),
-                  )
-                ]),
-                SizedBox(height: Dimens.space4),
-                Row(children: [
-                  Icon(
-                    Icons.location_city_outlined,
-                    color: Colors.white,
-                    size: Dimens.space16,
+                  SizedBox(height: Dimens.space4),
+                  Row(
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: [
+                      Icon(Icons.date_range_rounded, color: Colors.white),
+                      SizedBox(
+                        width: Dimens.space8,
+                      ),
+                      Text(
+                        widget.patientData!.createdAt!.toStringDateTime(),
+                        textAlign: TextAlign.start,
+                        style: TextStyles.white,
+                      ),
+                    ],
                   ),
-                  SizedBox(
-                    width: Dimens.space8,
+                ],
+              ).padding(
+                  edgeInsets: EdgeInsets.only(
+                      bottom: Dimens.space24,
+                      left: Dimens.space16,
+                      right: Dimens.space16)),
+            ),
+            CustomToolbar(title: Strings.addMedicalRecord),
+            SizedBox(height: Dimens.space4),
+            Row(
+              mainAxisAlignment: Responsive.isDesktop(context)
+                  ? MainAxisAlignment.spaceBetween
+                  : MainAxisAlignment.end,
+              children: [
+                if (Responsive.isDesktop(context))
+                  Button(
+                    title: Strings.addMedicalRecord,
+                    color: Palette.colorPrimary,
+                    width: Dimens.minWidthButtonDesktopAlt,
+                    onPressed: () async {
+                      await context.goTo(AppRoute.addMedicalRecord, args: {
+                        "idPatient": widget.patientData?.id.toString()
+                      });
+                      _resetPage();
+                      _getMedicalRecord();
+                    },
                   ),
-                  Text(
-                    widget.patientData!.address!,
-                    textAlign: TextAlign.start,
-                    style:
-                        TextStyles.white.copyWith(fontSize: Dimens.fontSmall),
-                  ),
-                ]),
-              ],
-            ).padding(
-                edgeInsets: EdgeInsets.only(
-                    bottom: Dimens.space24,
-                    left: Dimens.space16,
-                    right: Dimens.space16)),
-          ),
-          CustomToolbar(title: Strings.addMedicalRecord),
-          SizedBox(height: Dimens.space4),
-          Row(
-            mainAxisAlignment: Responsive.isDesktop(context)
-                ? MainAxisAlignment.spaceBetween
-                : MainAxisAlignment.end,
-            children: [
-              if (Responsive.isDesktop(context))
-                Button(
-                  title: Strings.addMedicalRecord,
-                  color: Palette.colorPrimary,
-                  width: Dimens.minWidthButtonDesktopAlt,
-                  onPressed: () async {
-                    await context.goTo(AppRoute.addMedicalRecord,
-                        args: {"idPatient": widget.patientData?.id.toString()});
-                    _resetPage();
-                    _getMedicalRecord();
-                  },
-                ),
-              Container(
-                constraints: BoxConstraints(maxWidth: Dimens.maxWidthSearch),
-                child: AnimatedSearchBar(
-                  label: Strings.searchMedicalRecord,
-                  labelStyle: TextStyles.textBold,
-                  searchStyle: TextStyles.text,
-                  searchDecoration: InputDecoration(
-                      alignLabelWithHint: true,
-                      hintText: Strings.searchMedicalRecordHint,
-                      hintStyle: TextStyles.textHint,
-                      contentPadding:
-                          EdgeInsets.symmetric(horizontal: Dimens.space8),
-                      border: OutlineInputBorder(
-                        gapPadding: 0,
-                        borderRadius: BorderRadius.circular(Dimens.space4),
-                        borderSide: BorderSide(
-                          color: Palette.colorPrimary,
-                          width: 1.0,
-                        ),
-                      )),
-                  cursorColor: Palette.colorPrimary,
-                  onChanged: (value) {
-                    _mainComplaint = value;
-                    _resetPage();
-                    _getMedicalRecord();
+                Container(
+                  constraints: BoxConstraints(maxWidth: Dimens.maxWidthSearch),
+                  child: AnimatedSearchBar(
+                    label: Strings.searchMedicalRecord,
+                    labelStyle: TextStyles.textBold,
+                    searchStyle: TextStyles.text,
+                    searchDecoration: InputDecoration(
+                        alignLabelWithHint: true,
+                        hintText: Strings.searchMedicalRecordHint,
+                        hintStyle: TextStyles.textHint,
+                        contentPadding:
+                            EdgeInsets.symmetric(horizontal: Dimens.space8),
+                        border: OutlineInputBorder(
+                          gapPadding: 0,
+                          borderRadius: BorderRadius.circular(Dimens.space4),
+                          borderSide: BorderSide(
+                            color: Palette.colorPrimary,
+                            width: 1.0,
+                          ),
+                        )),
+                    cursorColor: Palette.colorPrimary,
+                    onChanged: (value) {
+                      _mainComplaint = value;
+                      _resetPage();
+                      _getMedicalRecord();
                   },
                 ),
               ),
@@ -327,7 +340,8 @@ class _ListMedicalRecordPageState extends State<ListMedicalRecordPage> {
                 children: [
                   Text(
                     _listMedicalRecord[index].mainComplaint!,
-                    style: TextStyles.textBold,
+                    style: TextStyles.textBold
+                        .copyWith(fontSize: Dimens.fontLarge1),
                     textAlign: TextAlign.left,
                   ),
                   SizedBox(height: Dimens.space8),
