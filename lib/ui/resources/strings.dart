@@ -60,11 +60,13 @@ class Strings {
   static String backupDesc = "Backup database ke folder ";
   static String restoreDesc = "Pilih database untuk di restore";
 
-  static String addressContent = "Jl. BTP Blok M ";
+  static String addressContent = "Jl. Tamalanrea selatan 6 BTP blok M nomor 4";
 
   static String listPatient = "Daftar Pasien";
 
   static String successDelete = "Berhasil mengapus data";
 
   static String year = "Tahun";
+
+  static String phoneContent = "0821 8994 2021";
 }

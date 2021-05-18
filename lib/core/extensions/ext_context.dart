@@ -58,13 +58,38 @@ extension ContextExtensions on BuildContext {
                   Column(
                     crossAxisAlignment: CrossAxisAlignment.end,
                     children: [
-                      Text(
-                        Strings.address,
-                        style: TextStyles.textBold,
+                      Row(
+                        children: [
+                          Text(
+                            Strings.addressContent,
+                            style: TextStyles.textHint,
+                          ),
+                          SizedBox(
+                            width: Dimens.space8,
+                          ),
+                          Icon(
+                            Icons.home,
+                            color: Palette.colorHint,
+                          ),
+                        ],
                       ),
-                      Text(
-                        Strings.addressContent,
-                        style: TextStyles.textBold,
+                      SizedBox(
+                        height: Dimens.space4,
+                      ),
+                      Row(
+                        children: [
+                          Text(
+                            Strings.phoneContent,
+                            style: TextStyles.textHint,
+                          ),
+                          SizedBox(
+                            width: Dimens.space8,
+                          ),
+                          Icon(
+                            Icons.phone,
+                            color: Palette.colorHint,
+                          ),
+                        ],
                       ),
                     ],
                   )
