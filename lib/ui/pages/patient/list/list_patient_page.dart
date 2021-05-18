@@ -96,6 +96,9 @@ class _ListPatientPageState extends State<ListPatientPage> {
               {
                 Strings.successDelete.toString().toToastSuccess();
                 Navigator.pop(context);
+
+                _resetPage();
+                _getPatient();
               }
               break;
           }
@@ -402,11 +405,8 @@ class _ListPatientPageState extends State<ListPatientPage> {
                 style: TextStyles.text.copyWith(color: Palette.red),
               ),
               onPressed: () async {
-                await _deletePatientBloc
+                _deletePatientBloc
                     .deletePatient(_listPatient[index].id.toString());
-                _resetPage();
-                await _getPatient();
-                Navigator.pop(dialogContext, true); // Dismiss alert dialog
               },
             ),
           ],

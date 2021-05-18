@@ -85,40 +85,65 @@ class _ListMedicalRecordPageState extends State<ListMedicalRecordPage> {
                   tooltip: Strings.addMedicalRecord,
                 )
               : null,
-      child: Column(
-        children: [
-          Container(
-            decoration: BoxDecorations.primary.copyWith(
-                color: Palette.colorPrimary,
-                borderRadius: BorderRadius.only(
-                  bottomRight: Radius.circular(Dimens.radius),
-                  bottomLeft: Radius.circular(Dimens.radius),
-                )),
-            padding: EdgeInsets.all(Dimens.space16),
-            margin: EdgeInsets.symmetric(
-                horizontal: Responsive.isDesktop(context)
-                    ? context.dp36()
-                    : context.dp4()),
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.start,
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Row(
-                  children: [
-                    Expanded(
-                      child: Text(
-                        widget.patientData!.name!,
-                        style: TextStyles.whiteBold
-                            .copyWith(fontSize: Dimens.fontLarge),
+      child: BlocListener(
+        bloc: _deleteMedicalRecordBloc,
+        listener: (_, dynamic state) {
+          switch (state.status) {
+            case Status.LOADING:
+              {
+                Strings.pleaseWait.toToastLoading();
+              }
+              break;
+            case Status.ERROR:
+              {
+                state.message.toString().toToastError();
+              }
+              break;
+            case Status.SUCCESS:
+              {
+                Strings.successDelete.toToastSuccess();
+                Navigator.pop(context);
+
+                _resetPage();
+                _getMedicalRecord();
+              }
+              break;
+          }
+        },
+        child: Column(
+          children: [
+            Container(
+              decoration: BoxDecorations.primary.copyWith(
+                  color: Palette.colorPrimary,
+                  borderRadius: BorderRadius.only(
+                    bottomRight: Radius.circular(Dimens.radius),
+                    bottomLeft: Radius.circular(Dimens.radius),
+                  )),
+              padding: EdgeInsets.all(Dimens.space16),
+              margin: EdgeInsets.symmetric(
+                  horizontal: Responsive.isDesktop(context)
+                      ? context.dp36()
+                      : context.dp4()),
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.start,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Row(
+                    children: [
+                      Expanded(
+                        child: Text(
+                          widget.patientData!.name!,
+                          style: TextStyles.whiteBold
+                              .copyWith(fontSize: Dimens.fontLarge),
+                        ),
                       ),
-                    ),
-                    CircleAvatar(
-                        backgroundColor: Colors.white,
-                        maxRadius: Dimens.space16,
-                        child: SvgPicture.asset(
-                          widget.patientData!.sex == Strings.man
-                              ? Images.icMan
-                              : Images.icWoman,
+                      CircleAvatar(
+                          backgroundColor: Colors.white,
+                          maxRadius: Dimens.space16,
+                          child: SvgPicture.asset(
+                            widget.patientData!.sex == Strings.man
+                                ? Images.icMan
+                                : Images.icWoman,
                           color: Palette.colorPrimary,
                         )),
                     SizedBox(width: Dimens.space8),
@@ -255,35 +280,37 @@ class _ListMedicalRecordPageState extends State<ListMedicalRecordPage> {
 
                       return RefreshIndicator(
                         onRefresh: () async {
-                          _resetPage();
-                          _getMedicalRecord();
-                        },
-                        child: ListView.builder(
-                            controller: _scrollController,
-                            physics: AlwaysScrollableScrollPhysics(),
-                            itemCount: _currentPage == _lastPage
-                                ? _listMedicalRecord.length
-                                : _listMedicalRecord.length + 1,
-                            shrinkWrap: true,
-                            itemBuilder: (_, index) {
-                              return index < _listMedicalRecord.length
-                                  ? _listItem(index)
-                                  : Container(
-                                      height: 50,
-                                      child: Center(
-                                        child: new CircularProgressIndicator(),
-                                      ),
-                                    );
-                            }),
-                      );
-                    }
-                  default:
-                    return Container();
-                }
-              },
-            ),
-          )
-        ],
+                            _resetPage();
+                            _getMedicalRecord();
+                          },
+                          child: ListView.builder(
+                              controller: _scrollController,
+                              physics: AlwaysScrollableScrollPhysics(),
+                              itemCount: _currentPage == _lastPage
+                                  ? _listMedicalRecord.length
+                                  : _listMedicalRecord.length + 1,
+                              shrinkWrap: true,
+                              itemBuilder: (_, index) {
+                                return index < _listMedicalRecord.length
+                                    ? _listItem(index)
+                                    : Container(
+                                        height: 50,
+                                        child: Center(
+                                          child:
+                                              new CircularProgressIndicator(),
+                                        ),
+                                      );
+                              }),
+                        );
+                      }
+                    default:
+                      return Container();
+                  }
+                },
+              ),
+            )
+          ],
+        ),
       ),
     );
   }
@@ -436,9 +463,6 @@ class _ListMedicalRecordPageState extends State<ListMedicalRecordPage> {
               onPressed: () {
                 _deleteMedicalRecordBloc.deleteMedicalRecord(
                     _listMedicalRecord[index].id.toString());
-                _resetPage();
-                _getMedicalRecord();
-                Navigator.pop(dialogContext, true); // Dismiss alert dialog
               },
             ),
           ],
