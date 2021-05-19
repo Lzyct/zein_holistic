@@ -69,4 +69,18 @@ class Strings {
   static String year = "Tahun";
 
   static String phoneContent = "0821 8994 2021";
+
+  static String nameAsc = "name_asc";
+  static String nameDesc = "name_desc";
+  static String newest = "Terbaru";
+  static String newestDesc = "newest_desc";
+  static String ageAsc = "age_asc";
+  static String ageDesc = "age_desc";
+
+  static String laki = "Laki-laki";
+  static String perempuan = "Perempuan";
+
+  static String filter = "Filter";
+
+  static String all = "Semua";
 }

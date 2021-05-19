@@ -1,7 +1,9 @@
 import 'package:animated_search_bar/animated_search_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:zein_holistic/core/blocs/blocs.dart';
+import 'package:zein_holistic/core/data/models/helper/DataSelected.dart';
 import 'package:zein_holistic/core/data/models/models.dart';
 import 'package:zein_holistic/core/data/models/responses/list_patient_response.dart';
 import 'package:zein_holistic/core/enums/enums.dart';
@@ -30,6 +32,12 @@ class _ListPatientPageState extends State<ListPatientPage> {
   String _name = "";
   List<Data> _listPatient = [];
 
+  List<DataSelected> _listFilter = [];
+  List<String> _listSex = [Strings.all, Strings.man, Strings.woman];
+  String _sexSelected = Strings.all;
+
+  late DataSelected _listFilterSelected;
+
   var _lastPage = 0;
   var _currentPage = 0;
   var _scrollController = new ScrollController();
@@ -50,6 +58,26 @@ class _ListPatientPageState extends State<ListPatientPage> {
         }
       }
     });
+
+    //set listFilter Data
+    _listFilter.add(DataSelected(
+        title: Strings.newest,
+        value: Strings.newestDesc,
+        icon: Icons.arrow_upward));
+    _listFilter.add(DataSelected(
+        title: Strings.name,
+        value: Strings.nameAsc,
+        icon: Icons.arrow_downward));
+    _listFilter.add(DataSelected(
+        title: Strings.name,
+        value: Strings.nameDesc,
+        icon: Icons.arrow_upward));
+    _listFilter.add(DataSelected(
+        title: Strings.age, value: Strings.ageAsc, icon: Icons.arrow_downward));
+    _listFilter.add(DataSelected(
+        title: Strings.age, value: Strings.ageDesc, icon: Icons.arrow_upward));
+
+    _listFilterSelected = _listFilter[0];
   }
 
   @override
@@ -158,15 +186,75 @@ class _ListPatientPageState extends State<ListPatientPage> {
                 Padding(
                   padding: EdgeInsets.all(Dimens.padding),
                   child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      crossAxisAlignment: CrossAxisAlignment.center,
                       children: [
-                        Text(
-                          Strings.listPatient,
-                          style: TextStyles.textHint.copyWith(
-                              fontSize: Responsive.isDesktop(context)
-                                  ? Dimens.fontLarge4
-                                  : Dimens.fontLarge2),
+                        Expanded(
+                          child: Text(
+                            Strings.listPatient,
+                            style: TextStyles.textHint.copyWith(
+                                fontSize: Responsive.isDesktop(context)
+                                    ? Dimens.fontLarge4
+                                    : Dimens.fontLarge2),
+                          ),
                         ),
+                        SizedBox(
+                          width: Dimens.minWidthButtonDesktopAlt,
+                          child: DropDown(
+                            hintIsVisible: false,
+                            value: _listFilterSelected,
+                            items: _listFilter
+                                .map((e) => DropdownMenuItem<DataSelected>(
+                                      child: Row(
+                                        children: [
+                                          Icon(
+                                            e.icon,
+                                            size: Dimens.space16,
+                                          ),
+                                          SizedBox(width: Dimens.space8),
+                                          Text(
+                                            e.title.toString(),
+                                            style: TextStyles.text,
+                                          )
+                                        ],
+                                      ),
+                                      value: e,
+                                    ))
+                                .toList(),
+                            onChanged: (value) {
+                              logs(value);
+                              _listFilterSelected = value as DataSelected;
+                            },
+                          ),
+                        ),
+                        SizedBox(
+                          width: Dimens.space8,
+                        ),
+                        SizedBox(
+                          width: Dimens.minWidthButtonDesktop,
+                          child: DropDown(
+                            hintIsVisible: false,
+                            value: _sexSelected,
+                            items: _listSex
+                                .map((e) => DropdownMenuItem<String>(
+                                      child: Row(
+                                        children: [
+                                          Text(
+                                            e.toString(),
+                                            style: TextStyles.text,
+                                          )
+                                        ],
+                                      ),
+                                      value: e,
+                                    ))
+                                .toList(),
+                            onChanged: (value) {
+                              logs(value);
+                              _sexSelected = value as String;
+                            },
+                          ),
+                        ),
+                        SizedBox(width: Dimens.space16),
                         if (Responsive.isDesktop(context))
                           Button(
                             title: Strings.addPatient,
@@ -258,10 +346,28 @@ class _ListPatientPageState extends State<ListPatientPage> {
                 mainAxisAlignment: MainAxisAlignment.start,
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Text(
-                    "${index + 1}. ${_listPatient[index].name!}",
-                    style: TextStyles.textBold
-                        .copyWith(fontSize: Dimens.fontLarge),
+                  Row(
+                    children: [
+                      Text(
+                        "${index + 1}. ",
+                        style: TextStyles.textBold
+                            .copyWith(fontSize: Dimens.fontLarge),
+                      ),
+                      CircleAvatar(
+                          backgroundColor: Colors.white,
+                          maxRadius: Dimens.space12,
+                          child: SvgPicture.asset(
+                            _listPatient[index].sex == Strings.man
+                                ? Images.icMan
+                                : Images.icWoman,
+                            color: Palette.colorText,
+                          )),
+                      Text(
+                        " ${_listPatient[index].name!} (${calculateAge(_listPatient[index].birthday!.toDateTime())} ${Strings.year})",
+                        style: TextStyles.textBold
+                            .copyWith(fontSize: Dimens.fontLarge),
+                      )
+                    ],
                   ),
                   SizedBox(height: Dimens.space8),
                   Row(

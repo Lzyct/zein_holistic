@@ -1,7 +1,10 @@
+import 'package:flutter/material.dart';
+
 class DataSelected {
   final String? title;
   bool? isSelected;
-  final String? icon;
+  final IconData? icon;
+  final String? value;
 
-  DataSelected({this.title, this.isSelected, this.icon});
+  DataSelected({this.title, this.isSelected, this.icon, this.value});
 }
