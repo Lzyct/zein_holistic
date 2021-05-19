@@ -2,10 +2,14 @@ import 'dart:convert';
 import 'dart:developer';
 import 'dart:io';
 
+import 'package:flutter/cupertino.dart';
+
 logs(dynamic message) {
-  log("========================================================================================");
-  log("| Message Log : $message");
-  log("========================================================================================");
+  debugPrint(
+      "========================================================================================");
+  debugPrint("| Message Log : $message");
+  debugPrint(
+      "========================================================================================");
 }
 
 logsJson(dynamic message) {
