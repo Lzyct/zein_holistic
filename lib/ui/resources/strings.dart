@@ -73,14 +73,14 @@ class Strings {
   static String nameAsc = "name_asc";
   static String nameDesc = "name_desc";
   static String newest = "Terbaru";
-  static String newestDesc = "newest_desc";
-  static String ageAsc = "age_asc";
-  static String ageDesc = "age_desc";
+  static String newestDesc = "createdAt_desc";
+  static String birthdayAsc = "birthday_asc";
+  static String birthdayDesc = "birthday_desc";
 
   static String laki = "Laki-laki";
   static String perempuan = "Perempuan";
 
   static String filter = "Filter";
 
-  static String all = "Semua";
+  static String all = "semua";
 }
