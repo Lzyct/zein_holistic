@@ -148,7 +148,7 @@ class _ListMedicalRecordPageState extends State<ListMedicalRecordPage> {
                           )),
                       SizedBox(width: Dimens.space8),
                       Text(
-                        "${calculateAge(widget.patientData!.birthday!.toDateTime())} ${Strings.year}",
+                        "${calculateAge(widget.patientData!.birthday!.toDate())} ${Strings.year}",
                         style: TextStyles.whiteBold,
                       )
                     ],
@@ -161,7 +161,7 @@ class _ListMedicalRecordPageState extends State<ListMedicalRecordPage> {
                         width: Dimens.space8,
                       ),
                       Text(
-                        widget.patientData!.birthday!,
+                        widget.patientData!.birthday!.toBornDate(),
                         textAlign: TextAlign.start,
                         style: TextStyles.white,
                       )

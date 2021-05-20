@@ -41,6 +41,7 @@ class _EditPatientPageState extends State<EditPatientPage> {
   String? _selectedSex = "";
   var _isFirstLoad = true;
   var _id = "";
+  var _birthday = "";
 
   var _formKey = GlobalKey<FormState>();
 
@@ -121,8 +122,9 @@ class _EditPatientPageState extends State<EditPatientPage> {
                                 //set initial data
                                 PatientResponse _patientResponse = state.data;
                                 _conName.text = _patientResponse.data!.name!;
-                                _conDateBirth.text =
-                                    _patientResponse.data!.birthday!;
+                                _conDateBirth.text = _patientResponse
+                                    .data!.birthday!
+                                    .toBornDate();
                                 _conAddress.text =
                                     _patientResponse.data!.address!;
                                 _conPhoneNumber.text =
@@ -131,6 +133,7 @@ class _EditPatientPageState extends State<EditPatientPage> {
                                     _patientResponse.data!.birthday!.toDate());
                                 _selectedSex = _patientResponse.data!.sex;
                                 _id = _patientResponse.data!.id!;
+                                _birthday = _patientResponse.data!.birthday!;
                                 _isFirstLoad = false;
                               }
                               return _form();
@@ -203,6 +206,7 @@ class _EditPatientPageState extends State<EditPatientPage> {
                       var _result = await context.datePicker(
                           currentDate: _conDateBirth.text.fromBornDate());
                       if (_result != null) {
+                        _birthday = _result.toString();
                         _conDateBirth.text = _result.toString().toStringDate();
                         _conAge.text = calculateAge(_result);
                       }
@@ -252,7 +256,10 @@ class _EditPatientPageState extends State<EditPatientPage> {
                   var _updatePatientRequest = PatientRequest(
                       name: _conName.text.toString(),
                       sex: _selectedSex.toString(),
-                      birthday: _conDateBirth.text.toString(),
+                      birthday: _birthday
+                          .replaceAll("T00:00:00.000+08:00", "")
+                          .replaceAll(" 00:00:00.000", "")
+                          .replaceAll("-", "/"),
                       address: _conAddress.text.toString(),
                       phoneNumber: _conPhoneNumber.text.toString());
                   _editPatientBloc.updatePatient(_updatePatientRequest, _id);
