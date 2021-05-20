@@ -127,163 +127,13 @@ class _EditPatientPageState extends State<EditPatientPage> {
                                     _patientResponse.data!.address!;
                                 _conPhoneNumber.text =
                                     _patientResponse.data!.phoneNumber!;
-                                _conAge.text = calculateAge(_patientResponse
-                                    .data!.birthday!
-                                    .toDateTime());
+                                _conAge.text = calculateAge(
+                                    _patientResponse.data!.birthday!.toDate());
                                 _selectedSex = _patientResponse.data!.sex;
                                 _id = _patientResponse.data!.id!;
                                 _isFirstLoad = false;
                               }
-
-                              return Padding(
-                                padding: EdgeInsets.symmetric(
-                                    horizontal: Responsive.isDesktop(context)
-                                        ? context.dp36()
-                                        : context.dp4()),
-                                child: Form(
-                                  key: _formKey,
-                                  child: Column(
-                                    children: [
-                                      TextF(
-                                        hint: Strings.name,
-                                        textInputAction: TextInputAction.next,
-                                        keyboardType: TextInputType.number,
-                                        controller: _conName,
-                                        curFocusNode: _fnName,
-                                        nextFocusNode: _fnDateBirth,
-                                        validator: (String? value) =>
-                                            value!.isEmpty
-                                                ? Strings.errorEmpty
-                                                : null,
-                                      ),
-                                      Row(
-                                        children: [
-                                          Text(
-                                            Strings.sex,
-                                            style: TextStyles.textHint,
-                                          ),
-                                          SizedBox(width: Dimens.space16),
-                                          FlutterToggleTab(
-                                              labels: _sex,
-                                              width: Dimens.space16,
-                                              height: Dimens.height35,
-                                              initialIndex:
-                                                  _sex.indexOf(_selectedSex!),
-                                              selectedLabelIndex: (index) {
-                                                _selectedSex = _sex[index];
-                                              },
-                                              selectedTextStyle:
-                                                  TextStyles.white,
-                                              borderRadius: Dimens.space16,
-                                              unSelectedTextStyle:
-                                                  TextStyles.primary),
-                                        ],
-                                      ).margin(
-                                          edgeInsets: EdgeInsets.symmetric(
-                                              vertical: Dimens.space8)),
-                                      Row(
-                                        children: [
-                                          Expanded(
-                                            flex: 3,
-                                            child: TextF(
-                                              hint: Strings.dateBirth,
-                                              textInputAction:
-                                                  TextInputAction.next,
-                                              controller: _conDateBirth,
-                                              curFocusNode: DisableFocusNode(),
-                                              nextFocusNode: _fnAddress,
-                                              validator: (String? value) =>
-                                                  value!.isEmpty
-                                                      ? Strings.errorEmpty
-                                                      : null,
-                                              onTap: () async {
-                                                var _result =
-                                                    await context.datePicker(
-                                                        currentDate:
-                                                            _conDateBirth.text
-                                                                .toDate());
-                                                if (_result != null) {
-                                                  _conDateBirth.text = _result
-                                                      .toString()
-                                                      .toStringDate();
-                                                  _conAge.text =
-                                                      calculateAge(_result);
-                                                }
-                                              },
-                                            ),
-                                          ),
-                                          SizedBox(width: Dimens.space16),
-                                          Expanded(
-                                            flex: 2,
-                                            child: TextF(
-                                              textInputAction:
-                                                  TextInputAction.next,
-                                              curFocusNode: DisableFocusNode(),
-                                              controller: _conAge,
-                                              hint: Strings.age,
-                                              validator: (String? value) =>
-                                                  value!.isEmpty
-                                                      ? Strings.errorEmpty
-                                                      : null,
-                                            ),
-                                          ),
-                                        ],
-                                      ),
-                                      TextF(
-                                        hint: Strings.address,
-                                        textInputAction: TextInputAction.next,
-                                        controller: _conAddress,
-                                        curFocusNode: _fnAddress,
-                                        nextFocusNode: _fnPhoneNumber,
-                                        validator: (String? value) =>
-                                            value!.isEmpty
-                                                ? Strings.errorEmpty
-                                                : null,
-                                      ),
-                                      TextF(
-                                        hint: Strings.phoneNumber,
-                                        textInputAction: TextInputAction.done,
-                                        keyboardType: TextInputType.phone,
-                                        controller: _conPhoneNumber,
-                                        inputFormatter: [
-                                          FilteringTextInputFormatter.digitsOnly
-                                        ],
-                                        curFocusNode: _fnPhoneNumber,
-                                        validator: (String? value) =>
-                                            value!.isEmpty
-                                                ? Strings.errorEmpty
-                                                : null,
-                                      ),
-                                      SizedBox(height: Dimens.space16),
-                                      Button(
-                                        title: Strings.save,
-                                        color: Palette.colorPrimary,
-                                        width: double.infinity,
-                                        onPressed: () {
-                                          if (_formKey.currentState!
-                                              .validate()) {
-                                            var _updatePatientRequest =
-                                                PatientRequest(
-                                                    name: _conName.text
-                                                        .toString(),
-                                                    sex:
-                                                        _selectedSex.toString(),
-                                                    birthday: _conDateBirth.text
-                                                        .toString(),
-                                                    address: _conAddress.text
-                                                        .toString(),
-                                                    phoneNumber: _conPhoneNumber
-                                                        .text
-                                                        .toString());
-                                            _editPatientBloc.updatePatient(
-                                                _updatePatientRequest, _id);
-                                          }
-                                        },
-                                      )
-                                    ],
-                                  ),
-                                ),
-                              );
+                              return _form();
                             }
                           default:
                             return Container();
@@ -296,5 +146,122 @@ class _EditPatientPageState extends State<EditPatientPage> {
             ],
           ),
         ));
+  }
+
+  _form() {
+    return Padding(
+      padding: EdgeInsets.symmetric(
+          horizontal:
+              Responsive.isDesktop(context) ? context.dp36() : context.dp4()),
+      child: Form(
+        key: _formKey,
+        child: Column(
+          children: [
+            TextF(
+              hint: Strings.name,
+              textInputAction: TextInputAction.next,
+              keyboardType: TextInputType.number,
+              controller: _conName,
+              curFocusNode: _fnName,
+              nextFocusNode: _fnDateBirth,
+              validator: (String? value) =>
+                  value!.isEmpty ? Strings.errorEmpty : null,
+            ),
+            Row(
+              children: [
+                Text(
+                  Strings.sex,
+                  style: TextStyles.textHint,
+                ),
+                SizedBox(width: Dimens.space16),
+                FlutterToggleTab(
+                    labels: _sex,
+                    width: Dimens.space16,
+                    height: Dimens.height35,
+                    initialIndex: _sex.indexOf(_selectedSex!),
+                    selectedLabelIndex: (index) {
+                      _selectedSex = _sex[index];
+                    },
+                    selectedTextStyle: TextStyles.white,
+                    borderRadius: Dimens.space16,
+                    unSelectedTextStyle: TextStyles.primary),
+              ],
+            ).margin(edgeInsets: EdgeInsets.symmetric(vertical: Dimens.space8)),
+            Row(
+              children: [
+                Expanded(
+                  flex: 3,
+                  child: TextF(
+                    hint: Strings.dateBirth,
+                    textInputAction: TextInputAction.next,
+                    controller: _conDateBirth,
+                    curFocusNode: DisableFocusNode(),
+                    nextFocusNode: _fnAddress,
+                    validator: (String? value) =>
+                        value!.isEmpty ? Strings.errorEmpty : null,
+                    onTap: () async {
+                      var _result = await context.datePicker(
+                          currentDate: _conDateBirth.text.fromBornDate());
+                      if (_result != null) {
+                        _conDateBirth.text = _result.toString().toStringDate();
+                        _conAge.text = calculateAge(_result);
+                      }
+                    },
+                  ),
+                ),
+                SizedBox(width: Dimens.space16),
+                Expanded(
+                  flex: 2,
+                  child: TextF(
+                    textInputAction: TextInputAction.next,
+                    curFocusNode: DisableFocusNode(),
+                    controller: _conAge,
+                    hint: Strings.age,
+                    validator: (String? value) =>
+                        value!.isEmpty ? Strings.errorEmpty : null,
+                  ),
+                ),
+              ],
+            ),
+            TextF(
+              hint: Strings.address,
+              textInputAction: TextInputAction.next,
+              controller: _conAddress,
+              curFocusNode: _fnAddress,
+              nextFocusNode: _fnPhoneNumber,
+              validator: (String? value) =>
+                  value!.isEmpty ? Strings.errorEmpty : null,
+            ),
+            TextF(
+              hint: Strings.phoneNumber,
+              textInputAction: TextInputAction.done,
+              keyboardType: TextInputType.phone,
+              controller: _conPhoneNumber,
+              inputFormatter: [FilteringTextInputFormatter.digitsOnly],
+              curFocusNode: _fnPhoneNumber,
+              validator: (String? value) =>
+                  value!.isEmpty ? Strings.errorEmpty : null,
+            ),
+            SizedBox(height: Dimens.space16),
+            Button(
+              title: Strings.save,
+              color: Palette.colorPrimary,
+              width: double.infinity,
+              onPressed: () {
+                if (_formKey.currentState!.validate()) {
+                  var _updatePatientRequest = PatientRequest(
+                      name: _conName.text.toString(),
+                      sex: _selectedSex.toString(),
+                      birthday: _conDateBirth.text.toString(),
+                      address: _conAddress.text.toString(),
+                      phoneNumber: _conPhoneNumber.text.toString());
+                  _editPatientBloc.updatePatient(_updatePatientRequest, _id);
+                }
+              },
+            )
+          ],
+        ),
+      ),
+    );
   }
 }

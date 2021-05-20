@@ -32,7 +32,13 @@ extension StringExtension on String {
   }
 
   DateTime toDate() {
-    return DateFormat("dd MMMM yyyy", "id").parse(this);
+    late DateTime object;
+    try {
+      object = new DateFormat("yyyy-MM-ddTHH:mm:ss").parse(this);
+    } catch (e) {
+      object = new DateFormat("yyyy-MM-dd HH:mm:ss").parse(this);
+    }
+    return object;
   }
 
   String toClock() {
@@ -40,8 +46,18 @@ extension StringExtension on String {
     return DateFormat("HH:mm").format(object);
   }
 
-  DateTime toDateTime() {
-    return DateFormat("dd MMMM yyyy", "id").parse(this);
+  String toBornDate() {
+    late DateTime object;
+    try {
+      object = new DateFormat("yyyy-MM-ddTHH:mm:ss").parse(this);
+    } catch (e) {
+      object = new DateFormat("yyyy-MM-dd HH:mm:ss").parse(this);
+    }
+    return DateFormat("dd MMMM yyyy", "id").format(object);
+  }
+
+  DateTime fromBornDate() {
+    return new DateFormat("dd MMMM yyyy", "id").parse(this);
   }
 
   toToastError() {

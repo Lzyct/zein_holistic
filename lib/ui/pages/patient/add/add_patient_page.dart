@@ -37,6 +37,7 @@ class _AddPatientPageState extends State<AddPatientPage> {
 
   var _sex = [Strings.man, Strings.woman];
   var _selectedSex = "";
+  var _birthday = "";
 
   var _formKey = GlobalKey<FormState>();
 
@@ -147,9 +148,10 @@ class _AddPatientPageState extends State<AddPatientPage> {
                                   var _result = await context.datePicker(
                                       currentDate:
                                       _conDateBirth.text.isNotEmpty
-                                          ? _conDateBirth.text.toDate()
+                                          ? _conDateBirth.text.fromBornDate()
                                           : null);
                                   if (_result != null) {
+                                    _birthday = _result.toString();
                                     _conDateBirth.text =
                                         _result.toString().toStringDate();
                                     _conAge.text = calculateAge(_result);
@@ -204,10 +206,11 @@ class _AddPatientPageState extends State<AddPatientPage> {
                               var _createPatientRequest = PatientRequest(
                                   name: _conName.text.toString(),
                                   sex: _selectedSex,
-                                  birthday: _conDateBirth.text.toString(),
+                                  birthday: _birthday
+                                      .replaceAll(" 00:00:00.000", "")
+                                      .replaceAll("-", "/"),
                                   address: _conAddress.text.toString(),
-                                  phoneNumber:
-                                  _conPhoneNumber.text.toString());
+                                  phoneNumber: _conPhoneNumber.text.toString());
                               _addPatientBloc
                                   .createPatient(_createPatientRequest);
                             }
