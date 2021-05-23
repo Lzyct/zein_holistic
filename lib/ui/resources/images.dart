@@ -5,4 +5,5 @@ class Images {
   static String imgNoData = "assets/images/img_no_data.svg";
   static String icMan = "assets/images/ic_man.svg";
   static String icWoman = "assets/images/ic_woman.svg";
+  static String codeLogs ="assets/images/codelogs_lab.svg";
 }

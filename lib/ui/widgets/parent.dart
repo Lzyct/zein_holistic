@@ -1,5 +1,6 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:zein_holistic/core/extensions/extensions.dart';
 import 'package:zein_holistic/ui/resources/resources.dart';
 
@@ -62,28 +63,53 @@ class _ParentState extends State<Parent> {
             child: AnimatedContainer(
               duration: Duration(milliseconds: 300),
               constraints: BoxConstraints(maxWidth: Dimens.maxWidth),
-              child: Stack(
-                alignment: Alignment.topCenter,
+              child: Column(
                 children: [
-                  widget.isScroll
-                      ? Container()
-                      : widget.child.padding(
-                          edgeInsets: EdgeInsets.all(
-                            widget.isPadding ? Dimens.space16 : 0,
+                  Expanded(
+                    child: Stack(
+                      alignment: Alignment.topCenter,
+                      children: [
+                        widget.isScroll
+                            ? Container()
+                            : widget.child.padding(
+                                edgeInsets: EdgeInsets.all(
+                                  widget.isPadding ? Dimens.space16 : 0,
+                                ),
+                              ),
+                        Scrollbar(
+                          child: SingleChildScrollView(
+                            physics: BouncingScrollPhysics(),
+                            child: widget.isScroll
+                                ? widget.child.padding(
+                                    edgeInsets: EdgeInsets.all(
+                                      widget.isPadding ? Dimens.space16 : 0,
+                                    ),
+                                  )
+                                : Container(),
                           ),
                         ),
-                  Scrollbar(
-                    child: SingleChildScrollView(
-                      physics: BouncingScrollPhysics(),
-                      child: widget.isScroll
-                          ? widget.child.padding(
-                              edgeInsets: EdgeInsets.all(
-                                widget.isPadding ? Dimens.space16 : 0,
-                              ),
-                            )
-                          : Container(),
+                      ],
                     ),
                   ),
+                  Padding(
+                    padding: EdgeInsets.all(Dimens.space16),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Text(
+                          "© ${DateTime.now().year.toString()}",
+                          style: TextStyles.textBold,
+                        ),
+                        SizedBox(
+                          width: Dimens.space8,
+                        ),
+                        SvgPicture.asset(
+                          Images.codeLogs,
+                          height: Dimens.space16,
+                        )
+                      ],
+                    ),
+                  )
                 ],
               ),
             ),
